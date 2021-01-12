@@ -1,0 +1,211 @@
+menu "TFT Configuration"
+
+	choice DRIVER
+		prompt "Display Driver"
+		default ILI9341
+		help
+			Select Display Driver.
+		config ILI9325
+			bool "ILI9325"
+			help
+				Display Driver is ILI9325.
+		config ILI9327
+			bool "ILI9327"
+			help
+				Display Driver is ILI9327.
+		config ILI9341
+			bool "ILI9341"
+			help
+				Display Driver is ILI9341.
+		config ILI9342
+			bool "ILI9342"
+			help
+				Display Driver is ILI9342.
+		config ILI9481
+			bool "ILI9481"
+			help
+				Display Driver is ILI9481.
+		config ILI9486
+			bool "ILI9486"
+			help
+				Display Driver is ILI9486.
+				Same as ST7796.
+		config SPFD5408
+			bool "SPFD5408"
+			help
+				Display Driver is SPFD5408.
+				Almost the same as ILI9325.
+		config R61505
+			bool "R61505"
+			help
+				Display Driver is R61505.
+				Almost the same as ILI9325.
+		config R61509
+			bool "R61509"
+			help
+				Display Driver is R61509.
+		config LGDP4532
+			bool "LGDP4532"
+			help
+				Display Driver is LGDP4532.
+		config ST7781
+			bool "ST7781"
+			help
+				Display Driver is ST7781.
+				Same as ST7783.
+		config ST7783
+			bool "ST7783"
+			help
+				Display Driver is ST7783.
+				Same as ST7781.
+		config ST7796
+			bool "ST7796"
+			help
+				Display Driver is ST7796.
+				Same as ILI9486.
+	endchoice
+
+	config WIDTH
+		int "SCREEN WIDTH"
+		range 0 999
+		default 240
+		help
+			The width resolution of the screen.
+
+	config HEIGHT
+		int "SCREEN HEIGHT"
+		range 0 999
+		default 320
+		help
+			The height resolution of the screen.
+
+	config OFFSETX
+		int "GRAM X OFFSET"
+		range 0 99
+		default 0
+		help
+			When your TFT have offset(X), set it.
+
+	config OFFSETY
+		int "GRAM Y OFFSET"
+		range 0 99
+		default 0
+		help
+			When your TFT have offset(Y), set it.
+
+	config INVERSION
+		bool "Enable Display Inversion"
+		default false
+		help
+			Enable Display Inversion.
+
+	config CUSTOM_GPIO_CONFIG
+		bool "Enable Custom GPIO"
+		help
+			Enable Custom GPIO.
+
+	config D0_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D0 GPIO number"
+		range 0 46
+		default 19
+		help
+			GPIO number (IOxx) to LCD D0.
+
+	config D1_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D1 GPIO number"
+		range 0 46
+		default 21
+		help
+			GPIO number (IOxx) to LCD D1.
+
+	config D2_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D2 GPIO number"
+		range 0 46
+		default 25
+		help
+			GPIO number (IOxx) to LCD D2.
+
+	config D3_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D3 GPIO number"
+		range 0 46
+		default 22
+		help
+			GPIO number (IOxx) to LCD D3.
+
+	config D4_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D4 GPIO number"
+		range 0 46
+		default 23
+		help
+			GPIO number (IOxx) to LCD D4.
+
+	config D5_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D5 GPIO number"
+		range 0 46
+		default 33
+		help
+			GPIO number (IOxx) to LCD D5.
+
+	config D6_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D6 GPIO number"
+		range 0 46
+		default 32
+		help
+			GPIO number (IOxx) to LCD D6.
+
+	config D7_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "D7 GPIO number"
+		range 0 46
+		default 27
+		help
+			GPIO number (IOxx) to LCD D7.
+
+	config RD_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "RD GPIO number"
+		range 0 46
+		default 2
+		help
+			GPIO number (IOxx) to LCD RD.
+
+	config WR_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "WR GPIO number"
+		range 0 46
+		default 13
+		help
+			GPIO number (IOxx) to LCD WR.
+
+	config RS_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "RS GPIO number"
+		range 0 46
+		default 4
+		help
+			GPIO number (IOxx) to LCD RS.
+
+	config CS_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "CS GPIO number"
+		range 0 46
+		default 14
+		help
+			GPIO number (IOxx) to LCD CS.
+
+	config RESET_GPIO
+		depends on CUSTOM_GPIO_CONFIG
+		int "RESET GPIO number"
+		range 0 46
+		default 15
+		help
+			GPIO number (IOxx) to LCD RESET.
+
+endmenu
