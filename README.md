@@ -2,6 +2,8 @@
 8 bit parallel TFT Driver for esp-idf.   
 You can use such a TFT with esp32.   
 
+![TFT-SHIELD-1](https://user-images.githubusercontent.com/6020549/104252922-9d9c9d80-54b6-11eb-9b1f-8c8f71e60837.JPG)
+
 # Support drive
 - ILI9325   
 - ILI9327   
@@ -49,15 +51,12 @@ You have to set this config value with menuconfig.
  You waste time if you don't choose the right driver.   
  You can use [this](https://github.com/prenticedavid/MCUFRIEND_kbv/tree/master/examples/LCD_ID_readreg) to find out the driver.   
  Do not use this on the ESP32 as the GPIO on the ESP32 is not 5V tolerant.   
-<br>
 - CONFIG_WIDTH   
 - CONFIG_HEIGHT   
  Specifies the resolution of the TFT.   
-<br>
 - CONFIG_OFFSETX   
 - CONFIG_OFFSETY   
  You can specify the GRAM offset, but I've never seen a TFT with an offset.   
-<br>
 - CONFIG_INVERSION   
  For some TFTs, the BGR may be inverted.   
  Specify if the colors are inverted.
