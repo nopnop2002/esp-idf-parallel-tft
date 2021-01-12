@@ -1,8 +1,8 @@
 # esp-idf-parallel-tft
 8 bit parallel TFT Driver for esp-idf.   
-You can use such a TFT with esp32.   
+You can use such a TFT-Shield with esp32.   
 
-![TFT-SHIELD-1](https://user-images.githubusercontent.com/6020549/104252922-9d9c9d80-54b6-11eb-9b1f-8c8f71e60837.JPG)
+![TFT-Shield](https://user-images.githubusercontent.com/6020549/104253960-10a71380-54b9-11eb-8789-a12c2c769ab4.JPG)
 
 # Support drive
 - ILI9325   
