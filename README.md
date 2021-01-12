@@ -4,7 +4,7 @@ You can use such a TFT-Shield with esp32.
 
 ![TFT-Shield](https://user-images.githubusercontent.com/6020549/104253960-10a71380-54b9-11eb-8789-a12c2c769ab4.JPG)
 
-# Support drive
+# Support driver
 - ILI9325   
 - ILI9327   
 - ILI9341   
