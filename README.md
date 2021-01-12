@@ -151,5 +151,5 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 # Application layer
 
-![LibraryLayer](https://user-images.githubusercontent.com/6020549/104242715-e77b8880-54a2-11eb-8bbb-156e3fd26d14.jpg)
+![LibraryLayer](https://user-images.githubusercontent.com/6020549/104253530-08020d80-54b8-11eb-9fb9-21b90fd6d679.jpg)
 
