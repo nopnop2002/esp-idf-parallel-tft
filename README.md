@@ -101,8 +101,8 @@ When a regulator is NOT mounted on the back, it's operated 3.3V.
 ![Back](https://user-images.githubusercontent.com/6020549/104248029-1f3afe00-54ac-11eb-913d-0a832fb569b2.JPG)
 
 __Note__   
-My R61509V has a regulator on the back.
-Normally, a TFT with a regulator works at 5V, but my R61509V doesn't work unless I supply both 5V and 3.3V.
+My R61509V has a regulator on the back.   
+Normally, a TFT with a regulator works at 5V, but my R61509V doesn't work unless I supply both 5V and 3.3V.   
 
 __Note__   
 ESP32 development board cannot supply too much current.   
