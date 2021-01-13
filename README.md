@@ -47,7 +47,7 @@ idf.py flash
 
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
- The information provided by sellers on Ebay and Aliexpress is largely incorrect.   
+ The information provided by sellers on Ebay and AliExpress is largely incorrect.   
  You waste time if you don't choose the right driver.   
  There are many [variations](http://domoticx.com/arduino-shield-2-4-tft-lcd-touch/) of the 2.4 inch shield.   
  You can use [this](https://github.com/prenticedavid/MCUFRIEND_kbv/tree/master/examples/LCD_ID_readreg) to find out the driver.   
@@ -100,12 +100,17 @@ When a regulator is NOT mounted on the back, it's operated 3.3V.
 
 ![Back](https://user-images.githubusercontent.com/6020549/104248029-1f3afe00-54ac-11eb-913d-0a832fb569b2.JPG)
 
+__Note__
+My R61509V has a regulator on the back.
+Normally, a TFT with a regulator works at 5V, but my R61509V doesn't work unless I supply both 5V and 3.3V.
+
+__Note__
 ESP32 development board cannot supply too much current.   
 It is more stable when supplied from an external power source.   
 
 ![All](https://user-images.githubusercontent.com/6020549/104249117-1e0ad080-54ae-11eb-8c25-46a2d8fa5fed.JPG)
 
-![Circuit](https://user-images.githubusercontent.com/6020549/104242468-8bb0ff80-54a2-11eb-91c4-c857c47f0fa0.jpg)
+![Circuit](https://user-images.githubusercontent.com/6020549/104282887-0efa4180-54f3-11eb-8768-27a48ec38129.jpg)
 
 # Graphic support
 ![Graphic1](https://user-images.githubusercontent.com/6020549/104248260-848eef00-54ac-11eb-9ab8-4b74a2a7713f.JPG)
@@ -152,8 +157,7 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 # Application layer
 
-![LibraryLayer](https://user-images.githubusercontent.com/6020549/104253530-08020d80-54b8-11eb-9fb9-21b90fd6d679.jpg)
-
+![LibraryLayer](https://user-images.githubusercontent.com/6020549/104282561-972c1700-54f2-11eb-9b0b-732f17e9d41b.jpg)
 
 # Reference
 https://github.com/espressif/esp-iot-solution/issues/19
