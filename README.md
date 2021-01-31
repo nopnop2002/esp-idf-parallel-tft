@@ -24,7 +24,9 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(*1 Same as HX8347D)   
 
 (*1)
-Very Slow.1Pixel requires 5 commands to display.   
+Very Slow.   
+Most drivers require three commands to display one Pixel.   
+This driver require 9 commands to display one Pixel.   
 For some reason, the color of 0xFFFF does not appear.   
 
 These are all 2.4 inch, 320x240 TFTs.
