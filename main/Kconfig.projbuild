@@ -63,6 +63,26 @@ menu "TFT Configuration"
 			help
 				Display Driver is ST7796.
 				Same as ILI9486.
+		config S6D1121
+			bool "S6D1121"
+			help
+				Display Driver is S6D1121.
+		config HX8347A
+			bool "HX8347A"
+			help
+				Display Driver is HX8347A.
+		config HX8347D
+			bool "HX8347D"
+			help
+				Display Driver is HX8347D.
+		config HX8347G
+			bool "HX8347G"
+			help
+				Display Driver is HX8347G.
+		config HX8347I
+			bool "HX8347I"
+			help
+				Display Driver is HX8347I.
 	endchoice
 
 	config WIDTH

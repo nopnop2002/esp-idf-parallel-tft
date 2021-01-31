@@ -11,6 +11,8 @@ set(component_srcs "fontx.c"
 	"lgdp4532.c"
 	"r61509.c"
 	"st7781.c"
+	"s6d1121.c"
+	"hx8347.c"
 	)
 
 

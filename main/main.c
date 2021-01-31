@@ -56,6 +56,21 @@
 #if CONFIG_ST7796
 #include "ili9486.h"
 #endif
+#if CONFIG_S6D1121
+#include "s6d1121.h"
+#endif
+#if CONFIG_HX8347A
+#include "hx8347.h"
+#endif
+#if CONFIG_HX8347D
+#include "hx8347.h"
+#endif
+#if CONFIG_HX8347G
+#include "hx8347.h"
+#endif
+#if CONFIG_HX8347I
+#include "hx8347.h"
+#endif
 
 #define INTERVAL		400
 #define WAIT	vTaskDelay(INTERVAL)
@@ -1035,6 +1050,32 @@ void TFT(void *pvParameters)
 	strcpy(model, "ST7796");
 	ili9486_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 #endif
+
+#if CONFIG_S6D1121
+	strcpy(model, "S6D1121");
+	s6d1121_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+#endif
+
+#if CONFIG_HX8347A
+	strcpy(model, "HX8347A");
+	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+#endif
+
+#if CONFIG_HX8347D
+	strcpy(model, "HX8347D");
+	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+#endif
+
+#if CONFIG_HX8347G
+	strcpy(model, "HX8347G");
+	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+#endif
+
+#if CONFIG_HX8347I
+	strcpy(model, "HX8347I");
+	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+#endif
+
 
 #if CONFIG_INVERSION
 	ESP_LOGI(TAG, "Enable Display Inversion");

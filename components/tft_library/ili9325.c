@@ -114,9 +114,9 @@ void ili9325_lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color){
 	uint16_t _x = x + dev->_offsetx;
 	uint16_t _y = y + dev->_offsety;
 
-   lcd_write_register_word(dev, 0x0020, _x); // RAM Address Set 1
-   lcd_write_register_word(dev, 0x0021, _y); // RAM Address Set 2
-   lcd_write_register_word(dev, 0x0022, color); // Write Data to GRAM
+	lcd_write_register_word(dev, 0x0020, _x); // RAM Address Set 1
+	lcd_write_register_word(dev, 0x0021, _y); // RAM Address Set 2
+	lcd_write_register_word(dev, 0x0022, color); // Write Data to GRAM
 }
 
 // Draw multi pixel

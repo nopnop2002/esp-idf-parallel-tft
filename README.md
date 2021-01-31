@@ -18,6 +18,14 @@ You can use such a TFT-Shield with esp32.
 - ST7781   
 - ST7783(Same as ST7781)   
 - ST7796(Same as ILI9486)   
+- HX8347A(*1)   
+- HX8347D(*1 Almost the same as HX8347A)   
+- HX8347G(*1 Same as HX8347D)   
+- HX8347I(*1 Same as HX8347D)   
+
+(*1)
+Very Slow.1Pixel requires 5 commands to display.   
+For some reason, the color of 0xFFFF does not appear.   
 
 These are all 2.4 inch, 320x240 TFTs.
 ![TFT-SHIELD-2](https://user-images.githubusercontent.com/6020549/104244320-873a1600-54a5-11eb-93c0-9fad671fdfed.JPG)
