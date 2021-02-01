@@ -24,6 +24,8 @@ typedef struct {
 	bool _debug;
 } TFT_t;
 
+void gpio_digital_write(int GPIO_PIN, char data);
+void gpio_lcd_write_data(const char *data, size_t size);
 
 void lcd_write_table(TFT_t * dev, const void *table, int16_t size);
 void lcd_write_table16(TFT_t * dev, const void *table, int16_t size);
