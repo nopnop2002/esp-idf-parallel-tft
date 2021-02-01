@@ -11,6 +11,7 @@ You can use such a TFT-Shield with esp32.
 - ILI9342   
 - ILI9481   
 - ILI9486   
+- ILI9488   
 - SPFD5408(Almost the same as ILI9325)   
 - R61505(Almost the same as ILI9325)   
 - R61509   
@@ -169,5 +170,51 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/104282561-972c1700-54f2-11eb-9b0b-732f17e9d41b.jpg)
 
-# Reference
+# Performance comparison with ILI9488
+
+## Using GPIO parallel mode
+```
+I (2351) AddressTest: elapsed time[ms]:1300
+I (7621) AddressTest: elapsed time[ms]:1270
+I (16941) FillTest: elapsed time[ms]:5320
+I (22231) ColorBarTest: elapsed time[ms]:1290
+I (27601) ArrowTest: elapsed time[ms]:1360
+I (34791) LineTest: elapsed time[ms]:3190
+I (41821) CircleTest: elapsed time[ms]:3030
+I (48881) RoundRectTest: elapsed time[ms]:3060
+I (56991) RectAngleTest: elapsed time[ms]:4110
+I (65691) TriangleTest: elapsed time[ms]:4700
+I (71131) DirectionTest: elapsed time[ms]:1440
+I (76881) HorizontalTest: elapsed time[ms]:1750
+I (82631) VerticalTest: elapsed time[ms]:1750
+I (88971) FillRectTest: elapsed time[ms]:2340
+I (95601) ColorTest: elapsed time[ms]:2630
+I (102951) BMPTest: elapsed time[ms]:3350
+I (110821) JPEGTest: elapsed time[ms]:3870
+I (119131) PNGTest: elapsed time[ms]:4310
+```
+
+## Using I2S parallel mode
+```
+I (1201) AddressTest: elapsed time[ms]:70
+I (5271) AddressTest: elapsed time[ms]:70
+I (10951) FillTest: elapsed time[ms]:1680
+I (15061) ColorBarTest: elapsed time[ms]:110
+I (19271) ArrowTest: elapsed time[ms]:210
+I (26921) LineTest: elapsed time[ms]:3650
+I (34231) CircleTest: elapsed time[ms]:3310
+I (41631) RoundRectTest: elapsed time[ms]:3400
+I (57111) RectAngleTest: elapsed time[ms]:11480
+I (74401) TriangleTest: elapsed time[ms]:13290
+I (78741) DirectionTest: elapsed time[ms]:340
+I (83481) HorizontalTest: elapsed time[ms]:740
+I (88211) VerticalTest: elapsed time[ms]:730
+I (92491) FillRectTest: elapsed time[ms]:280
+I (96891) ColorTest: elapsed time[ms]:400
+I (102261) BMPTest: elapsed time[ms]:1370
+I (108891) JPEGTest: elapsed time[ms]:2630
+I (115941) PNGTest: elapsed time[ms]:3050
+```
+
+# Reference about I2S parallel mode
 https://github.com/espressif/esp-iot-solution/issues/19

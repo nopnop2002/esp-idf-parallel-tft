@@ -12,6 +12,6 @@ typedef struct {
 
 esp_err_t i2s_lcd_pin_config(i2s_port_t i2s_num, i2s_paral_pin_config_t* pin_conf);
 esp_err_t i2s_lcd_driver_install(i2s_port_t i2s_num);
-int i2s_lcd_write_data(i2s_port_t i2s_num, const char *src, size_t size, TickType_t ticks_to_wait);
+int i2s_lcd_write_data(i2s_port_t i2s_num, unsigned char *src, size_t size, TickType_t ticks_to_wait);
 
 #endif

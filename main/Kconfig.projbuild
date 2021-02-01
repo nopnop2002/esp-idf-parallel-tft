@@ -30,6 +30,10 @@ menu "TFT Configuration"
 			help
 				Display Driver is ILI9486.
 				Same as ST7796.
+		config ILI9488
+			bool "ILI9488"
+			help
+				Display Driver is ILI9488.
 		config SPFD5408
 			bool "SPFD5408"
 			help

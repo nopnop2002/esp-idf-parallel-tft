@@ -14,7 +14,7 @@
 
 void ili9481_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-	lcdInitDevive(dev, width, height, offsetx, offsety);
+	lcdInitDevice(dev, width, height, offsetx, offsety);
 
 	ESP_LOGI(TAG,"Your TFT is ILI9481");
 	ESP_LOGI(TAG,"Screen width:%d",width);

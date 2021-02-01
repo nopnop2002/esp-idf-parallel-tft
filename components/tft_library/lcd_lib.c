@@ -85,7 +85,7 @@ void lcdStartScroll(TFT_t * dev, uint16_t vsp){
 }
 
 // Initialize devive
-void lcdInitDevive(TFT_t * dev, int width, int height, int offsetx, int offsety) {
+void lcdInitDevice(TFT_t * dev, int width, int height, int offsetx, int offsety) {
 	dev->_width = width;
 	dev->_height = height;
 	dev->_offsetx = offsetx;

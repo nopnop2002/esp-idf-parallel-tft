@@ -15,7 +15,7 @@
 
 void st7781_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-	lcdInitDevive(dev, width, height, offsetx, offsety);
+	lcdInitDevice(dev, width, height, offsetx, offsety);
 
 #if CONFIG_ST7781
     ESP_LOGI(TAG,"Your TFT is ST7781");

@@ -15,7 +15,7 @@
 
 void ili9325_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-	lcdInitDevive(dev, width, height, offsetx, offsety);
+	lcdInitDevice(dev, width, height, offsetx, offsety);
 
 #if CONFIG_ILI9325
 	ESP_LOGI(TAG,"Your TFT is ILI9325");

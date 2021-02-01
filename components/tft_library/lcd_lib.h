@@ -33,7 +33,7 @@ void (*ResetScrollArea)(TFT_t * dev, uint16_t vsa);
 void (*StartScroll)(TFT_t * dev, uint16_t vsp);
 
 // Global function
-void lcdInitDevive(TFT_t * dev, int width, int height, int offsetx, int offsety);
+void lcdInitDevice(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
 void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);

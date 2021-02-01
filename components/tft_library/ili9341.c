@@ -13,7 +13,7 @@
 
 void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-    lcdInitDevive(dev, width, height, offsetx, offsety);
+    lcdInitDevice(dev, width, height, offsetx, offsety);
 
 	ESP_LOGI(TAG,"Your TFT is ILI9341");
 	ESP_LOGI(TAG,"Screen width:%d",width);
@@ -65,7 +65,7 @@ void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offset
 }
 #endif
 
-#if CONFIG_ILI9327 ||  CONFIG_ILI9341 || CONFIG_ILI9342 || CONFIG_ILI9481 || CONFIG_ILI9486 || CONFIG_ST7796
+#if CONFIG_ILI9327 ||  CONFIG_ILI9341 || CONFIG_ILI9342 || CONFIG_ILI9481 || CONFIG_ILI9486 || CONFIG_ST7796 || CONFIG_ILI9488
 
 // Draw pixel
 // x:X coordinate

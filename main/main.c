@@ -19,57 +19,118 @@
 
 #if CONFIG_ILI9325
 #include "ili9325.h"
-#endif
-#if CONFIG_ILI9327
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9325"
+#define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9327
 #include "ili9327.h"
-#endif
-#if CONFIG_ILI9341
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9327"
+#define INIT_FUNCTION(a, b, c, d, e) ili9327_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9341
 #include "ili9341.h"
-#endif
-#if CONFIG_ILI9342
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9341"
+#define INIT_FUNCTION(a, b, c, d, e) ili9341_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9342
 #include "ili9342.h"
-#endif
-#if CONFIG_ILI9481
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9342"
+#define INIT_FUNCTION(a, b, c, d, e) ili9342_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9481
 #include "ili9481.h"
-#endif
-#if CONFIG_ILI9486
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9481"
+#define INIT_FUNCTION(a, b, c, d, e) ili9481_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9486
 #include "ili9486.h"
-#endif
-#if CONFIG_SPFD5408
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9486"
+#define INIT_FUNCTION(a, b, c, d, e) ili9486_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9488
+#include "ili9488.h"
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ILI9488"
+#define INIT_FUNCTION(a, b, c, d, e) ili9488_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_SPFD5408
 #include "ili9325.h"
-#endif
-#if CONFIG_R61505
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "SPFD5408"
+#define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_R61505
 #include "ili9325.h"
-#endif
-#if CONFIG_R61509
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "R61505"
+#define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_R61509
 #include "r61509.h"
-#endif
-#if CONFIG_LGDP4532
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "R61509"
+#define INIT_FUNCTION(a, b, c, d, e) r61509_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_LGDP4532
 #include "lgdp4532.h"
-#endif
-#if CONFIG_ST7781
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "LGDP4532"
+#define INIT_FUNCTION(a, b, c, d, e) lgdp4532_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ST7781
 #include "st7781.h"
-#endif
-#if CONFIG_ST7783
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ST7781"
+#define INIT_FUNCTION(a, b, c, d, e) st7781_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ST7783
 #include "st7781.h"
-#endif
-#if CONFIG_ST7796
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ST7783"
+#define INIT_FUNCTION(a, b, c, d, e) st7781_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ST7796
 #include "ili9486.h"
-#endif
-#if CONFIG_S6D1121
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "ST7796"
+#define INIT_FUNCTION(a, b, c, d, e) ili9486_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_S6D1121
 #include "s6d1121.h"
-#endif
-#if CONFIG_HX8347A
+#define INTERFACE INTERFACE_GPIO
+#define DRIVER "S6D1121"
+#define INIT_FUNCTION(a, b, c, d, e) s6d1121_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_HX8347A
 #include "hx8347.h"
-#endif
-#if CONFIG_HX8347D
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "HX8347A"
+#define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_HX8347D
 #include "hx8347.h"
-#endif
-#if CONFIG_HX8347G
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "HX8347D"
+#define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_HX8347G
 #include "hx8347.h"
-#endif
-#if CONFIG_HX8347I
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "HX8347G"
+#define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_HX8347I
 #include "hx8347.h"
+#define INTERFACE INTERFACE_I2S
+#define DRIVER "HX8347I"
+#define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
+
 #endif
 
 #define INTERVAL		400
@@ -983,98 +1044,10 @@ void TFT(void *pvParameters)
 	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
 	
 	TFT_t dev;
-	lcd_interface_cfg(&dev);
+	lcd_interface_cfg(&dev, INTERFACE);
+	//lcd_interface_cfg(&dev, INTERFACE_GPIO);
 
-	char model[32];
-#if CONFIG_ILI9325
-	strcpy(model, "ILI9325");
-	ili9325_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ILI9327
-	strcpy(model, "ILI9327");
-	ili9327_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ILI9341
-	strcpy(model, "ILI9341");
-	ili9341_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ILI9342
-	strcpy(model, "ILI9342");
-	ili9342_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ILI9481
-	strcpy(model, "ILI9481");
-	ili9481_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ILI9486
-	strcpy(model, "ILI9486");
-	ili9486_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_SPFD5408
-	strcpy(model, "SPFD5408");
-	ili9325_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_R61505
-	strcpy(model, "R61505");
-	ili9325_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_R61509
-	strcpy(model, "R61509");
-	r61509_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_LGDP4532
-	strcpy(model, "LGDP4532");
-	lgdp4532_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ST7781
-	strcpy(model, "ST7781");
-	st7781_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ST7783
-	strcpy(model, "ST7783");
-	st7781_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_ST7796
-	strcpy(model, "ST7796");
-	ili9486_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_S6D1121
-	strcpy(model, "S6D1121");
-	s6d1121_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_HX8347A
-	strcpy(model, "HX8347A");
-	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_HX8347D
-	strcpy(model, "HX8347D");
-	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_HX8347G
-	strcpy(model, "HX8347G");
-	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
-
-#if CONFIG_HX8347I
-	strcpy(model, "HX8347I");
-	hx8347_lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
-#endif
+	INIT_FUNCTION(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 
 
 #if CONFIG_INVERSION
@@ -1130,7 +1103,7 @@ void TFT(void *pvParameters)
 		ColorBarTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		ArrowTest(&dev, fx16G, model, CONFIG_WIDTH, CONFIG_HEIGHT);
+		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		LineTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);

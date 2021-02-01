@@ -3,24 +3,20 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#if CONFIG_ILI9486 || CONFIG_ST7796
+#if CONFIG_ILI9488
 
 #include "lcd_com.h"
 #include "lcd_lib.h"
-#include "ili9486.h"
+#include "ili9488.h"
 
-#define TAG "ILI9486"
+#define TAG "ILI9488"
 
 
-void ili9486_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
+void ili9488_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
 	lcdInitDevice(dev, width, height, offsetx, offsety);
 
-#if CONFIG_ILI9486
-	ESP_LOGI(TAG,"Your TFT is ILI9486.Same as ST7796");
-#elif CONFIG_ST7796
-	ESP_LOGI(TAG,"Your TFT is ST7796.Same as ILI9486");
-#endif
+	ESP_LOGI(TAG,"Your TFT is ILI9488");
 	ESP_LOGI(TAG,"Screen width:%d",width);
 	ESP_LOGI(TAG,"Screen height:%d",height);
 
@@ -39,30 +35,24 @@ void ili9486_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offset
 	};
 
 	static const uint8_t regValues[] = {
-		0xB0, 1, 0x00,				// unlocks E0, F0
-		0xB3, 4, 0x02, 0x00, 0x00, 0x00, //Frame Memory, interface [02 00 00 00]
-		0xB4, 1, 0x00,				// Frame mode [00]
-		//0xB6, 3, 0x02, 0x02, 0x3B,  // Display Function Control [02 02 3B]
-		0xB6, 3, 0x02, 0x42, 0x3B,  // Display Function Control [02 02 3B]
-		0xD0, 3, 0x07, 0x42, 0x18,
-		0xD1, 3, 0x00, 0x07, 0x18,
-		0xD2, 2, 0x01, 0x02,
-		0xD3, 2, 0x01, 0x02,		// Set Power for Partial Mode [01 22]
-		0xD4, 2, 0x01, 0x02,		// Set Power for Idle Mode [01 22]
-		//0xC0, 5, 0x10, 0x3B, 0x00, 0x02, 0x11,
-		0xC0, 5, 0x14, 0x3B, 0x00, 0x02, 0x11,
-		0xC1, 3, 0x10, 0x10, 0x88,	// Display Timing Normal [10 10 88]
-		0xC5, 1, 0x03,		//Frame Rate [03]
-		0xC6, 1, 0x02,		//Interface Control [02]
-		0xC8, 12, 0x00, 0x32, 0x36, 0x45, 0x06, 0x16, 0x37, 0x75, 0x77, 0x54, 0x0C, 0x00,
-		0xCC, 1, 0x00,		//Panel Control [00]
-		0x36, 1, 0x18, //0x08,
+		0xC0, 2, 0x10, 0x10,        //Power Control 1 [0E 0E]
+		0xC1, 1, 0x41,      //Power Control 2 [43]
+		0xC5, 4, 0x00, 0x22, 0x80, 0x40,    //VCOM  Control 1 [00 40 00 40]
+		//0x36, 1, 0x68,      //Memory Access [00]
+		0x36, 1, 0x98,      //Memory Access [00]
+		0xB0, 1, 0x00,      //Interface     [00]
+		0xB1, 2, 0xB0, 0x11,        //Frame Rate Control [B0 11]
+		0xB4, 1, 0x02,      //Inversion Control [02]
+		0xB6, 3, 0x02, 0x02, 0x3B,  // Display Function Control [02 02 3B] .kbv NL=480
+		0xB7, 1, 0xC6,      //Entry Mode      [06]
+		0x3A, 1, 0x55,      //Interlace Pixel Format [XX]
+		0xF7, 4, 0xA9, 0x51, 0x2C, 0x82,    //Adjustment Control 3 [A9 51 2C 82]
 	};
 	lcd_write_table(dev, reset_off, sizeof(reset_off));
 	lcd_write_table(dev, regValues, sizeof(regValues));
 	lcd_write_table(dev, wake_on, sizeof(wake_on));
 
-	// ili9486 custom function
+	// ili9488 custom function
 	DrawPixel = ili9341_lcdDrawPixel;
 	DrawMultiPixels = ili9341_lcdDrawMultiPixels;
 	DrawFillRect = ili9341_lcdDrawFillRect;

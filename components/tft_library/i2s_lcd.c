@@ -372,7 +372,8 @@ int i2s_lcd_write_data(i2s_port_t i2s_num, const char *src, size_t size, TickTyp
 // 8bit mode
 #if 1//CONFIG_BIT_MODE_8BIT_EN
 
-int i2s_lcd_write_data(i2s_port_t i2s_num, const char *src, size_t size, TickType_t ticks_to_wait)
+//int i2s_lcd_write_data(i2s_port_t i2s_num, const char *src, size_t size, TickType_t ticks_to_wait)
+int i2s_lcd_write_data(i2s_port_t i2s_num, unsigned char *src, size_t size, TickType_t ticks_to_wait)
 {
     I2S_CHECK((i2s_num < I2S_NUM_MAX), "i2s_num error", ESP_ERR_INVALID_ARG);
     uint8_t tagle = 0x01;
