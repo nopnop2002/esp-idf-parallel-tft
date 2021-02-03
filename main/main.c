@@ -17,118 +17,121 @@
 #include "decode_image.h"
 #include "pngle.h"
 
-#if CONFIG_ILI9325
-#include "ili9325.h"
+#if CONFIG_INTERFACE_I2S
 #define INTERFACE INTERFACE_I2S
+#elif CONFIG_INTERFACE_GPIO
+#define INTERFACE INTERFACE_GPIO
+#elif CONFIG_INTERFACE_REG
+#define INTERFACE INTERFACE_REG
+#endif
+
+#if CONFIG_ILI9225
+#include "ili9225.h"
+#define DRIVER "ILI9225"
+#define INIT_FUNCTION(a, b, c, d, e) ili9225_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9226
+#include "ili9225.h"
+#define DRIVER "ILI9226"
+#define INIT_FUNCTION(a, b, c, d, e) ili9225_lcdInit(a, b, c, d, e)
+
+#elif CONFIG_ILI9325
+#include "ili9325.h"
 #define DRIVER "ILI9325"
 #define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9327
 #include "ili9327.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9327"
 #define INIT_FUNCTION(a, b, c, d, e) ili9327_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9341
 #include "ili9341.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9341"
 #define INIT_FUNCTION(a, b, c, d, e) ili9341_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9342
 #include "ili9342.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9342"
 #define INIT_FUNCTION(a, b, c, d, e) ili9342_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9481
 #include "ili9481.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9481"
 #define INIT_FUNCTION(a, b, c, d, e) ili9481_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9486
 #include "ili9486.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9486"
 #define INIT_FUNCTION(a, b, c, d, e) ili9486_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ILI9488
 #include "ili9488.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ILI9488"
 #define INIT_FUNCTION(a, b, c, d, e) ili9488_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_SPFD5408
 #include "ili9325.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "SPFD5408"
 #define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_R61505
 #include "ili9325.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "R61505"
 #define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_R61509
 #include "r61509.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "R61509"
 #define INIT_FUNCTION(a, b, c, d, e) r61509_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_LGDP4532
 #include "lgdp4532.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "LGDP4532"
 #define INIT_FUNCTION(a, b, c, d, e) lgdp4532_lcdInit(a, b, c, d, e)
 
+#elif CONFIG_ST7775
+#include "ili9225.h"
+#define DRIVER "ST7775"
+#define INIT_FUNCTION(a, b, c, d, e) ili9225_lcdInit(a, b, c, d, e)
+
 #elif CONFIG_ST7781
 #include "st7781.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ST7781"
 #define INIT_FUNCTION(a, b, c, d, e) st7781_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ST7783
 #include "st7781.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ST7783"
 #define INIT_FUNCTION(a, b, c, d, e) st7781_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_ST7796
 #include "ili9486.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "ST7796"
 #define INIT_FUNCTION(a, b, c, d, e) ili9486_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_S6D1121
 #include "s6d1121.h"
-#define INTERFACE INTERFACE_GPIO
-//#define INTERFACE INTERFACE_I2S
 #define DRIVER "S6D1121"
 #define INIT_FUNCTION(a, b, c, d, e) s6d1121_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_HX8347A
 #include "hx8347.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "HX8347A"
 #define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_HX8347D
 #include "hx8347.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "HX8347D"
 #define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_HX8347G
 #include "hx8347.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "HX8347G"
 #define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_HX8347I
 #include "hx8347.h"
-#define INTERFACE INTERFACE_I2S
 #define DRIVER "HX8347I"
 #define INIT_FUNCTION(a, b, c, d, e) hx8347_lcdInit(a, b, c, d, e)
 

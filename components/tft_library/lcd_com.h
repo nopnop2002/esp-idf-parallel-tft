@@ -8,6 +8,8 @@
 
 #define INTERFACE_I2S  1
 #define INTERFACE_GPIO 2
+#define INTERFACE_REG  3
+
 #define GPIO_PORT_NUM  0
 
 typedef struct {
@@ -31,6 +33,7 @@ typedef struct {
 
 void gpio_digital_write(int GPIO_PIN, uint8_t data);
 void gpio_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy2);
+void reg_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy2);
 
 void lcd_write_table(TFT_t * dev, const void *table, int16_t size);
 void lcd_write_table16(TFT_t * dev, const void *table, int16_t size);

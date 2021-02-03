@@ -1,5 +1,6 @@
 set(component_srcs "fontx.c"
 	"i2s_lcd.c"
+	"ili9225.c"
 	"ili9325.c"
 	"ili9327.c"
 	"ili9341.c"

@@ -5,6 +5,15 @@ menu "TFT Configuration"
 		default ILI9341
 		help
 			Select Display Driver.
+		config ILI9225
+			bool "ILI9225"
+			help
+				Display Driver is ILI9225.
+		config ILI9226
+			bool "ILI9226"
+			help
+				Display Driver is ILI9226.
+				Same as ILI9225.
 		config ILI9325
 			bool "ILI9325"
 			help
@@ -52,6 +61,11 @@ menu "TFT Configuration"
 			bool "LGDP4532"
 			help
 				Display Driver is LGDP4532.
+		config ST7775
+			bool "ST7775"
+			help
+				Display Driver is ST7775.
+				Same as ILI9225.
 		config ST7781
 			bool "ST7781"
 			help
@@ -87,6 +101,25 @@ menu "TFT Configuration"
 			bool "HX8347I"
 			help
 				Display Driver is HX8347I.
+	endchoice
+
+	choice INTERFACE
+		prompt "Parallel Interface"
+		default INTERFACE_I2S
+		help
+			Select Parallel Interface.
+		config INTERFACE_I2S
+			bool "I2S Parallel Interface"
+			help
+				Parallel Interface is I2S.
+		config INTERFACE_REG
+			bool "REGISTER Parallel Interface"
+			help
+				Parallel Interface is REGISTER I/O.
+		config INTERFACE_GPIO
+			bool "GPIO Parallel Interface"
+			help
+				Parallel Interface is GPIO.
 	endchoice
 
 	config WIDTH

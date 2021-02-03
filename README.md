@@ -5,6 +5,10 @@ You can use such a TFT-Shield with esp32.
 ![TFT-Shield](https://user-images.githubusercontent.com/6020549/104253960-10a71380-54b9-11eb-8789-a12c2c769ab4.JPG)
 
 # Support driver
+
+## Generic Sheild   
+- ILI9225   
+- ILI9226(Same as ILI9225)   
 - ILI9325   
 - ILI9327   
 - ILI9341   
@@ -16,18 +20,24 @@ You can use such a TFT-Shield with esp32.
 - R61505(Almost the same as ILI9325)   
 - R61509   
 - LGDP4532   
+- ST7775(Same as ILI9225)   
 - ST7781   
 - ST7783(Same as ST7781)   
 - ST7796(Same as ILI9486)   
-- S6D1121(*1)   
 - HX8347A(*2)   
 - HX8347D(*2 Almost the same as HX8347A)   
 - HX8347G(*2 Same as HX8347D)   
 - HX8347I(*2 Same as HX8347D)   
 
+## OPEN-SMART Products   
+- OPEN-SMART S6D1121(*1)   
+- OPEN-SMART ST7775(*1)   
+- OPEN-SMART ST7783(*1)   
+
 (*1)   
 I2S parallel does not work.   
-GPIO parallel works.   
+I don't know why.   
+GPIO parallel or REGISTER I/O parallel works.   
 
 (*2)   
 Very Slow.   
@@ -63,11 +73,20 @@ idf.py flash
 
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
+ __IMPORTANT__   
  The information provided by sellers on Ebay and AliExpress is largely incorrect.   
  You waste time if you don't choose the right driver.   
  There are many [variations](http://domoticx.com/arduino-shield-2-4-tft-lcd-touch/) of the 2.4 inch shield.   
  You can use [this](https://github.com/prenticedavid/MCUFRIEND_kbv/tree/master/examples/LCD_ID_readreg) to find out the driver.   
+ This is for Arduino UNO.   
  Do not use this on the ESP32 as the GPIO on the ESP32 is not 5V tolerant.   
+- CONFIG_INTERFACE   
+ Most drivers work using I2S parallel.   
+ However, some drivers only work using GPIO parallels or REGISTER I/O parallels.   
+ I2S parallel is most fast.   
+ REGISTER I/O parallel is the next fastest.   
+ When using REGISTER I/O parallel, GPIO from D0 to D7 is 0 to 31.   
+ GPIO parallel is most slow.   
 - CONFIG_WIDTH   
 - CONFIG_HEIGHT   
  Specifies the resolution of the TFT.   
@@ -80,9 +99,11 @@ You have to set this config value with menuconfig.
 
 ![config-menu](https://user-images.githubusercontent.com/6020549/104242485-94093a80-54a2-11eb-934b-90eda9fb7bbe.jpg)
 
-![config-app1](https://user-images.githubusercontent.com/6020549/104252600-c2444580-54b5-11eb-9ec8-92f2fcbbbdae.jpg)
+![config-app1](https://user-images.githubusercontent.com/6020549/106704254-27abd200-662f-11eb-8697-743e220c030d.jpg)
 
 ![config-app2](https://user-images.githubusercontent.com/6020549/106686442-9d06ab00-660d-11eb-9a53-912e221278ce.jpg)
+
+![config-app4](https://user-images.githubusercontent.com/6020549/106704258-28dcff00-662f-11eb-8a75-2070c3fe746a.jpg)
 
 # Wireing  
 
@@ -175,51 +196,27 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/104282561-972c1700-54f2-11eb-9b0b-732f17e9d41b.jpg)
 
-# Performance comparison with ILI9488
+# Performance comparison using ILI9488(320x480)
 
-## Using GPIO parallel mode
-```
-I (2351) AddressTest: elapsed time[ms]:1300
-I (7621) AddressTest: elapsed time[ms]:1270
-I (16941) FillTest: elapsed time[ms]:5320
-I (22231) ColorBarTest: elapsed time[ms]:1290
-I (27601) ArrowTest: elapsed time[ms]:1360
-I (34791) LineTest: elapsed time[ms]:3190
-I (41821) CircleTest: elapsed time[ms]:3030
-I (48881) RoundRectTest: elapsed time[ms]:3060
-I (56991) RectAngleTest: elapsed time[ms]:4110
-I (65691) TriangleTest: elapsed time[ms]:4700
-I (71131) DirectionTest: elapsed time[ms]:1440
-I (76881) HorizontalTest: elapsed time[ms]:1750
-I (82631) VerticalTest: elapsed time[ms]:1750
-I (88971) FillRectTest: elapsed time[ms]:2340
-I (95601) ColorTest: elapsed time[ms]:2630
-I (102951) BMPTest: elapsed time[ms]:3350
-I (110821) JPEGTest: elapsed time[ms]:3870
-I (119131) PNGTest: elapsed time[ms]:4310
-```
-
-## Using I2S parallel mode
-```
-I (1201) AddressTest: elapsed time[ms]:70
-I (5271) AddressTest: elapsed time[ms]:70
-I (10951) FillTest: elapsed time[ms]:1680
-I (15061) ColorBarTest: elapsed time[ms]:110
-I (19271) ArrowTest: elapsed time[ms]:210
-I (26921) LineTest: elapsed time[ms]:3650
-I (34231) CircleTest: elapsed time[ms]:3310
-I (41631) RoundRectTest: elapsed time[ms]:3400
-I (57111) RectAngleTest: elapsed time[ms]:11480
-I (74401) TriangleTest: elapsed time[ms]:13290
-I (78741) DirectionTest: elapsed time[ms]:340
-I (83481) HorizontalTest: elapsed time[ms]:740
-I (88211) VerticalTest: elapsed time[ms]:730
-I (92491) FillRectTest: elapsed time[ms]:280
-I (96891) ColorTest: elapsed time[ms]:400
-I (102261) BMPTest: elapsed time[ms]:1370
-I (108891) JPEGTest: elapsed time[ms]:2630
-I (115941) PNGTest: elapsed time[ms]:3050
-```
+|Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|
+|:-:|:-:|:-:|:-:|
+|AddressTest|1300|430|70|
+|FillTest|5320|2810|1680|
+|ColorBarTest|1290|460|110|
+|ArrowTest|1360|460|210|
+|LineTest|3190|1280|3650|
+|CircleTest|3030|1230|3310|
+|RoundRectTest|3060|1220|3400|
+|RectAngleTest|4110|1890|11480|
+|TriangleTest|4700|2110|13290|
+|DirectionTest|1440|530|340|
+|HorizontalTest|1750|640|740|
+|VerticalTest|1750|640|730|
+|FillRectTest|2340|890|280|
+|ColorTest|2630|970|400|
+|BMPTest|3350|2190|1370|
+|JPEGTest|3870|2990|2630|
+|PNGTest|4310|3450|3050|
 
 # Reference about I2S parallel mode
 https://github.com/espressif/esp-iot-solution/issues/19

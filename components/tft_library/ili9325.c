@@ -182,10 +182,12 @@ void ili9325_lcdDisplayOn(TFT_t * dev) {
 
 // Display Inversion OFF
 void ili9325_lcdInversionOff(TFT_t * dev) {
+	lcd_write_register_word(dev, 0x0061, 0x0001);
 }
 
 // Display Inversion ON
 void ili9325_lcdInversionOn(TFT_t * dev) {
+	lcd_write_register_word(dev, 0x0061, 0x0000);
 }
 
 // Enable Vertical Scrolling
