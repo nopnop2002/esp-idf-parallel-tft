@@ -25,9 +25,9 @@ You can use such a TFT-Shield with esp32.
 - ST7783(Same as ST7781)   
 - ST7796(Same as ILI9486)   
 - HX8347A(*2)   
-- HX8347D(*2 Almost the same as HX8347A)   
-- HX8347G(*2 Same as HX8347D)   
-- HX8347I(*2 Same as HX8347D)   
+- HX8347D(Almost the same as HX8347A)(*2)   
+- HX8347G(Same as HX8347D)(*2)   
+- HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
 - OPEN-SMART S6D1121(*1)   
