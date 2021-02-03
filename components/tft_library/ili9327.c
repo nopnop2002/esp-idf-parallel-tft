@@ -14,13 +14,7 @@
 
 void ili9327_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-	dev->_width = width;
-	dev->_height = height;
-	dev->_offsetx = offsetx;
-	dev->_offsety = offsety;
-	dev->_font_direction = DIRECTION0;
-	dev->_font_fill = false;
-	dev->_font_underline = false;
+	lcdInitDevice(dev, width, height, offsetx, offsety);
 
 	ESP_LOGI(TAG,"Your TFT is ILI9327");
 	ESP_LOGI(TAG,"Screen width:%d",width);

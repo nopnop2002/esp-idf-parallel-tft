@@ -13,7 +13,7 @@
 
 void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
-    lcdInitDevice(dev, width, height, offsetx, offsety);
+	lcdInitDevice(dev, width, height, offsetx, offsety);
 
 	ESP_LOGI(TAG,"Your TFT is ILI9341");
 	ESP_LOGI(TAG,"Screen width:%d",width);
@@ -21,16 +21,16 @@ void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offset
 
 	// Initailize TFT
 	static const uint8_t reset_off[] = {
-		0x01, 0,            //Soft Reset
+		0x01, 0,			//Soft Reset
 		TFTLCD_DELAY8, 150,
-		0x28, 0,            //Display Off
-		0x3A, 1, 0x55,      //Pixel read=565, write=565.
+		0x28, 0,			//Display Off
+		0x3A, 1, 0x55,		//Pixel read=565, write=565.
 	};
 
 	static const uint8_t wake_on[] = {
-		0x11, 0,            //Sleep Out
+		0x11, 0,			//Sleep Out
 		TFTLCD_DELAY8, 150,
-		0x29, 0,            //Display On
+		0x29, 0,			//Display On
 	};
 
 	static const uint8_t regValues[] = {

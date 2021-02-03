@@ -104,6 +104,7 @@
 #elif CONFIG_S6D1121
 #include "s6d1121.h"
 #define INTERFACE INTERFACE_GPIO
+//#define INTERFACE INTERFACE_I2S
 #define DRIVER "S6D1121"
 #define INIT_FUNCTION(a, b, c, d, e) s6d1121_lcdInit(a, b, c, d, e)
 

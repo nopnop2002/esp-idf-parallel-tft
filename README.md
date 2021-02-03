@@ -19,12 +19,17 @@ You can use such a TFT-Shield with esp32.
 - ST7781   
 - ST7783(Same as ST7781)   
 - ST7796(Same as ILI9486)   
-- HX8347A(*1)   
-- HX8347D(*1 Almost the same as HX8347A)   
-- HX8347G(*1 Same as HX8347D)   
-- HX8347I(*1 Same as HX8347D)   
+- S6D1121(*1)   
+- HX8347A(*2)   
+- HX8347D(*2 Almost the same as HX8347A)   
+- HX8347G(*2 Same as HX8347D)   
+- HX8347I(*2 Same as HX8347D)   
 
-(*1)
+(*1)   
+I2S parallel does not work.   
+GPIO parallel works.   
+
+(*2)   
 Very Slow.   
 Most drivers require three commands to display one Pixel.   
 This driver require 9 commands to display one Pixel.   
@@ -83,19 +88,19 @@ You have to set this config value with menuconfig.
 
 |TFT||ESP32|
 |:-:|:-:|:-:|
-|LDC_RST|--|GPIO15(*1)|
-|LDC_CS|--|GPIO14(*1)|
-|LDC_RS|--|GPIO4(*1)|
-|LDC_WR|--|GPIO13(*1)|
+|LDC_RST|--|GPIO32(*1)|
+|LDC_CS|--|GPIO33(*1)|
+|LDC_RS|--|GPIO15(*1)|
+|LDC_WR|--|GPIO4(*1)|
 |LDC_RD|--|GPIO2(*1)|
-|LDC_D0|--|GPIO19(*1)|
-|LDC_D1|--|GPIO21(*1)|
-|LDC_D2|--|GPIO25(*1)|
-|LDC_D3|--|GPIO22(*1)|
-|LDC_D4|--|GPIO23(*1)|
-|LDC_D5|--|GPIO33(*1)|
-|LDC_D6|--|GPIO32(*1)|
-|LDC_D7|--|GPIO27(*1)|
+|LDC_D0|--|GPIO12(*1)|
+|LDC_D1|--|GPIO13(*1)|
+|LDC_D2|--|GPIO26(*1)|
+|LDC_D3|--|GPIO25(*1)|
+|LDC_D4|--|GPIO17(*1)|
+|LDC_D5|--|GPIO16(*1)|
+|LDC_D6|--|GPIO27(*1)|
+|LDC_D7|--|GPIO14(*1)|
 |5V|--|5V(*2)|
 |3.3V|--|3.3V(*2)|
 |GND|--|GND|
