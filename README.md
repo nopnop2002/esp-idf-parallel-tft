@@ -108,7 +108,7 @@ You have to set this config value with menuconfig.
 (*1)   
 You can change any GPIO using menuconfig.   
 
-![config-app3](https://user-images.githubusercontent.com/6020549/104252602-c3757280-54b5-11eb-9a0f-fed0f9825ca0.jpg)
+![config-app3](https://user-images.githubusercontent.com/6020549/106685441-be669780-660b-11eb-8e8e-790348e65921.jpg)
 
 (*2)   
 When a regulator(It's often AMS1117) is mounted on the back, it's operated 5V.   
