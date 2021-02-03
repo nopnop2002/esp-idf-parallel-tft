@@ -82,7 +82,7 @@ You have to set this config value with menuconfig.
 
 ![config-app1](https://user-images.githubusercontent.com/6020549/104252600-c2444580-54b5-11eb-9ec8-92f2fcbbbdae.jpg)
 
-![config-app2](https://user-images.githubusercontent.com/6020549/104242561-b1d69f80-54a2-11eb-9113-9c0ebf7fa268.jpg)
+![config-app2](https://user-images.githubusercontent.com/6020549/106686442-9d06ab00-660d-11eb-9a53-912e221278ce.jpg)
 
 # Wireing  
 
