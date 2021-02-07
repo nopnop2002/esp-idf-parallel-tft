@@ -220,4 +220,6 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 |PNGTest|4310|3450|3050|
 
 # Reference about I2S parallel mode
-https://github.com/espressif/esp-iot-solution/issues/19
+https://github.com/espressif/esp-iot-solution/tree/master/components/i2s_devices/lcd_common   
+
+https://github.com/espressif/esp-iot-solution/issues/19   
