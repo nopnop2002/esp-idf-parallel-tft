@@ -77,7 +77,7 @@ You have to set this config value with menuconfig.
  The information provided by sellers on Ebay or AliExpress is largely incorrect.   
  You waste time if you don't choose the right driver.   
  There are many [variations](http://domoticx.com/arduino-shield-2-4-tft-lcd-touch/) of the 2.4 inch shield.   
- You can use [this](https://github.com/prenticedavid/MCUFRIEND_kbv/tree/master/examples/LCD_ID_readreg) to find out the driver.   
+ You can use [this](https://github.com/prenticedavid/MCUFRIEND_kbv/tree/master/examples/LCD_ID_readreg) to find out your driver.   
  This is for Arduino UNO.   
  Do not use this on the ESP32 as the GPIO on the ESP32 is not 5V tolerant.   
  __Never believe the seller's information.__   
