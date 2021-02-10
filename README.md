@@ -73,7 +73,7 @@ idf.py flash
 
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
- ![](https://img.shields.io/badge/_IMPOTANT-important)  
+ ![](https://img.shields.io/badge/_IMPORTANT-important)  
  The information provided by sellers on Ebay or AliExpress is largely incorrect.   
  You waste time if you don't choose the right driver.   
  There are many [variations](http://domoticx.com/arduino-shield-2-4-tft-lcd-touch/) of the 2.4 inch shield.   
