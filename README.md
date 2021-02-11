@@ -188,6 +188,7 @@ I changed some pin assignments. It worked correctly.
 
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
+TFT shield pin assignment.   
 ![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107591041-1a08d480-6c4d-11eb-8ea3-afb235506bb3.jpg)
 
 # Font File   
