@@ -178,7 +178,7 @@ PNG file
 ![Image3](https://user-images.githubusercontent.com/6020549/104248110-3b3e9f80-54ac-11eb-9487-a0379f40fd35.JPG)
 
 # Using Wemos D1 ESP32   
-I bought this for $4   
+I bought this for $4.   
 ![WeMos-R32-11](https://user-images.githubusercontent.com/6020549/107591015-09585e80-6c4d-11eb-9198-d882408d0d4a.JPG)
 
 I changed some pin assignments. It worked correctly.   
