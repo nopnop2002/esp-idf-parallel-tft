@@ -30,9 +30,10 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
-- OPEN-SMART S6D1121(*1)   
-- OPEN-SMART ST7775(*1)   
-- OPEN-SMART ST7783(*1)   
+- OPEN-SMART ILI9327 TFT-Shield(*3)   
+- OPEN-SMART S6D1121 16Pin-Parallel(*1)   
+- OPEN-SMART ST7775 16Pin-Parallel(*1)   
+- OPEN-SMART ST7783 16Pin-Parallel(*1)   
 
 (*1)   
 I2S parallel does not work.   
@@ -44,6 +45,11 @@ Very Slow.
 Most drivers require three commands to display one Pixel.   
 This driver require 9 commands to display one Pixel.   
 For some reason, the color of 0xFFFF does not appear.   
+
+(*3)   
+It has a GRAM offset.   
+See below.   
+
 
 These are all 2.4 inch, 320x240 TFTs.
 ![TFT-SHIELD-2](https://user-images.githubusercontent.com/6020549/104244320-873a1600-54a5-11eb-93c0-9fad671fdfed.JPG)
@@ -93,7 +99,8 @@ You have to set this config value with menuconfig.
  Specifies the resolution of the TFT.   
 - CONFIG_OFFSETX   
 - CONFIG_OFFSETY   
- You can specify the GRAM offset, but I've never seen a TFT with an offset.   
+ You can specify the GRAM offset.   
+ You must specify Y offset = 32 for OPEN-SMART-ILI9327.   
 - CONFIG_INVERSION   
  For some TFTs, the BGR may be inverted.   
  Specify if the colors are inverted.
@@ -193,8 +200,9 @@ It's very smart.
 
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
-TFT shield pin assignment.   
-![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107591041-1a08d480-6c4d-11eb-8ea3-afb235506bb3.jpg)
+![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107723948-ff565e80-6d25-11eb-89cc-74fcd2fa11f3.jpg)
+
+![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107723878-ce762980-6d25-11eb-84d9-8b3b082773e8.jpg)
 
 # Font File   
 You can add your original font file.   
