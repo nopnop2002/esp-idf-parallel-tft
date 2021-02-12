@@ -186,6 +186,9 @@ Attached the TFT shield.
 The TFT shield worked correctly.   
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
+It's very smart.   
+![WeMos-R32-13](https://user-images.githubusercontent.com/6020549/107716436-bcd85600-6d14-11eb-9f5e-407e413e243e.JPG)
+
 ![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/107591029-0eb5a900-6c4d-11eb-9599-00f1d011499f.jpg)
 
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
