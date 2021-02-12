@@ -181,7 +181,9 @@ PNG file
 I bought this for $4.   
 ![WeMos-R32-11](https://user-images.githubusercontent.com/6020549/107591015-09585e80-6c4d-11eb-9198-d882408d0d4a.JPG)
 
-I changed some pin assignments. It worked correctly.   
+I have changed some pin assignments.   
+Attached the TFT shield.   
+The TFT shield worked correctly.   
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
 ![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/107591029-0eb5a900-6c4d-11eb-9599-00f1d011499f.jpg)
