@@ -10,7 +10,6 @@ You can use such a TFT-Shield with esp32.
 - ILI9225   
 - ILI9226(Same as ILI9225)   
 - ILI9325   
-- ILI9327   
 - ILI9341   
 - ILI9342   
 - ILI9481   
@@ -31,9 +30,10 @@ You can use such a TFT-Shield with esp32.
 
 ## OPEN-SMART Products   
 - OPEN-SMART ILI9327 TFT-Shield(*3)   
+- OPEN-SMART ILI9340 TFT-Shield   
 - OPEN-SMART S6D1121 16Pin-Parallel(*1)   
-- OPEN-SMART ST7775 16Pin-Parallel(*1)   
-- OPEN-SMART ST7783 16Pin-Parallel(*1)   
+- OPEN-SMART ST7775  16Pin-Parallel(*1)   
+- OPEN-SMART ST7783  16Pin-Parallel(*1)   
 
 (*1)   
 I2S parallel does not work.   
@@ -155,7 +155,7 @@ It is more stable when supplied from an external power source.
 
 ![All](https://user-images.githubusercontent.com/6020549/104249117-1e0ad080-54ae-11eb-8c25-46a2d8fa5fed.JPG)
 
-![Circuit](https://user-images.githubusercontent.com/6020549/104282887-0efa4180-54f3-11eb-8768-27a48ec38129.jpg)
+![Circuit](https://user-images.githubusercontent.com/6020549/107826655-9542c580-6dc8-11eb-843a-96611f8642d7.jpg)
 
 # Graphic support
 ![Graphic1](https://user-images.githubusercontent.com/6020549/104248260-848eef00-54ac-11eb-9ab8-4b74a2a7713f.JPG)

@@ -9,13 +9,17 @@
 
 #define TAG "ILI9341"
 
-#if CONFIG_ILI9341
+#if CONFIG_ILI9340 || CONFIG_ILI9341
 
 void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
 	lcdInitDevice(dev, width, height, offsetx, offsety);
 
+#if CONFIG_ILI9340
+	ESP_LOGI(TAG,"Your TFT is ILI9340");
+#elif CONFIG_ILI9341
 	ESP_LOGI(TAG,"Your TFT is ILI9341");
+#endif
 	ESP_LOGI(TAG,"Screen width:%d",width);
 	ESP_LOGI(TAG,"Screen height:%d",height);
 
@@ -65,7 +69,7 @@ void ili9341_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offset
 }
 #endif
 
-#if CONFIG_ILI9327 ||  CONFIG_ILI9341 || CONFIG_ILI9342 || CONFIG_ILI9481 || CONFIG_ILI9486 || CONFIG_ST7796 || CONFIG_ILI9488
+#if CONFIG_ILI9327 || CONFIG_ILI9340 || CONFIG_ILI9341 || CONFIG_ILI9342 || CONFIG_ILI9481 || CONFIG_ILI9486 || CONFIG_ST7796 || CONFIG_ILI9488
 
 // Draw pixel
 // x:X coordinate

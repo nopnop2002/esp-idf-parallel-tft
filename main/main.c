@@ -45,6 +45,11 @@
 #define DRIVER "ILI9327"
 #define INIT_FUNCTION(a, b, c, d, e) ili9327_lcdInit(a, b, c, d, e)
 
+#elif CONFIG_ILI9340
+#include "ili9341.h"
+#define DRIVER "ILI9340"
+#define INIT_FUNCTION(a, b, c, d, e) ili9341_lcdInit(a, b, c, d, e)
+
 #elif CONFIG_ILI9341
 #include "ili9341.h"
 #define DRIVER "ILI9341"

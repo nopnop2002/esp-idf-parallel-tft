@@ -1,0 +1,40 @@
+Read Registers on MCUFRIEND UNO shield
+controllers either read as single 16-bit
+e.g. the ID is at readReg(0)
+or as a sequence of 8-bit values
+in special locations (first is dummy)
+
+reg(0x0000) 00 00	ID: ILI9320, ILI9325, ILI9335, ...
+reg(0x0004) 00 54 00 00	Manufacturer ID
+reg(0x0009) 00 00 61 00 00	Status Register
+reg(0x000A) 00 08	Get Powsr Mode
+reg(0x000C) 00 06	Get Pixel Format
+reg(0x0061) 06 06	RDID1 HX8347-G
+reg(0x0062) 06 06	RDID2 HX8347-G
+reg(0x0063) 06 06	RDID3 HX8347-G
+reg(0x0064) 06 06	RDID1 HX8347-A
+reg(0x0065) 06 06	RDID2 HX8347-A
+reg(0x0066) 06 06	RDID3 HX8347-A
+reg(0x0067) 06 06	RDID Himax HX8347-A
+reg(0x0070) 06 06	Panel Himax HX8347-A
+reg(0x00A1) 00 00 FF 00 00	RD_DDB SSD1963
+reg(0x00B0) 00 00	RGB Interface Signal Control
+reg(0x00B4) 00 00	Inversion Control
+reg(0x00B6) 00 00 00 00 00	Display Control
+reg(0x00B7) 00 00	Entry Mode Set
+reg(0x00BF) 00 00 00 00 00 00	ILI9481, HX8357-B
+reg(0x00C0) 00 00 35 00 00 01 02 02 02	Panel Control
+reg(0x00C8) 02 44 44 44 44 08 10 44 44 44 44 08 10	GAMMA
+reg(0x00CC) 10 10	Panel Control
+reg(0x00D0) 10 07 04	Power Control
+reg(0x00D2) 04 01 44 44 44	NVM Read
+reg(0x00D3) 44 01 44 44	ILI9341, ILI9488
+reg(0x00DA) 00 54	RDID1
+reg(0x00DB) 00 00	RDID2
+reg(0x00DC) 00 00	RDID3
+reg(0x00E0) 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00	GAMMA-P
+reg(0x00E1) 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00	GAMMA-N
+reg(0x00EF) 00 02 04 93 27 FF	ILI9327
+reg(0x00F2) FF FF FF FF FF FF FF FF FF FF FF FF	Adjust Control 2
+reg(0x00F6) FF FF FF FF	Interface Control
+
