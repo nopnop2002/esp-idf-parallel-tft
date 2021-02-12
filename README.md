@@ -202,7 +202,7 @@ It's very smart.
 
 ![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107723948-ff565e80-6d25-11eb-89cc-74fcd2fa11f3.jpg)
 
-![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107723878-ce762980-6d25-11eb-84d9-8b3b082773e8.jpg)
+![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107725257-2e220400-6d29-11eb-808a-a440336780d6.jpg)
 
 # Font File   
 You can add your original font file.   
