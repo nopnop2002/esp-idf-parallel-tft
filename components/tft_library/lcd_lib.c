@@ -58,12 +58,12 @@ void lcdInversionOff(TFT_t * dev) {
 
 // Display Inversion ON
 void lcdInversionOn(TFT_t * dev) {
-	(InversionOn)(dev);
+	(*InversionOn)(dev);
 }
 
 // Enable Vertical Scrolling
 bool lcdEnableScroll(TFT_t * dev){
-	return (EnableScroll)(dev);
+	return (*EnableScroll)(dev);
 }
 
 // Vertical Scrolling Definition
@@ -71,17 +71,17 @@ bool lcdEnableScroll(TFT_t * dev){
 // vsa:Vertical Scrolling Area
 // bfa:Bottom Fixed Area
 void lcdSetScrollArea(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t bfa){
-	(SetScrollArea)(dev, tfa, vsa, bfa);
+	(*SetScrollArea)(dev, tfa, vsa, bfa);
 }
 
 void lcdResetScrollArea(TFT_t * dev, uint16_t vsa){
-	(ResetScrollArea)(dev, vsa);
+	(*ResetScrollArea)(dev, vsa);
 }
 
 // Vertical Scrolling Start Address
 // vsp:Vertical Scrolling Start Address
 void lcdStartScroll(TFT_t * dev, uint16_t vsp){
-	(StartScroll)(dev, vsp);
+	(*StartScroll)(dev, vsp);
 }
 
 // Initialize devive
