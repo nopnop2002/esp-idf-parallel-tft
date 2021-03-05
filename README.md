@@ -29,11 +29,14 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
+- OPEN-SMART ILI9225 TFT-Shield   
 - OPEN-SMART ILI9327 TFT-Shield(*3)   
 - OPEN-SMART ILI9340 TFT-Shield   
 - OPEN-SMART S6D1121 16Pin-Parallel(*1)   
 - OPEN-SMART ST7775  16Pin-Parallel(*1)   
 - OPEN-SMART ST7783  16Pin-Parallel(*1)   
+- OPEN-SMART R61509V 16Pin-Parallel(*1)   
+- OPEN-SMART ILI9488 16Pin-Parallel(*1))(*4)   
 
 (*1)   
 I2S parallel does not work.   
@@ -50,12 +53,17 @@ For some reason, the color of 0xFFFF does not appear.
 It has a GRAM offset.   
 See below.   
 
+(*4)   
+Need RGB inverstion.   
 
 These are all 2.4 inch, 320x240 TFTs.
 ![TFT-SHIELD-2](https://user-images.githubusercontent.com/6020549/104244320-873a1600-54a5-11eb-93c0-9fad671fdfed.JPG)
 
 3.95 inches is almost twice as large as 2.4 inches.
 ![TFT-SHIELD-3](https://user-images.githubusercontent.com/6020549/104244328-8903d980-54a5-11eb-8c9a-d26408e04f92.JPG)
+
+These ara OPEN-SMART 16Pin-Parallel Products.
+![OPEN-SMART-16Pin](https://user-images.githubusercontent.com/6020549/110071604-ad9e7280-7dbf-11eb-8e09-a9ebfacfd795.JPG)
 
 # Installation for ESP32
 
