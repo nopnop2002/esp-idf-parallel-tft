@@ -23,6 +23,7 @@ You can use such a TFT-Shield with esp32.
 - ST7775(Same as ILI9225)   
 - ST7781   
 - ST7783(Same as ST7781)   
+- ST7793(Same as R61509)   
 - ST7796(Same as ILI9486)   
 - HX8347A(*2)   
 - HX8347D(Almost the same as HX8347A)(*2)   

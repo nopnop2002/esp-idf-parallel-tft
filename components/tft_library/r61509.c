@@ -11,13 +11,17 @@
 
 #define TAG "R61509"
 
-#if CONFIG_R61509
+#if CONFIG_R61509 || CONFIG_ST7793
 
 void r61509_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 {
 	lcdInitDevice(dev, width, height, offsetx, offsety);
 
+#if CONFIG_R61509
 	ESP_LOGI(TAG,"Your TFT is R61509");
+#elif CONFIG_ST7793
+	ESP_LOGI(TAG,"Your TFT is ST7793");
+#endif
 	ESP_LOGI(TAG,"Screen width:%d",width);
 	ESP_LOGI(TAG,"Screen height:%d",height);
 

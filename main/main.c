@@ -115,6 +115,11 @@
 #define DRIVER "ST7783"
 #define INIT_FUNCTION(a, b, c, d, e) st7781_lcdInit(a, b, c, d, e)
 
+#elif CONFIG_ST7793
+#include "r61509.h"
+#define DRIVER "ST7793"
+#define INIT_FUNCTION(a, b, c, d, e) r61509_lcdInit(a, b, c, d, e)
+
 #elif CONFIG_ST7796
 #include "ili9486.h"
 #define DRIVER "ST7796"

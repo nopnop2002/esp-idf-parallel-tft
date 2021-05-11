@@ -56,12 +56,12 @@ menu "TFT Configuration"
 			bool "SPFD5408"
 			help
 				Display Driver is SPFD5408.
-				Almost the same as ILI9325.
+				Same as ILI9320.
 		config R61505
 			bool "R61505"
 			help
 				Display Driver is R61505.
-				Almost the same as ILI9325.
+				Same as ILI9320.
 		config R61509
 			bool "R61509"
 			help
@@ -85,6 +85,11 @@ menu "TFT Configuration"
 			help
 				Display Driver is ST7783.
 				Same as ST7781.
+		config ST7793
+			bool "ST7793"
+			help
+				Display Driver is ST7793.
+				Same as R61509.
 		config ST7796
 			bool "ST7796"
 			help
