@@ -3,6 +3,7 @@
 
 #define I2S_PORT_NUM (0)
 
+#define TFTLCD_DELAY	0xFFFF
 #define TFTLCD_DELAY16	0xFFFF
 #define TFTLCD_DELAY8	0x7F
 
