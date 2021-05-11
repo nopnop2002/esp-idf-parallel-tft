@@ -35,6 +35,11 @@
 #define DRIVER "ILI9226"
 #define INIT_FUNCTION(a, b, c, d, e) ili9225_lcdInit(a, b, c, d, e)
 
+#elif CONFIG_ILI9320
+#include "ili9320.h"
+#define DRIVER "ILI9320"
+#define INIT_FUNCTION(a, b, c, d, e) ili9320_lcdInit(a, b, c, d, e)
+
 #elif CONFIG_ILI9325
 #include "ili9325.h"
 #define DRIVER "ILI9325"
@@ -76,14 +81,14 @@
 #define INIT_FUNCTION(a, b, c, d, e) ili9488_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_SPFD5408
-#include "ili9325.h"
+#include "ili9320.h"
 #define DRIVER "SPFD5408"
-#define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
+#define INIT_FUNCTION(a, b, c, d, e) ili9320_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_R61505
-#include "ili9325.h"
+#include "ili9320.h"
 #define DRIVER "R61505"
-#define INIT_FUNCTION(a, b, c, d, e) ili9325_lcdInit(a, b, c, d, e)
+#define INIT_FUNCTION(a, b, c, d, e) ili9320_lcdInit(a, b, c, d, e)
 
 #elif CONFIG_R61509
 #include "r61509.h"

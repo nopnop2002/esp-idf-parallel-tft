@@ -9,14 +9,15 @@ You can use such a TFT-Shield with esp32.
 ## Generic Sheild   
 - ILI9225   
 - ILI9226(Same as ILI9225)   
+- ILI9320   
 - ILI9325   
 - ILI9341   
 - ILI9342   
 - ILI9481   
 - ILI9486   
 - ILI9488   
-- SPFD5408(Almost the same as ILI9325)   
-- R61505(Almost the same as ILI9325)   
+- SPFD5408(Same as ILI9320)   
+- R61505(Same as ILI9320)   
 - R61509   
 - LGDP4532   
 - ST7775(Same as ILI9225)   
