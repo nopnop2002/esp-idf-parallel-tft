@@ -214,6 +214,19 @@ It's very smart.
 
 ![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107725257-2e220400-6d29-11eb-808a-a440336780d6.jpg)
 
+# JPEG Decoder   
+The ESP-IDF component includes Tiny JPEG Decompressor.   
+The document of Tiny JPEG Decompressor is [here](http://elm-chan.org/fsw/tjpgd/00index.html).   
+This can reduce the image to 1/2 1/4 1/8.   
+
+# PNG Decoder   
+The ESP-IDF component includes part of the miniz library, such as mz_crc32.   
+But it doesn't support all of the miniz.   
+The document of miniz library is [here](https://github.com/richgel999/miniz).   
+
+And I ported the pngle library from [here](https://github.com/kikuchan/pngle).   
+This can reduce the image to any size.   
+
 # Font File   
 You can add your original font file.   
 The format of the font file is the FONTX format.   
