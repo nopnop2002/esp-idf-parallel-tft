@@ -86,6 +86,9 @@ idf.py set-target esp32s2
 idf.py menuconfig
 idf.py flash
 ```
+ESP32S2 Limitation   
+- tjpgd library does not exist in ESP32-S2 ROM.   
+- Works only with GPIO parallel or REGISTER I / O parallel.   
 
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
@@ -100,7 +103,6 @@ You have to set this config value with menuconfig.
 - CONFIG_INTERFACE   
  Most drivers work using I2S parallel.   
  However, some drivers only work using GPIO parallels or REGISTER I/O parallels.   
- __And ESP32S2/S3 only work using GPIO parallels or REGISTER I/O parallels.__   
  I2S parallel is the fastest when drawing to consecutive addresses.   
  However, REGISTER I/O parallel is the fastest when drawing to non-contiguous addresses.   
  When using REGISTER I/O parallel, GPIO from D0 to D7 is 1 to 31.(GPIO0 is boot mode pin)   
