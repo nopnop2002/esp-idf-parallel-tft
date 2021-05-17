@@ -133,16 +133,16 @@ You have to set this config value with menuconfig.
 |LDC_RS|--|GPIO15|GPIO41|*1|
 |LDC_WR|--|GPIO4|GPIO40|*1|
 |LDC_RD|--|GPIO2|GPIO39|*1|
-|LDC_D0|--|GPIO12|GPIO1|*1|
-|LDC_D1|--|GPIO13|GPIO2|*1|
-|LDC_D2|--|GPIO26|GPIO3|*1|
-|LDC_D3|--|GPIO25|GPIO4|*1|
-|LDC_D4|--|GPIO17|GPIO5|*1|
-|LDC_D5|--|GPIO16|GPIO6|*1|
-|LDC_D6|--|GPIO27|GPIO7|*1|
-|LDC_D7|--|GPIO14|GPIO8|*1|
-|5V|--|5V|5V|*2|
-|3.3V|--|3.3V|3.3V|*2|
+|LDC_D0|--|GPIO12|GPIO1|*1 *2|
+|LDC_D1|--|GPIO13|GPIO2|*1 *2|
+|LDC_D2|--|GPIO26|GPIO3|*1 *2|
+|LDC_D3|--|GPIO25|GPIO4|*1 *2|
+|LDC_D4|--|GPIO17|GPIO5|*1 *2|
+|LDC_D5|--|GPIO16|GPIO6|*1 *2|
+|LDC_D6|--|GPIO27|GPIO7|*1 *2|
+|LDC_D7|--|GPIO14|GPIO8|*1 *2|
+|5V|--|5V|5V|*3|
+|3.3V|--|3.3V|3.3V|*3|
 |GND|--|GND|GND||
 
 (*1)   
@@ -150,7 +150,10 @@ You can change any GPIO using menuconfig.
 
 ![config-app3](https://user-images.githubusercontent.com/6020549/106685441-be669780-660b-11eb-8e8e-790348e65921.jpg)
 
-(*2)   
+(*2)
+When using REGISTER I/O parallel, GPIO from D0 to D7 is 1 to 31.(GPIO0 is boot mode pin)   
+
+(*3)   
 When a regulator(It's often AMS1117) is mounted on the back, it's operated 5V.   
 When a regulator is NOT mounted on the back, it's operated 3.3V.   
 
