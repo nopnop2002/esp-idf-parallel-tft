@@ -90,7 +90,7 @@ idf.py flash
 # ESP32S2 Limitation   
 - tjpgd library does not exist in ESP32-S2 ROM.   
 - Works only with GPIO parallel or REGISTER I/O parallel.   
-- Image function is not supported because the ROM is small.   
+- JPEG and PNG function is not supported because the ROM is small.   
 
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
@@ -194,12 +194,12 @@ It's possible to text rotation and invert.
 It's possible to indicate more than one font at the same time.   
 ![Font5](https://user-images.githubusercontent.com/6020549/104248209-6923e400-54ac-11eb-8812-a438ca1be724.JPG)
 
-# Image support(ESP32 only)
+# Image support
 BMP file   
 ![Image1](https://user-images.githubusercontent.com/6020549/104248104-3974dc00-54ac-11eb-9b97-56a062f13e5b.JPG)
-JPEG file   
+JPEG file(ESP32 only)   
 ![Image2](https://user-images.githubusercontent.com/6020549/104248108-3aa60900-54ac-11eb-8545-3c8971a344a9.JPG)
-PNG file    
+PNG file(ESP32 only)    
 ![Image3](https://user-images.githubusercontent.com/6020549/104248110-3b3e9f80-54ac-11eb-9487-a0379f40fd35.JPG)
 
 # Using Wemos D1 ESP32   
