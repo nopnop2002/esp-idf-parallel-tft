@@ -127,7 +127,7 @@ You have to set this config value with menuconfig.
 # Wireing  
 
 |TFT||ESP32|ESP32S2/S3||
-|:-:|:-:|:-:|:-:|:-:|
+| -
 |LDC_RST|--|GPIO32|GPIO45|*1|
 |LDC_CS|--|GPIO33|GPIO42|*1|
 |LDC_RS|--|GPIO15|GPIO41|*1|
