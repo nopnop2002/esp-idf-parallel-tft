@@ -1095,9 +1095,16 @@ void TFT(void *pvParameters)
 		strcpy(file, "/spiffs/esp32.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+#ifdef CONFIG_IDF_TARGET_ESP32
+		strcpy(file, "/spiffs/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 	}
 #endif
 

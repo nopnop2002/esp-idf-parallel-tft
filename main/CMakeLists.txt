@@ -1,6 +1,7 @@
 set(srcs "main.c")
 
-# Only ESP32 has enough memory to do jpeg & png decoding
+# tjpgd library does not exist in ESP32-S2 ROM.
+# Only ESP32 has enough memory to do image decoding
 if(IDF_TARGET STREQUAL "esp32")
     list(APPEND srcs "decode_image.c" "pngle.c")
 endif()
