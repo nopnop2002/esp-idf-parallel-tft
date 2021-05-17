@@ -126,6 +126,11 @@ You have to set this config value with menuconfig.
 
 # Wireing  
 
+| One    | Two | Three | Four    | Five  | Six
+|-|-|-|-|-|-
+| Span <td colspan=3>triple  <td colspan=2>double
+
+
 |TFT||ESP32|ESP32S2/S3|
 |-|-|-|-|-
 |LDC_RST|--|GPIO32|GPIO45|*1
