@@ -119,7 +119,8 @@ menu "TFT Configuration"
 
 	choice INTERFACE
 		prompt "Parallel Interface"
-		default INTERFACE_I2S
+		default INTERFACE_I2S if IDF_TARGET_ESP32
+		default INTERFACE_REG if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			Select Parallel Interface.
 		config INTERFACE_I2S
@@ -179,7 +180,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D0 GPIO number"
 		range 0 46
-		default 12
+		default 12 if IDF_TARGET_ESP32
+		default 1 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D0.
 
@@ -187,7 +189,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D1 GPIO number"
 		range 0 46
-		default 13
+		default 13 if IDF_TARGET_ESP32
+		default 2 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D1.
 
@@ -195,7 +198,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D2 GPIO number"
 		range 0 46
-		default 26
+		default 26 if IDF_TARGET_ESP32
+		default 3 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D2.
 
@@ -203,7 +207,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D3 GPIO number"
 		range 0 46
-		default 25
+		default 25 if IDF_TARGET_ESP32
+		default 4 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D3.
 
@@ -211,7 +216,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D4 GPIO number"
 		range 0 46
-		default 17
+		default 17 if IDF_TARGET_ESP32
+		default 5 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D4.
 
@@ -219,7 +225,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D5 GPIO number"
 		range 0 46
-		default 16
+		default 16 if IDF_TARGET_ESP32
+		default 6 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D5.
 
@@ -227,7 +234,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D6 GPIO number"
 		range 0 46
-		default 27
+		default 27 if IDF_TARGET_ESP32
+		default 7 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D6.
 
@@ -235,7 +243,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "D7 GPIO number"
 		range 0 46
-		default 14
+		default 14 if IDF_TARGET_ESP32
+		default 8 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D7.
 
@@ -243,7 +252,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "RD GPIO number"
 		range 0 46
-		default 2
+		default 2 if IDF_TARGET_ESP32
+		default 39 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD RD.
 
@@ -251,7 +261,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "WR GPIO number"
 		range 0 46
-		default 4
+		default 4 if IDF_TARGET_ESP32
+		default 40 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD WR.
 
@@ -259,7 +270,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "RS GPIO number"
 		range 0 46
-		default 15
+		default 15 if IDF_TARGET_ESP32
+		default 41 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD RS.
 
@@ -267,7 +279,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "CS GPIO number"
 		range 0 46
-		default 33
+		default 33 if IDF_TARGET_ESP32
+		default 42 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD CS.
 
@@ -275,7 +288,8 @@ menu "TFT Configuration"
 		depends on CUSTOM_GPIO_CONFIG
 		int "RESET GPIO number"
 		range 0 46
-		default 32
+		default 32 if IDF_TARGET_ESP32
+		default 45 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD RESET.
 
