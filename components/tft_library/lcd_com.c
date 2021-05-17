@@ -27,6 +27,7 @@
 #define LCD_CS_PIN	CONFIG_CS_GPIO
 #define LCD_RESET_PIN CONFIG_RESET_GPIO
 #else
+#ifdef CONFIG_IDF_TARGET_ESP32
 #define LCD_D0_PIN	(12)
 #define LCD_D1_PIN	(13)
 #define LCD_D2_PIN	(26)
@@ -40,6 +41,21 @@
 #define LCD_RS_PIN	(15)
 #define LCD_CS_PIN	(33)
 #define LCD_RESET_PIN (32)
+#elif defined CONFIG_IDF_TARGET_ESP32S2
+#define LCD_D0_PIN	(1)
+#define LCD_D1_PIN	(2)
+#define LCD_D2_PIN	(3)
+#define LCD_D3_PIN	(4)
+#define LCD_D4_PIN	(5)
+#define LCD_D5_PIN	(6)
+#define LCD_D6_PIN	(7)
+#define LCD_D7_PIN	(8)
+#define LCD_RD_PIN	(39)
+#define LCD_WR_PIN	(40)
+#define LCD_RS_PIN	(41)
+#define LCD_CS_PIN	(42)
+#define LCD_RESET_PIN (45)
+#endif
 #endif
 
 #define gpio_digital_write(GPIO_PIN, data) \
