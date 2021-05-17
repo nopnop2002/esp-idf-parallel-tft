@@ -150,7 +150,7 @@ You can change any GPIO using menuconfig.
 
 ![config-app3](https://user-images.githubusercontent.com/6020549/106685441-be669780-660b-11eb-8e8e-790348e65921.jpg)
 
-(*2)
+(*2)   
 When using REGISTER I/O parallel, GPIO from D0 to D7 is 1 to 31.(GPIO0 is boot mode pin)   
 
 (*3)   
