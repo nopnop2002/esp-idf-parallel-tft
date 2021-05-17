@@ -100,7 +100,7 @@ You have to set this config value with menuconfig.
 - CONFIG_INTERFACE   
  Most drivers work using I2S parallel.   
  However, some drivers only work using GPIO parallels or REGISTER I/O parallels.   
- And ESP32S2/S3 only work using GPIO parallels or REGISTER I/O parallels.   
+ __And ESP32S2/S3 only work using GPIO parallels or REGISTER I/O parallels.__   
  I2S parallel is most fast.   
  REGISTER I/O parallel is the next fastest.   
  When using REGISTER I/O parallel, GPIO from D0 to D7 is 0 to 31.   
