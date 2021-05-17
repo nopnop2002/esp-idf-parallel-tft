@@ -92,7 +92,7 @@ idf.py flash
 - Works only with GPIO parallel or REGISTER I/O parallel.   
 - JPEG and PNG function is not supported because the ROM is small.   
 
-# Configure   
+# Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
  ![](https://img.shields.io/badge/_IMPORTANT-important)  
