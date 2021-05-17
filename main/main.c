@@ -1091,20 +1091,13 @@ void TFT(void *pvParameters)
 
 #if 0
 	while(1) {
-		HorizontalTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-		VerticalTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
 		char file[32];
 		strcpy(file, "/spiffs/esp32.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-		strcpy(file, "/spiffs/esp32.jpeg");
-		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		strcpy(file, "/spiffs/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-		ScrollTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-		ScrollReset(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 	}
 #endif
 
@@ -1176,11 +1169,11 @@ void TFT(void *pvParameters)
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 
 #if 0
 		if (lcdEnableScroll(&dev)) {
