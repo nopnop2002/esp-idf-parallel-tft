@@ -141,7 +141,7 @@ You have to set this config value with menuconfig.
 |LDC_D5|--|GPIO16|GPIO6|*1|
 |LDC_D6|--|GPIO27|GPIO7|*1|
 |LDC_D7|--|GPIO14|GPIO8|*1|
-|5V|--|<td colspan=2>5V|*2|
+|5V|--<td colspan=2>5V|*2|
 |3.3V|--|3.3V|3.3V|*2|
 |GND|--|GND|GND||
 
