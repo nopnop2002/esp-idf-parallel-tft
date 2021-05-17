@@ -87,7 +87,7 @@ idf.py menuconfig
 idf.py flash
 ```
 
-ESP32S2 Limitation   
+# ESP32S2 Limitation   
 - tjpgd library does not exist in ESP32-S2 ROM.   
 - Works only with GPIO parallel or REGISTER I/O parallel.   
 - Image function is not supported because the ROM is small.   
