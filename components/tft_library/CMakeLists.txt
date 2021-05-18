@@ -1,5 +1,4 @@
 set(component_srcs "fontx.c"
-	"i2s_lcd.c"
 	"ili9225.c"
 	"ili9320.c"
 	"ili9325.c"
@@ -16,8 +15,9 @@ set(component_srcs "fontx.c"
 	"st7781.c"
 	"s6d1121.c"
 	"hx8347.c"
+	"i2s_lcd_esp32_driver.c"
+	"i2s_lcd_esp32s2_driver.c"
 	)
-
 
 idf_component_register(SRCS "${component_srcs}"
                        INCLUDE_DIRS ".")

@@ -7,7 +7,7 @@
 #include "soc/soc.h"
 #include "soc/dport_reg.h"
 #include "lcd_com.h"
-#include "i2s_lcd.h"
+#include "i2s_lcd_driver.h"
 #include "driver/gpio.h"
 
 #define TAG "LCD_COM"
@@ -77,7 +77,7 @@
 		} \
 	} while (0)
 
-void gpio_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy2) {
+void gpio_lcd_write_data(int dummy1, unsigned char *data, size_t size) {
 	for (int i=0;i<size;i++) {
 		gpio_digital_write(LCD_D0_PIN, data[i] & 0x01);
 		gpio_digital_write(LCD_D1_PIN, data[i] & 0x02);
@@ -92,7 +92,7 @@ void gpio_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy
 	}
 }
 
-void reg_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy2) {
+void reg_lcd_write_data(int dummy1, unsigned char *data, size_t size) {
 	for (int i=0;i<size;i++) {
 		reg_digital_write(LCD_D0_PIN, data[i] & 0x01);
 		reg_digital_write(LCD_D1_PIN, data[i] & 0x02);
@@ -101,7 +101,7 @@ void reg_lcd_write_data(int dummy1, unsigned char *data, size_t size, int dummy2
 		reg_digital_write(LCD_D4_PIN, data[i] & 0x10); 
 		reg_digital_write(LCD_D5_PIN, data[i] & 0x20);
 		reg_digital_write(LCD_D6_PIN, data[i] & 0x40);
-		reg_digital_write(LCD_D7_PIN, data[i] & 0x80);  
+		reg_digital_write(LCD_D7_PIN, data[i] & 0x80);	
 		gpio_set_level( LCD_WR_PIN, 0 );
 		gpio_set_level( LCD_WR_PIN, 1 );
 	}
@@ -154,11 +154,11 @@ void lcd_write_comm_byte(TFT_t * dev, uint8_t cmd)
 	gpio_set_level(dev->_rs, 0);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, c, 1, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, c, 1);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, c, 1, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, c, 1);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, c, 1, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, c, 1);
 	}
 	gpio_set_level(dev->_cs, 1);
 	if (dev->_delay != 0) ets_delay_us(dev->_delay);
@@ -174,11 +174,11 @@ void lcd_write_comm_word(TFT_t * dev, uint16_t cmd)
 	gpio_set_level(dev->_rs, 0);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, c, 2, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, c, 2);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, c, 2, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, c, 2);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, c, 2, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, c, 2);
 	}
 	gpio_set_level(dev->_cs, 1);
 	if (dev->_delay != 0) ets_delay_us(dev->_delay);
@@ -193,11 +193,11 @@ void lcd_write_data_byte(TFT_t * dev, uint8_t data)
 	gpio_set_level(dev->_rs, 1);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, d, 1, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, d, 1);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, d, 1, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, d, 1);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, d, 1, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, d, 1);
 	}
 	gpio_set_level(dev->_cs, 1);
 	if (dev->_delay != 0) ets_delay_us(dev->_delay);
@@ -214,11 +214,11 @@ void lcd_write_data_word(TFT_t * dev, uint16_t data)
 	gpio_set_level(dev->_rs, 1);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, d, 2, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, d, 2);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, d, 2, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, d, 2);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, d, 2, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, d, 2);
 	}
 	gpio_set_level(dev->_cs, 1);
 	if (dev->_delay != 0) ets_delay_us(dev->_delay);
@@ -237,11 +237,11 @@ void lcd_write_addr(TFT_t * dev, uint16_t addr1, uint16_t addr2)
 	gpio_set_level(dev->_rs, 1);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, c, 4, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, c, 4);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, c, 4, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, c, 4);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, c, 4, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, c, 4);
 	}
 	gpio_set_level(dev->_cs, 1);
 	if (dev->_delay != 0) ets_delay_us(dev->_delay);
@@ -261,11 +261,11 @@ void lcd_write_color(TFT_t * dev, uint16_t color, uint16_t size)
 	gpio_set_level(dev->_rs, 1);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, data, size*2, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, data, size*2);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, data, size*2, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, data, size*2);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, data, size*2, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, data, size*2);
 	}
 	gpio_set_level(dev->_cs, 1);
 	free(data);
@@ -286,11 +286,11 @@ void lcd_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size)
 	gpio_set_level(dev->_rs, 1);
 	//gpio_set_level(dev->_rd, 1);
 	if (dev->_interface == INTERFACE_I2S) {
-		i2s_lcd_write_data(I2S_PORT_NUM, data, size*2, 100);
+		i2s_lcd_write(dev->i2s_lcd_handle, data, size*2);
 	} else if (dev->_interface == INTERFACE_GPIO) {
-		gpio_lcd_write_data(GPIO_PORT_NUM, data, size*2, 100);
+		gpio_lcd_write_data(GPIO_PORT_NUM, data, size*2);
 	} else if (dev->_interface == INTERFACE_REG) {
-		reg_lcd_write_data(GPIO_PORT_NUM, data, size*2, 100);
+		reg_lcd_write_data(GPIO_PORT_NUM, data, size*2);
 	}
 	gpio_set_level(dev->_cs, 1);
 	free(data);
@@ -314,7 +314,9 @@ void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data)
 	lcd_write_data_word(dev, data);
 }
 
-void lcd_interface_cfg(TFT_t * dev, int interface)
+#define BOARD_LCD_I2S_BITWIDTH 8
+
+esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 {
 	if (interface == INTERFACE_I2S) {
 		ESP_LOGI(TAG, "interface=I2S");
@@ -345,16 +347,44 @@ void lcd_interface_cfg(TFT_t * dev, int interface)
 
 	if (interface == INTERFACE_I2S) {
 		ESP_LOGI(TAG, "INTERFACE is I2S");
-		i2s_paral_pin_config_t pin_conf = {
-			.data_width = 8,
-			.data_io_num = {
-				LCD_D0_PIN,  LCD_D1_PIN,  LCD_D2_PIN,  LCD_D3_PIN,
-				LCD_D4_PIN,  LCD_D5_PIN,  LCD_D6_PIN,  LCD_D7_PIN,
-		},
-			.ws_io_num = LCD_WR_PIN,
+		i2s_lcd_config_t i2s_lcd_cfg = {
+			.data_width  = BOARD_LCD_I2S_BITWIDTH,
+			.pin_data_num = {
+				LCD_D0_PIN,
+				LCD_D1_PIN,
+				LCD_D2_PIN,
+				LCD_D3_PIN,
+				LCD_D4_PIN,
+				LCD_D5_PIN,
+				LCD_D6_PIN,
+				LCD_D7_PIN,
+				//BOARD_LCD_I2S_D8_PIN,
+				//BOARD_LCD_I2S_D9_PIN,
+				//BOARD_LCD_I2S_D10_PIN,
+				//BOARD_LCD_I2S_D11_PIN,
+				//BOARD_LCD_I2S_D12_PIN,
+				//BOARD_LCD_I2S_D13_PIN,
+				//BOARD_LCD_I2S_D14_PIN,
+				//BOARD_LCD_I2S_D15_PIN,
+			},
+			.pin_num_cs = LCD_CS_PIN,
+			.pin_num_wr = LCD_WR_PIN,
+			.pin_num_rs = LCD_RS_PIN,
+	
+			.clk_freq = 20000000,
+			.i2s_port = I2S_NUM_0,
+			.buffer_size = 32000,
+			.swap_data = false,
 		};
-		i2s_lcd_driver_install(I2S_PORT_NUM);
-		i2s_lcd_pin_config(I2S_PORT_NUM, &pin_conf);
+
+
+		//i2s_lcd_handle_t i2s_lcd_handle;
+        dev->i2s_lcd_handle = i2s_lcd_driver_init(&i2s_lcd_cfg);
+        if (NULL == dev->i2s_lcd_handle) {
+            ESP_LOGE(TAG, "%s:%d (%s):%s", __FILE__, __LINE__, __FUNCTION__, "screen 8080 interface create failed");
+            return ESP_FAIL;
+        }
+
 	} else if (interface == INTERFACE_GPIO || interface == INTERFACE_REG) {
 		if (interface == INTERFACE_GPIO) {
 			ESP_LOGI(TAG, "INTERFACE is GPIO");
@@ -397,4 +427,6 @@ void lcd_interface_cfg(TFT_t * dev, int interface)
 	dev->_rs = LCD_RS_PIN;
 	dev->_cs = LCD_CS_PIN;
 	dev->_interface = interface;
+	
+	return ESP_OK;
 }

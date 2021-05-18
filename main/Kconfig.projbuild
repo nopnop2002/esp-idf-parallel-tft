@@ -119,8 +119,7 @@ menu "TFT Configuration"
 
 	choice INTERFACE
 		prompt "Parallel Interface"
-		default INTERFACE_I2S if IDF_TARGET_ESP32
-		default INTERFACE_REG if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default INTERFACE_I2S
 		help
 			Select Parallel Interface.
 		config INTERFACE_I2S

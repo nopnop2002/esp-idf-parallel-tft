@@ -67,6 +67,10 @@ These are all 2.4 inch, 320x240 TFTs.
 These are OPEN-SMART 16Pin-Parallel Products.
 ![OPEN-SMART-16Pin](https://user-images.githubusercontent.com/6020549/110071604-ad9e7280-7dbf-11eb-8e09-a9ebfacfd795.JPG)
 
+# Software requirements
+esp-idf v4.4 or later.   
+The i2s driver for esp32s2 is supported.   
+
 # Installation for ESP32
 
 ```
@@ -89,7 +93,6 @@ idf.py flash
 
 # ESP32-S2 Limitation   
 - tjpgd library does not exist in ESP32-S2 ROM.   
-- Works only with GPIO parallel or REGISTER I/O parallel.   
 - JPEG and PNG function is not supported because the ROM is small.   
 
 # Configuration   
@@ -254,7 +257,7 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 # Application layer
 
-![LibraryLayer](https://user-images.githubusercontent.com/6020549/104282561-972c1700-54f2-11eb-9b0b-732f17e9d41b.jpg)
+![LibraryLayer](https://user-images.githubusercontent.com/6020549/118597304-7bf64e80-b7e7-11eb-952f-1f79c0a32d62.jpg)
 
 # Performance comparison using ILI9488(320x480)
 
@@ -278,7 +281,12 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 |JPEGTest|3870|2990|2630|
 |PNGTest|4310|3450|3050|
 
-# Reference about I2S parallel mode
+# Reference about I2S driver
 https://github.com/espressif/esp-iot-solution/tree/master/components/bus
 
-https://github.com/espressif/esp-iot-solution/issues/19   
+- for esp32   
+ i2s_lcd_esp32_driver.c   
+- for esp32s2   
+ i2s_lcd_esp32s2_driver.c   
+- Common header   
+ i2s_lcd_driver.h   
