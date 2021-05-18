@@ -257,7 +257,7 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 
 # Application layer
 
-![LibraryLayer](https://user-images.githubusercontent.com/6020549/118597304-7bf64e80-b7e7-11eb-952f-1f79c0a32d62.jpg)
+![LibraryLayer](https://user-images.githubusercontent.com/6020549/118599243-30916f80-b7ea-11eb-8766-5dd8fecd66aa.jpg)
 
 # Performance comparison using ILI9488(320x480)
 
