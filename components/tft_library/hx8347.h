@@ -1,6 +1,10 @@
 #ifndef __HX8347_H__
 #define __HX8347_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void hx8347_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void hx8347_lcd_write_register(TFT_t * dev, uint8_t addr, uint16_t data);
 void hx8347_lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
@@ -16,5 +20,8 @@ void hx8347_lcdSetScrollArea(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t b
 void hx8347_lcdResetScrollArea(TFT_t * dev, uint16_t vsa);
 void hx8347_lcdStartScroll(TFT_t * dev, uint16_t vsp);
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif

@@ -1,5 +1,10 @@
 #ifndef MAIN_FONTX_H_
 #define MAIN_FONTX_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define FontxGlyphBufSize (32*32/8)
 
 typedef struct {
@@ -35,5 +40,9 @@ uint8_t RotateByte(uint8_t ch);
 //#define Utf8Sjis "Utf8Sjis.tbl"
 //uint16_t UTF2SJIS(spiffs_file fd, uint8_t *utf8);
 //int String2SJIS(spiffs_file fd, unsigned char *str_in, size_t stlen, uint16_t *sjis, size_t ssize);
-#endif /* MAIN_FONTX_H_ */
 
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* MAIN_FONTX_H_ */

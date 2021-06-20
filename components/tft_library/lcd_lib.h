@@ -3,6 +3,10 @@
 
 #include "fontx.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define RED				0xf800
 #define GREEN			0x07e0
 #define BLUE			0x001f
@@ -68,5 +72,8 @@ void lcdUnsetFontFill(TFT_t * dev);
 void lcdSetFontUnderLine(TFT_t * dev, uint16_t color);
 void lcdUnsetFontUnderLine(TFT_t * dev);
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif
