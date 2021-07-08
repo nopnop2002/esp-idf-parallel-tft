@@ -1,6 +1,10 @@
 #ifndef __S6D1121_H__
 #define __S6D1121_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void s6d1121_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void s6d1121_lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void s6d1121_lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
@@ -15,5 +19,8 @@ void s6d1121_lcdSetScrollArea(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t 
 void s6d1121_lcdResetScrollArea(TFT_t * dev, uint16_t vsa);
 void s6d1121_lcdStartScroll(TFT_t * dev, uint16_t vsp);
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif

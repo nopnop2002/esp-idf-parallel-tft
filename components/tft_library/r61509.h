@@ -1,6 +1,10 @@
 #ifndef __R61509_H__
 #define __R61509_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void r61509_lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void r61509_lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void r61509_lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
@@ -15,5 +19,8 @@ void r61509_lcdSetScrollArea(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t b
 void r61509_lcdResetScrollArea(TFT_t * dev, uint16_t vsa);
 void r61509_lcdStartScroll(TFT_t * dev, uint16_t vsp);
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif
