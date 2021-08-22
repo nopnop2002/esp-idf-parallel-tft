@@ -44,6 +44,7 @@ You can use such a TFT-Shield with esp32.
 I2S parallel does not work.   
 I don't know why.   
 GPIO parallel or REGISTER I/O parallel works.   
+__LED pins connect to GND instead of 3.3V.__   
 
 (*2)   
 Very Slow.   
