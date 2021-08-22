@@ -38,7 +38,7 @@ You can use such a TFT-Shield with esp32.
 - OPEN-SMART ST7775  16Pin-Parallel(*1)   
 - OPEN-SMART ST7783  16Pin-Parallel(*1)   
 - OPEN-SMART R61509V 16Pin-Parallel(*1)   
-- OPEN-SMART ILI9488 16Pin-Parallel(*1))(*4)   
+- OPEN-SMART ILI9488 16Pin-Parallel(*1)(*4)   
 
 (*1)   
 I2S parallel does not work.   
