@@ -6,7 +6,7 @@ You can use such a TFT-Shield with esp32.
 
 # Support driver
 
-## Generic Sheild   
+## Generic Shield   
 - ILI9225   
 - ILI9226(Same as ILI9225)   
 - ILI9320   
