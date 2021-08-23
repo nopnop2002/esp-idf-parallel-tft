@@ -31,14 +31,14 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
-- OPEN-SMART ILI9225 TFT-Shield   
-- OPEN-SMART ILI9327 TFT-Shield(*3)   
-- OPEN-SMART ILI9340 TFT-Shield   
-- OPEN-SMART S6D1121 16Pin-Parallel(*1)   
-- OPEN-SMART ST7775  16Pin-Parallel(*1)   
-- OPEN-SMART ST7783  16Pin-Parallel(*1)   
-- OPEN-SMART R61509V 16Pin-Parallel(*1)   
-- OPEN-SMART ILI9488 16Pin-Parallel(*1)(*4)   
+- OPEN-SMART ILI9225 TFT-Shield(176x220)   
+- OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)   
+- OPEN-SMART ILI9340 TFT-Shield(240x320)   
+- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)   
+- OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)   
+- OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)   
+- OPEN-SMART R61509V 16Pin-Parallel(240x400)(*1)   
+- OPEN-SMART ILI9488 16Pin-Parallel(320x400 Color inversion)(*1)(*4)   
 
 (*1)   
 I2S parallel does not work.   
