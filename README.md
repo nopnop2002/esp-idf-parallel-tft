@@ -17,8 +17,8 @@ You can use such a TFT-Shield with esp32.
 - ILI9486   
 - ILI9488   
 - SPFD5408(Same as ILI9320)   
-- R61505(Same as ILI9320)   
-- R61509   
+- R61505U(Same as ILI9320)   
+- R61509V   
 - LGDP4532   
 - ST7775(Same as ILI9225)   
 - ST7781   
