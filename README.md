@@ -282,6 +282,28 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 |JPEGTest|3870|2990|2630|
 |PNGTest|4310|3450|3050|
 
+# Performance comparison using ILI9341(240x320)
+SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).   
+
+|Test|SPI|GPIO parallel|REGISTER I/O parallel|I2S parallel|
+|:-:|:-:|:-:|:-:|:-:|
+|FillTest|1620|2700|1920|1560|
+|ColorBarTest|80|420|160|50|
+|ArrowTest|250|460|170|140|
+|LineTest|2690|1040|420|1530|
+|CircleTest|2400|980|410|1370|
+|RoundRectTest|2400|980|400|1390|
+|RectAngleTest|5960|2010|940|6720|
+|TriangleTest|6550|2120|990|7630|
+|DirectionTest|420|520|200|240|
+|HorizontalTest|990|720|300|580|
+|VerticalTest|990|710|300|580|
+|FillRectTest|160|730|300|120|
+|ColorTest|240|850|330|190|
+|BMPTest|1600|1930|1320|960|
+|JPEGTest|2540|2940|2650|2530|
+|PNGTest|2830|3210|2940|2810|
+
 # Reference about I2S driver
 https://github.com/espressif/esp-iot-solution/tree/master/components/bus
 
