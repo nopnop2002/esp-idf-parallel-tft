@@ -92,9 +92,9 @@ idf.py menuconfig
 idf.py flash
 ```
 
-# ESP32-S2 Limitation   
-- tjpgd library does not exist in ESP32-S2 ROM because the ROM is small.   
-- JPEG and PNG function is not supported because the SRAM is small.   
+__Note__   
+- tjpgd library does not exist in ESP32-S2 ROM. Therefore, the JPEG file cannot be displayed.
+- PNG file cannot be displayed because the SRAM is small.   
 
 # Configuration   
 You have to set this config value with menuconfig.   
