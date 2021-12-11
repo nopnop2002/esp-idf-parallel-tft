@@ -318,7 +318,7 @@ When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enabl
 ![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
 
 - Touch position accuacy   
-The coordinates read from XPT2046 are not stable.   
+The coordinates read from Y(+) and X(-) are analog values.   
 The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate
 ## Wiring
 
