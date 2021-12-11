@@ -31,9 +31,9 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
-- OPEN-SMART ILI9225 TFT-Shield(176x220)   
-- OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)   
-- OPEN-SMART ILI9340 TFT-Shield(240x320)   
+- OPEN-SMART ILI9225 TFT-Shield(176x220)(*5)   
+- OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)(*5)   
+- OPEN-SMART ILI9340 TFT-Shield(240x320)(*5)   
 - OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)(*5)   
 - OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)(*5)   
 - OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)(*5)   
@@ -261,6 +261,45 @@ strcpy((char *)ascii, "MyFont");
 lcdDrawString(dev, yourFont, x, y, ascii, color);
 ```
 
+# 4-line resistance touch screen   
+OPEN-SMART Products has 4-line resistance touch screen.   
+![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
+
+When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
+
+![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
+
+- ADC Channel   
+ESP32 has 8 channels: GPIO32 - GPIO39.   
+ESP32S2 has 10 channels: GPIO01 - GPIO10.   
+
+- Touch position accuacy   
+The coordinates read from Y(+) and X(-) are analog values.   
+The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate
+## Wiring for OPEN-SMART TFT-Shield
+
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|LCD-WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD-RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+## Wiring for OPEN-SMART 16Pin-Parallel
+
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|(Y+)WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+## Calibration   
+Keep touching the point.   
+![Touch1](https://user-images.githubusercontent.com/6020549/145660949-ba8a369b-b3c1-45e5-97d8-5e00b77be4cb.JPG)
+![Touch2](https://user-images.githubusercontent.com/6020549/145660951-3fc20a79-a79d-44d5-9172-ded5e6988f86.JPG)
+
+## Draw with touch   
+![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
+
+If there is no touch for 10 seconds, it will end,   
+
 # Application layer
 
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/118599243-30916f80-b7ea-11eb-8766-5dd8fecd66aa.jpg)
@@ -309,37 +348,6 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 |JPEGTest|2540|2940|2650|2530|
 |PNGTest|2830|3210|2940|2810|
 
-# 4-line resistance touch screen   
-Some TFT has 4-line resistance touch screen.   
-![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
-
-When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
-
-![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
-
-- ADC Channel   
-ESP32 has 8 channels: GPIO32 - GPIO39.   
-ESP32S2 has 10 channels: GPIO01 - GPIO10.   
-
-- Touch position accuacy   
-The coordinates read from Y(+) and X(-) are analog values.   
-The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate
-## Wiring
-
-|TFT||ESP32|ESP32S2|
-|:-:|:-:|:-:|:-:|
-|Y(+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|X(-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
-
-## Calibration   
-Keep touching the point.   
-![Touch1](https://user-images.githubusercontent.com/6020549/145660949-ba8a369b-b3c1-45e5-97d8-5e00b77be4cb.JPG)
-![Touch2](https://user-images.githubusercontent.com/6020549/145660951-3fc20a79-a79d-44d5-9172-ded5e6988f86.JPG)
-
-## Draw with touch   
-![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
-
-If there is no touch for 10 seconds, it will end,   
 
 ## How it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
