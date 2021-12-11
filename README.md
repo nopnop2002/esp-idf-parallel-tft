@@ -60,7 +60,7 @@ See below.
 Need RGB inverstion.   
 
 (*5)   
-Enable 4-line resistance touch screen.   
+4-line resistance touch screen available.   
 See below.   
 
 
