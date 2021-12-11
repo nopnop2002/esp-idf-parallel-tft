@@ -317,6 +317,9 @@ When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enabl
 
 ![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
 
+- Touch position accuacy   
+The coordinates read from XPT2046 are not stable.   
+The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate
 ## Wiring
 
 |TFT||ESP32|ESP32S2|
@@ -331,6 +334,9 @@ Keep touching the point.
 
 ## Draw with touch   
 ![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
+
+## How it works   
+https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 # Reference about I2S driver
 https://github.com/espressif/esp-iot-solution/tree/master/components/bus
