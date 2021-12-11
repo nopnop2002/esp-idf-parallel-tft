@@ -1120,8 +1120,9 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	float _ys = dev->_max_yc - dev->_min_yc;
 	ESP_LOGI(TAG, "_xs=%f _ys=%f", _xs, _ys);
 
-	int pointed = 0;
-	while(1) {
+	TickType_t lastTouched = xTaskGetTickCount();
+	bool isRunning = true;
+	while(isRunning) {
 		int _xpos = 0;
 		int _ypos = 0;
 		int _xpos_prev = 0;
@@ -1152,14 +1153,20 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 #else
 				break;
 #endif
+			} else {
+				TickType_t current = xTaskGetTickCount();
+				if (current - lastTouched > 1000) {
+					isRunning = false;
+					break;
+				}
+
 			} // end if
 		} // end while
 
-		ESP_LOGI(TAG, "pointed=%d _xpos=%d _ypos=%d", pointed, _xpos, _ypos);
+		ESP_LOGI(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
 		lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
-		pointed++;
-		if (pointed == 100) break;
-	}
+		lastTouched = xTaskGetTickCount();
+	} // end while
 }
 #endif
 

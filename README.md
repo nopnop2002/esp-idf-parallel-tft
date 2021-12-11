@@ -339,6 +339,8 @@ Keep touching the point.
 ## Draw with touch   
 ![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
 
+If there is no touch for 10 seconds, it will end,   
+
 ## How it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
