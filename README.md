@@ -305,7 +305,7 @@ Keep touching the point.
 
 If there is no touch for 10 seconds, it will end,   
 
-## How it works   
+## How dose it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 
