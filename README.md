@@ -275,7 +275,11 @@ ESP32S2 has 10 channels: GPIO01 - GPIO10.
 
 - Touch position accuacy   
 The coordinates read from Y(+) and X(-) are analog values.   
-The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate
+The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate.   
+Decreasing this value will make the position more accurate, but less responsive.   
+Increasing this value will make the position more inaccurate but more responsive.   
+
+
 ## Additional wiring for OPEN-SMART TFT-Shield   
 
 |TFT||ESP32|ESP32S2|
