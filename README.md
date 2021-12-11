@@ -305,6 +305,10 @@ Keep touching the point.
 
 If there is no touch for 10 seconds, it will end,   
 
+## How it works   
+https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
+
+
 # Application layer
 
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/118599243-30916f80-b7ea-11eb-8766-5dd8fecd66aa.jpg)
@@ -354,8 +358,6 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 |PNGTest|2830|3210|2940|2810|
 
 
-## How it works   
-https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 # Reference about I2S driver
 https://github.com/espressif/esp-iot-solution/tree/master/components/bus
