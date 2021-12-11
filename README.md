@@ -1,5 +1,5 @@
 # esp-idf-parallel-tft
-8 bit parallel TFT Driver for esp-idf.   
+8 bit parallel TFT & 4-line resistance touch screen Driver for esp-idf.   
 You can use such a TFT-Shield with esp32.   
 
 ![TFT-Shield](https://user-images.githubusercontent.com/6020549/104253960-10a71380-54b9-11eb-8789-a12c2c769ab4.JPG)
@@ -34,11 +34,11 @@ You can use such a TFT-Shield with esp32.
 - OPEN-SMART ILI9225 TFT-Shield(176x220)   
 - OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)   
 - OPEN-SMART ILI9340 TFT-Shield(240x320)   
-- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)   
-- OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)   
-- OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)   
-- OPEN-SMART R61509V 16Pin-Parallel(240x400)(*1)   
-- OPEN-SMART ILI9488 16Pin-Parallel(320x400 Color inversion)(*1)(*4)   
+- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)(*5)   
+- OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)(*5)   
+- OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)(*5)   
+- OPEN-SMART R61509V 16Pin-Parallel(240x400)(*1)(*5)   
+- OPEN-SMART ILI9488 16Pin-Parallel(320x400 Color inversion)(*1)(*4)(*5)   
 
 (*1)   
 I2S parallel does not work.   
@@ -58,6 +58,11 @@ See below.
 
 (*4)   
 Need RGB inverstion.   
+
+(*5)   
+Enable 4-line resistance touch screen.   
+See below.   
+
 
 These are all 2.4 inch, 320x240 TFTs.
 ![TFT-SHIELD-2](https://user-images.githubusercontent.com/6020549/104244320-873a1600-54a5-11eb-93c0-9fad671fdfed.JPG)
@@ -303,6 +308,29 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 |BMPTest|1600|1930|1320|960|
 |JPEGTest|2540|2940|2650|2530|
 |PNGTest|2830|3210|2940|2810|
+
+# 4-line resistance touch screen   
+Some TFT has 4-line resistance touch screen.   
+![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
+
+When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
+
+![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
+
+## Wiring
+
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|Y(+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|X(-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+## Calibration   
+Keep touching the point.   
+![Touch1](https://user-images.githubusercontent.com/6020549/145660949-ba8a369b-b3c1-45e5-97d8-5e00b77be4cb.JPG)
+![Touch2](https://user-images.githubusercontent.com/6020549/145660951-3fc20a79-a79d-44d5-9172-ded5e6988f86.JPG)
+
+## Draw with touch   
+![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
 
 # Reference about I2S driver
 https://github.com/espressif/esp-iot-solution/tree/master/components/bus

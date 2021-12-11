@@ -292,4 +292,38 @@ menu "TFT Configuration"
 		help
 			GPIO number (IOxx) to LCD RESET.
 
+	config ENABLE_TOUCH
+		depends on INTERFACE_REG || INTERFACE_GPIO
+		bool "Enable 4-line resistance touch screen"
+		default false
+		help
+			Enable 4-line resistance touch screen.
+
+	config ADC_CHANNEL_YP
+		depends on ENABLE_TOUCH
+		int "ADC Channel Y+"
+		default 6
+		range 3 9 if IDF_TARGET_ESP32
+		range 0 7 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		help
+			ADC Channel Y+.
+
+	config ADC_CHANNEL_XM
+		depends on ENABLE_TOUCH
+		int "ADC Channel X-"
+		default 7
+		range 3 9 if IDF_TARGET_ESP32
+		range 0 7 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		help
+			ADC Channel X-.
+
+	config XPT_ACCURACY
+		depends on ENABLE_TOUCH
+		int "Touch position accuracy"
+		range 2 10
+		default 5
+		help
+			Tolerance of touch position.
+			If the difference from the previous position is within this range, it is considered valid.
+			The higher the value, the less accurate the position, but the less responsive it is.
 endmenu

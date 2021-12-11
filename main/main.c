@@ -785,7 +785,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 			// Seek to start of scan line.	It might seem labor-
 			// intensive to be doing this on every line, but this
 			// method covers a lot of gritty details like cropping
-			// and scanline padding.  Also, the seek only takes
+			// and scanline padding. Also, the seek only takes
 			// place if the file position actually needs to change
 			// (avoids a lot of cluster math in SD library).
 			// Bitmap is stored bottom-to-top order (normal BMP)
@@ -994,6 +994,175 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
+#if CONFIG_ENABLE_TOUCH
+void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
+	if (dev->_calibration == false) return;
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	uint8_t ascii[24];
+	int xpos = 0;
+	int ypos = 0;
+
+	// Calibration
+	lcdFillScreen(dev, BLACK);
+	dev->_min_xc = 15;
+	dev->_min_yc = 15;
+	//lcdDrawFillCircle(dev, 10, 10, 10, CYAN);
+	lcdDrawFillCircle(dev, dev->_min_xc, dev->_min_yc, 10, CYAN);
+	strcpy((char *)ascii, "Calibration");
+	ypos = ((height - fontHeight) / 2) - 1;
+	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	lcdSetFontDirection(dev, DIRECTION180);
+	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
+	ypos = ypos - fontHeight;
+	int _xpos = xpos;
+	for(int i=0;i<10;i++) {
+		lcdDrawFillCircle(dev, _xpos, ypos, fontWidth/2, RED);
+		_xpos = _xpos - fontWidth - 5;
+	}
+
+	int16_t xp = INT16_MIN;
+	int16_t yp = INT16_MAX;
+	int counter = 0;
+	while(1) {
+		vTaskDelay(1);
+		int _xp;
+		int _yp;
+		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
+		ESP_LOGI(TAG, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
+		if (_xp > xp) xp = _xp;
+		if (_yp < yp) yp = _yp;
+		counter++;
+		if (counter == 100) break;
+		if ((counter % 10) == 0) {
+			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
+			xpos = xpos - fontWidth - 5;
+		}
+	} // end while
+	ESP_LOGI(TAG, "_min_xp=%d _min_yp=%d", xp, yp);
+	dev->_min_xp = xp;
+	dev->_min_yp = yp;
+
+	lcdFillScreen(dev, BLACK);
+	dev->_max_xc = width-10;
+	dev->_max_yc = height-10;
+	//lcdDrawFillCircle(dev, width-10, height-10, 10, CYAN);
+	lcdDrawFillCircle(dev, dev->_max_xc, dev->_max_yc, 10, CYAN);
+	ypos = ((height - fontHeight) / 2) - 1;
+	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
+	ypos = ypos - fontHeight;
+	_xpos = xpos;
+	for(int i=0;i<10;i++) {
+		lcdDrawFillCircle(dev, _xpos, ypos, fontWidth/2, RED);
+		_xpos = _xpos - fontWidth - 5;
+	}
+
+	xp = INT16_MAX;
+	yp = INT16_MIN;
+	counter = 0;
+	while(1) {
+		vTaskDelay(1);
+		int _xp;
+		int _yp;
+		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
+		ESP_LOGI(TAG, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
+		if (_xp < xp) xp = _xp;
+		if (_yp > yp) yp = _yp;
+		counter++;
+		if (counter == 100) break;
+		if ((counter % 10) == 0) {
+			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
+			xpos = xpos - fontWidth - 5;
+		}
+	} // end while
+	ESP_LOGI(TAG, "max_xp=%d max_yp=%d", xp, yp);
+	dev->_max_xp = xp;
+	dev->_max_yp = yp;
+	dev->_calibration = false;
+}
+
+void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	uint8_t ascii[24];
+	int xpos = 0;
+	int ypos = 0;
+
+	lcdFillScreen(dev, BLACK);
+	strcpy((char *)ascii, "Touch");
+	ypos = ((height - fontHeight) / 2) - 1;
+	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	lcdSetFontDirection(dev, DIRECTION180);
+	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
+
+	sprintf((char *)ascii, "ACCURACY=%d", CONFIG_XPT_ACCURACY);
+	ypos = ypos - fontHeight;
+	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
+
+	float _xd = dev->_max_xp - dev->_min_xp;
+	float _yd = dev->_max_yp - dev->_min_yp;
+	//float _xs = width-10-10;
+	//float _ys = height-10-10;
+	float _xs = dev->_max_xc - dev->_min_xc;
+	float _ys = dev->_max_yc - dev->_min_yc;
+	ESP_LOGI(TAG, "_xs=%f _ys=%f", _xs, _ys);
+
+	int pointed = 0;
+	while(1) {
+		int _xpos = 0;
+		int _ypos = 0;
+		int _xpos_prev = 0;
+		int _ypos_prev = 0;
+
+		while(1){
+			vTaskDelay(1);
+			int _xp;
+			int _yp;
+			if (touch_getxy(dev, &_xp, &_yp)) { 
+				ESP_LOGI(TAG, "_max_xp=%d _min_xp=%d _xp=%d", dev->_max_xp, dev->_min_xp, _xp);
+				ESP_LOGI(TAG, "_max_yp=%d _min_yp=%d _yp=%d", dev->_max_yp, dev->_min_yp, _yp);
+				if (_xp < dev->_max_xp && _xp > dev->_min_xp) continue;
+				if (_yp < dev->_max_yp && _yp > dev->_min_yp) continue;
+				// Convert from position to coordinate
+				//_xpos = ( (float)(_xp - dev->_min_xp) / _xd * _xs ) + 10;
+				//_ypos = ( (float)(_yp - dev->_min_yp) / _yd * _ys ) + 10;
+				_xpos = ( (float)(_xp - dev->_min_xp) / _xd * _xs ) + dev->_min_xc;
+				_ypos = ( (float)(_yp - dev->_min_yp) / _yd * _ys ) + dev->_min_yc;
+				ESP_LOGI(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
+#if 1
+				// Valid if the current coordinates are close to the previous coordinates
+				if ( (_xpos > _xpos_prev-CONFIG_XPT_ACCURACY && _xpos < _xpos_prev+CONFIG_XPT_ACCURACY) && 
+					(_ypos > _ypos_prev-CONFIG_XPT_ACCURACY && _ypos < _ypos_prev+CONFIG_XPT_ACCURACY) ) break;
+				//if (_xpos == _xpos_prev && _ypos == _ypos_prev) break;
+				_xpos_prev = _xpos;
+				_ypos_prev = _ypos;
+#else
+				break;
+#endif
+			} // end if
+		} // end while
+
+		ESP_LOGI(TAG, "pointed=%d _xpos=%d _ypos=%d", pointed, _xpos, _ypos);
+		lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
+		pointed++;
+		if (pointed == 100) break;
+	}
+}
+#endif
+
 void TFT(void *pvParameters)
 {
 	// set font file
@@ -1038,21 +1207,19 @@ void TFT(void *pvParameters)
 	dev._debug=false;
 #endif
 
+#if CONFIG_ENABLE_TOUCH
+	//touch_interface_cfg(&dev, 6, 7);
+	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM);
+#endif
+
 #if 0
 	while(1) {
-		char file[32];
-		strcpy(file, "/spiffs/esp32.bmp");
-		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, BLACK);
 		WAIT;
 
-#ifdef CONFIG_IDF_TARGET_ESP32
-		strcpy(file, "/spiffs/esp32.jpeg");
-		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		strcpy(file, "/spiffs/esp_logo.png");
-		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
+#if CONFIG_ENABLE_TOUCH
+		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 #endif
 	}
 #endif
@@ -1115,6 +1282,11 @@ void TFT(void *pvParameters)
 
 		ColorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+#if CONFIG_ENABLE_TOUCH
+		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
+#endif
 
 		char file[32];
 		strcpy(file, "/spiffs/esp32.bmp");

@@ -13,6 +13,15 @@
 
 #define GPIO_PORT_NUM  0
 
+#define MODE_RESET  0
+#define MODE_OUTPUT 1
+#define MODE_INPUT  2
+
+#define NUMSAMPLES  2 // Number of samples
+#define COMP        2 // Coordinate tolerance
+#define AVERAGETIME 4 // Number of samples when averaging
+#define RXPLATE    300
+
 typedef struct {
 	uint16_t _width;
 	uint16_t _height;
@@ -27,10 +36,29 @@ typedef struct {
 	int16_t _wr;
 	int16_t _rs;
 	int16_t _cs;
+	int16_t _d6;
+	int16_t _d7;
 	int16_t _delay;
 	int16_t _interface;
 	bool _debug;
 	i2s_lcd_handle_t i2s_lcd_handle;
+	adc1_channel_t _adc_yp;
+	adc1_channel_t _adc_xm;
+	int16_t _gpio_xp;
+	int16_t _gpio_xm;
+	int16_t _gpio_yp;
+	int16_t _gpio_ym;
+	int16_t _rawxp;
+	int16_t _rawyp;
+	bool _calibration;
+	int16_t _min_xp; // Minimum xp calibration
+	int16_t _min_yp; // Minimum yp calibration
+	int16_t _max_xp; // Maximum xp calibration
+	int16_t _max_yp; // Maximum yp calibration
+	int16_t _min_xc; // Minimum x coordinate
+	int16_t _min_yc; // Minimum y coordinate
+	int16_t _max_xc; // Maximum x coordinate
+	int16_t _max_yc; // Maximum y coordinate
 } TFT_t;
 
 void gpio_digital_write(int GPIO_PIN, uint8_t data);
@@ -50,5 +78,14 @@ void lcd_delay_ms(int delay_time);
 void lcd_write_register_word(TFT_t * dev, uint16_t addr, uint16_t data);
 void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data);
 esp_err_t lcd_interface_cfg(TFT_t * dev, int interface);
+
+void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm);
+int touch_avr_analog(adc1_channel_t channel, int averagetime);
+void touch_gpio(int gpio, int mode, int level);
+int touch_getx(TFT_t * dev);
+int touch_gety(TFT_t * dev);
+int touch_getz(TFT_t * dev);
+void touch_getxyz(TFT_t * dev, int *xp, int *yp, int *zp);
+bool touch_getxy(TFT_t *dev, int *xp, int *yp);
 
 #endif

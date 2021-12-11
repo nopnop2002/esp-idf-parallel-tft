@@ -9,6 +9,7 @@
 #include "lcd_com.h"
 #include "i2s_lcd_driver.h"
 #include "driver/gpio.h"
+#include "driver/adc_common.h"
 
 #define TAG "LCD_COM"
 
@@ -121,8 +122,8 @@ void lcd_write_table(TFT_t * dev, const void *table, int16_t size)
 		} else {
 			lcd_write_comm_byte(dev, cmd );
 			for (i = 0; i < len; i++) {
-			  uint8_t data = *p++;
-			  lcd_write_data_byte(dev, data );
+				uint8_t data = *p++;
+				lcd_write_data_byte(dev, data );
 			}
 		}
 		size -= len + 2;
@@ -318,11 +319,13 @@ void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data)
 
 esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 {
+#if 0
 	if (interface == INTERFACE_I2S) {
 		ESP_LOGI(TAG, "interface=I2S");
 	} else if (interface == INTERFACE_GPIO) {
 		ESP_LOGI(TAG, "interface=GPIO");
 	}
+#endif
 	ESP_LOGI(TAG, "LCD_CS_PIN=%d",LCD_CS_PIN);
 	gpio_pad_select_gpio( LCD_CS_PIN );
 	gpio_set_direction( LCD_CS_PIN, GPIO_MODE_OUTPUT );
@@ -379,11 +382,11 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 
 
 		//i2s_lcd_handle_t i2s_lcd_handle;
-        dev->i2s_lcd_handle = i2s_lcd_driver_init(&i2s_lcd_cfg);
-        if (NULL == dev->i2s_lcd_handle) {
-            ESP_LOGE(TAG, "%s:%d (%s):%s", __FILE__, __LINE__, __FUNCTION__, "screen 8080 interface create failed");
-            return ESP_FAIL;
-        }
+		dev->i2s_lcd_handle = i2s_lcd_driver_init(&i2s_lcd_cfg);
+		if (NULL == dev->i2s_lcd_handle) {
+			ESP_LOGE(TAG, "%s:%d (%s):%s", __FILE__, __LINE__, __FUNCTION__, "screen 8080 interface create failed");
+			return ESP_FAIL;
+		}
 
 	} else if (interface == INTERFACE_GPIO || interface == INTERFACE_REG) {
 		if (interface == INTERFACE_GPIO) {
@@ -410,6 +413,8 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		gpio_set_direction( LCD_D7_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_WR_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_level( LCD_WR_PIN, 1 );
+		dev->_d6 = LCD_D6_PIN;
+		dev->_d7 = LCD_D7_PIN;
 	}
 
 
@@ -430,3 +435,149 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 	
 	return ESP_OK;
 }
+
+void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm)
+{
+	dev->_calibration = true;
+	dev->_adc_yp = adc_yp;
+	dev->_adc_xm = adc_xm;
+	dev->_gpio_xp = dev->_d6;
+	dev->_gpio_xm = dev->_rs;
+	dev->_gpio_yp = dev->_wr;
+	dev->_gpio_ym = dev->_d7;
+	ESP_LOGI(TAG, "_adc_yp=%d _adc_xm=%d", dev->_adc_yp, dev->_adc_xm);
+}
+
+int touch_avr_analog(adc1_channel_t channel, int averagetime)
+{
+	if (averagetime > 2) {
+		int sum = 0;
+		int max = 0;
+		int min = 1024;
+		for(int i = 0; i<averagetime; i++)
+		{
+			int tmp = adc1_get_raw(channel);
+			if(tmp > max)max = tmp;
+			if(tmp < min)min = tmp;
+			sum += tmp;
+			//	 sum+=analogRead(adpin);
+		}
+		return (sum-min-max)/(averagetime-2);
+	} else {
+		return 0;
+	}
+}
+
+void touch_gpio(int gpio, int mode, int level)
+{
+	esp_log_level_set("gpio", ESP_LOG_WARN);
+	gpio_reset_pin(gpio);
+	gpio_config_t io_conf = {};
+	io_conf.pin_bit_mask = (1ULL<<gpio);
+	if (mode == MODE_OUTPUT) {
+		io_conf.mode = GPIO_MODE_OUTPUT;
+		ESP_ERROR_CHECK(gpio_config(&io_conf));
+		gpio_set_level(gpio, level);
+	} else if(mode == MODE_INPUT) {
+		io_conf.mode = GPIO_MODE_INPUT;
+		io_conf.intr_type = GPIO_INTR_DISABLE;
+		io_conf.pull_down_en = GPIO_PULLDOWN_ENABLE;
+		ESP_ERROR_CHECK(gpio_config(&io_conf));
+	}
+}
+
+int touch_getx(TFT_t * dev)
+{
+	int xp = 0;
+	touch_gpio(dev->_gpio_yp, MODE_INPUT, 0);
+	touch_gpio(dev->_gpio_ym, MODE_INPUT, 0);
+	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 1);
+	touch_gpio(dev->_gpio_xm, MODE_OUTPUT, 0);
+
+	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
+	int samples[NUMSAMPLES];
+	for (int i=0; i<NUMSAMPLES; i++) {
+		samples[i] = touch_avr_analog(dev->_adc_yp, AVERAGETIME);
+	}
+	int icomp =  samples[0] > samples[1]? samples[0] - samples[1]: samples[1] -  samples[0];
+	ESP_LOGD(TAG, "adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP=%d", dev->_adc_yp, samples[0], samples[1], icomp, COMP);
+	if(icomp <= COMP) xp = samples[0] + samples[1];
+	return xp;
+}
+
+int touch_gety(TFT_t * dev)
+{
+	int yp = 0;
+	touch_gpio(dev->_gpio_yp, MODE_OUTPUT, 1);
+	touch_gpio(dev->_gpio_ym, MODE_OUTPUT, 0);
+	touch_gpio(dev->_gpio_xp, MODE_INPUT, 0);
+	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
+
+	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+	int samples[NUMSAMPLES];
+	for (int i=0; i<NUMSAMPLES; i++) {
+		samples[i] = touch_avr_analog(dev->_adc_xm, AVERAGETIME);
+	}
+	int icomp =  samples[0] > samples[1]? samples[0] - samples[1]: samples[1] -  samples[0];
+	ESP_LOGD(TAG, "adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP=%d", dev->_adc_xm, samples[0], samples[1], icomp, COMP);
+	if(icomp <= COMP) yp = samples[0] + samples[1];
+	return yp;
+
+}
+
+int touch_getz(TFT_t * dev)
+{
+	touch_gpio(dev->_gpio_yp, MODE_INPUT, 0);
+	touch_gpio(dev->_gpio_ym, MODE_OUTPUT, 1);
+	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 0);
+	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
+
+	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+	int z1 =	adc1_get_raw(dev->_adc_yp);
+	int z2 =	adc1_get_raw(dev->_adc_xm);
+
+	int icomp =  z1 > z2? z1 - z2: z2 -  z1;
+	ESP_LOGD(TAG, "z1=%d z2=%d icomp=%d", z1, z2, icomp);
+	return icomp;
+
+#if 0
+	float rtouch = 0;
+	rtouch	= z2;
+	rtouch /= z1;
+	rtouch -= 1;
+	rtouch *= (2046-dev->_rawxp)/2;
+	rtouch *= RXPLATE;
+	rtouch /= 1024;
+	ESP_LOGI(pcTaskGetTaskName(0), "rtouch=%f", rtouch);
+	return rtouch;
+#endif
+}
+
+void touch_getxyz(TFT_t * dev, int *xp, int *yp, int *zp)
+{
+	*xp = touch_getx(dev);
+	*yp = touch_gety(dev);
+	*zp = touch_getz(dev);
+	touch_gpio(dev->_gpio_yp, MODE_OUTPUT, 0);
+	touch_gpio(dev->_gpio_ym, MODE_OUTPUT, 0);
+	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 0);
+	touch_gpio(dev->_gpio_xm, MODE_OUTPUT, 0);
+}
+
+bool touch_getxy(TFT_t *dev, int *xp, int *yp)
+{
+	int _xp;
+	int _yp;
+	int _zp;
+	touch_getxyz(dev, &_xp, &_yp, &_zp);
+	if (_xp == 0) return false;
+	if (_yp == 0) return false;
+	if (_zp == 1023) return false;
+	*xp = _xp;
+	*yp = _yp;
+	return true;
+}	
