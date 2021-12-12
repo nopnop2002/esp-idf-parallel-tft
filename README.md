@@ -168,8 +168,8 @@ You can change any GPIO using menuconfig.
 When using REGISTER I/O parallel, GPIO from D0 to D7 is 1 to 31.(GPIO0 is boot mode pin)   
 
 (*3)   
-When a regulator(It's often AMS1117) is mounted on the back, it's operated 5V.   
-When a regulator is NOT mounted on the back, it's operated 3.3V.   
+With a regulator on the back (mostly AMS1117), the supply voltage is 5V.   
+When a regulator is NOT on the back, the supply voltage is 3.3V.   
 
 ![Back](https://user-images.githubusercontent.com/6020549/104248029-1f3afe00-54ac-11eb-913d-0a832fb569b2.JPG)
 
