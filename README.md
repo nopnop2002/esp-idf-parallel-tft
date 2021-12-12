@@ -330,6 +330,10 @@ The following wiring is additionally required.
 |(Y+)CS||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
+## Other TFT   
+I don't know which pin is X(+), X(-), Y(+), Y(-).   
+If you find, please tell me.
+
 ## Calibration   
 Keep touching the point.   
 ![TouchCalib-1](https://user-images.githubusercontent.com/6020549/145699311-fce1049d-bb9b-460a-9724-bab62cdbf674.JPG)
