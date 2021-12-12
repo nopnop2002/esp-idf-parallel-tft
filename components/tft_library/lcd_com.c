@@ -570,8 +570,13 @@ int touch_getz(TFT_t * dev)
 
 void touch_getxyz(TFT_t * dev, int *xp, int *yp, int *zp)
 {
+#if CONFIG_SWAP_XY
+	*yp = touch_getx(dev);
+	*xp = touch_gety(dev);
+#else
 	*xp = touch_getx(dev);
 	*yp = touch_gety(dev);
+#endif
 	*zp = touch_getz(dev);
 	touch_gpio(dev->_gpio_yp, MODE_OUTPUT, 0);
 	touch_gpio(dev->_gpio_ym, MODE_OUTPUT, 0);

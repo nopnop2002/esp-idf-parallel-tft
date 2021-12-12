@@ -327,68 +327,85 @@ menu "TFT Configuration"
 			If the difference from the previous position is within this range, it is considered valid.
 			The higher the value, the less accurate the position, but the less responsive it is.
 
-  choice XP_GPIO
-    depends on ENABLE_TOUCH
-    prompt "GPIO number (IOxx) to Touch X(+)"
-    default XP_GPIO_D6
-    help
-      GPIO number (IOxx) to Touch X(+).
-    config XP_GPIO_D6
-      bool "GPIO_D6"
-      help
-        "GPIO_D6"
-    config XP_GPIO_D0
-      bool "GPIO_D0"
-      help
-        "GPIO_D0"
-  endchoice
+	choice XP_GPIO
+		depends on ENABLE_TOUCH
+		prompt "GPIO number (IOxx) to Touch X(+)"
+		default XP_GPIO_D6
+		help
+			GPIO number (IOxx) to Touch X(+).
+		config XP_GPIO_D6
+			bool "GPIO_D6"
+			help
+				"GPIO_D6"
+		config XP_GPIO_D0
+			bool "GPIO_D0"
+			help
+				"GPIO_D0"
+		config XP_GPIO_D1
+			bool "GPIO_D1"
+			help
+				"GPIO_D1"
+	endchoice
 
-  choice XM_GPIO
-    depends on ENABLE_TOUCH
-    prompt "GPIO number (IOxx) to Touch X(-)"
-    default XM_GPIO_RS
-    help
-      GPIO number (IOxx) to Touch X(-).
-    config XM_GPIO_RS
-      bool "GPIO_RS"
-      help
-        "GPIO_D6"
-    config XM_GPIO_CS
-      bool "GPIO_CS"
-      help
-        "GPIO_CS"
-  endchoice
+	choice XM_GPIO
+		depends on ENABLE_TOUCH
+		prompt "GPIO number (IOxx) to Touch X(-)"
+		default XM_GPIO_RS
+		help
+			GPIO number (IOxx) to Touch X(-).
+		config XM_GPIO_RS
+			bool "GPIO_RS"
+			help
+				"GPIO_D6"
+		config XM_GPIO_CS
+			bool "GPIO_CS"
+			help
+				"GPIO_CS"
+	endchoice
 
-  choice YP_GPIO
-    depends on ENABLE_TOUCH
-    prompt "GPIO number (IOxx) to Touch Y(+)"
-    default YP_GPIO_WR
-    help
-      GPIO number (IOxx) to Touch Y(+).
-    config YP_GPIO_WR
-      bool "GPIO_WR"
-      help
-        "GPIO_WR"
-    config YP_GPIO_CS
-      bool "GPIO_CS"
-      help
-        "GPIO_CS"
-  endchoice
+	choice YP_GPIO
+		depends on ENABLE_TOUCH
+		prompt "GPIO number (IOxx) to Touch Y(+)"
+		default YP_GPIO_WR
+		help
+			GPIO number (IOxx) to Touch Y(+).
+		config YP_GPIO_WR
+			bool "GPIO_WR"
+			help
+				"GPIO_WR"
+		config YP_GPIO_CS
+			bool "GPIO_CS"
+			help
+				"GPIO_CS"
+		config YP_GPIO_RS
+			bool "GPIO_RS"
+			help
+				"GPIO_RS"
+	endchoice
 
-  choice YM_GPIO
-    depends on ENABLE_TOUCH
-    prompt "GPIO number (IOxx) to Touch Y(-)"
-    default YM_GPIO_D7
-    help
-      GPIO number (IOxx) to Touch Y(-).
-    config YM_GPIO_D1
-      bool "GPIO_D1"
-      help
-        "GPIO_D1"
-    config YM_GPIO_D7
-      bool "GPIO_D7"
-      help
-        "GPIO_D7"
-  endchoice
+	choice YM_GPIO
+		depends on ENABLE_TOUCH
+		prompt "GPIO number (IOxx) to Touch Y(-)"
+		default YM_GPIO_D7
+		help
+			GPIO number (IOxx) to Touch Y(-).
+		config YM_GPIO_D0
+			bool "GPIO_D0"
+			help
+				"GPIO_D0"
+		config YM_GPIO_D1
+			bool "GPIO_D1"
+			help
+				"GPIO_D1"
+		config YM_GPIO_D7
+			bool "GPIO_D7"
+			help
+				"GPIO_D7"
+	endchoice
 
+	config SWAP_XY
+		bool "Swap X and Y coordinates"
+		default false
+		help
+			Swap X and Y coordinates.
 endmenu

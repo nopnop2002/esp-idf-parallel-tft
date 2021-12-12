@@ -1088,7 +1088,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	dev->_calibration = false;
 }
 
-void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
 	// get font width & height
 	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
@@ -1118,7 +1118,7 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	//float _ys = height-10-10;
 	float _xs = dev->_max_xc - dev->_min_xc;
 	float _ys = dev->_max_yc - dev->_min_yc;
-	ESP_LOGI(TAG, "_xs=%f _ys=%f", _xs, _ys);
+	ESP_LOGD(TAG, "_xs=%f _ys=%f", _xs, _ys);
 
 	TickType_t lastTouched = xTaskGetTickCount();
 	bool isRunning = true;
@@ -1163,7 +1163,8 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 #endif
 			} else {
 				TickType_t current = xTaskGetTickCount();
-				if (current - lastTouched > 1000) {
+				//if (current - lastTouched > 1000) {
+				if (current - lastTouched > timeout) {
 					isRunning = false;
 					break;
 				}
@@ -1228,6 +1229,8 @@ void TFT(void *pvParameters)
   int gpio_xp = dev._d6;
 #elif CONFIG_XP_GPIO_D0
   int gpio_xp = dev._d0;
+#elif CONFIG_XP_GPIO_D1
+  int gpio_xp = dev._d1;
 #endif
 
 #if CONFIG_XM_GPIO_RS
@@ -1240,10 +1243,14 @@ void TFT(void *pvParameters)
   int gpio_yp = dev._wr;
 #elif CONFIG_YP_GPIO_CS
   int gpio_yp = dev._cs;
+#elif CONFIG_YP_GPIO_RS
+  int gpio_yp = dev._rs;
 #endif
 
 #if CONFIG_YM_GPIO_D7
   int gpio_ym = dev._d7;
+#elif CONFIG_YM_GPIO_D0
+  int gpio_ym = dev._d0;
 #elif CONFIG_YM_GPIO_D1
   int gpio_ym = dev._d1;
 #endif
@@ -1258,7 +1265,7 @@ void TFT(void *pvParameters)
 
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
 #endif
 	}
 #endif
@@ -1324,7 +1331,7 @@ void TFT(void *pvParameters)
 
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #endif
 
 		char file[32];

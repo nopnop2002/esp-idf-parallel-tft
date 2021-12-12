@@ -278,7 +278,7 @@ When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enabl
 |LCD_D6|LCD_RS|LCD_WR|LCD_D7|
 
 ![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
-![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145698688-45b3014a-a6aa-40b0-b7c0-6a597dad3ff3.jpg)
+![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
 - ADC Channel   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
@@ -305,7 +305,7 @@ But 4-line resistance touch screen available.
 |LCD_D6|LCD_RS|LCD_WR|LCD_D7|
 
 ![Touch-OpenSmart-Sheild-1](https://user-images.githubusercontent.com/6020549/145698700-a1fb42a7-27d0-438b-aaa1-07e15c87eda7.JPG)
-![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145698688-45b3014a-a6aa-40b0-b7c0-6a597dad3ff3.jpg)
+![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
@@ -321,8 +321,27 @@ But 4-line resistance touch screen available.
 |:-:|:-:|:-:|:-:|
 |LCD_D0|LCD_RS|LCD_CS|LCD_D1|
 
-![Touch-Elegoo-1](https://user-images.githubusercontent.com/6020549/145698831-b7d986b5-0152-4422-8ab2-b6b82fd9b58e.JPG)
-![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145698685-9bf1a02a-a6ef-4b91-9c50-19cc7103d5bb.jpg)
+![Touch-Elegoo-1](https://user-images.githubusercontent.com/6020549/145734702-a7719de0-3d7e-4f70-aada-e6f1cdd0ca20.JPG)
+![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145734683-78392b48-81ab-42e9-b3d9-2260c52de8d2.jpg)
+
+The following wiring is additionally required.   
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+## ILI9341 TFT-Shield with Yellow Pin-header   
+There is no marking about 4-line resistance touch screen.   
+But 4-line resistance touch screen available.   
+
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D1|LCD_CS|LCD_RS|LCD_D0|
+
+![Touch-ILI9341-1](https://user-images.githubusercontent.com/6020549/145734786-a717d42d-0ad8-441a-846c-e486e07c0839.JPG)
+![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145734683-78392b48-81ab-42e9-b3d9-2260c52de8d2.jpg)
+
+__You need to SWAP the X and Y coordinates.__   
 
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
@@ -343,7 +362,8 @@ Keep touching the point.
 ## Draw with touch   
 ![Touch-OpenSmat-16pin](https://user-images.githubusercontent.com/6020549/145699328-c065278a-39b9-4a11-b2f3-6ca5d54c6e3f.JPG)
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
-![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145698852-e79d67ad-2475-4045-bc37-c48df6f7060a.JPG)
+![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145734726-68d2272b-1452-47a9-b934-647f7a741ad1.JPG)
+![Touch-ILI9341-2](https://user-images.githubusercontent.com/6020549/145734734-ad6fa02b-9ba7-48e3-83a6-224e3637c18a.JPG)
 
 If there is no touch for 10 seconds, it will end,   
 
