@@ -293,8 +293,8 @@ Increasing this value will make the position more inaccurate but more responsive
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
-|LCD-WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|LCD-RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD-RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 ## OPEN-SMART TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
@@ -310,8 +310,8 @@ But 4-line resistance touch screen available.
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
-|(Y+)WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 ## ELEGOO TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
@@ -327,8 +327,8 @@ But 4-line resistance touch screen available.
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
-|(Y+)CS||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 ## Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
