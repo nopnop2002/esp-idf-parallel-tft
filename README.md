@@ -332,11 +332,12 @@ The following wiring is additionally required.
 
 ## Calibration   
 Keep touching the point.   
-![Touch1](https://user-images.githubusercontent.com/6020549/145660949-ba8a369b-b3c1-45e5-97d8-5e00b77be4cb.JPG)
-![Touch2](https://user-images.githubusercontent.com/6020549/145660951-3fc20a79-a79d-44d5-9172-ded5e6988f86.JPG)
+![TouchCalib-1](https://user-images.githubusercontent.com/6020549/145699311-fce1049d-bb9b-460a-9724-bab62cdbf674.JPG)
+![TouchCalib-2](https://user-images.githubusercontent.com/6020549/145699316-98171b90-70c7-4359-b72e-ed2f1cd4bf13.JPG)
+
 
 ## Draw with touch   
-![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
+![Touch-OpenSmat-16pin](https://user-images.githubusercontent.com/6020549/145699328-c065278a-39b9-4a11-b2f3-6ca5d54c6e3f.JPG)
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
 ![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145698852-e79d67ad-2475-4045-bc37-c48df6f7060a.JPG)
 
