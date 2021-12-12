@@ -413,6 +413,12 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		gpio_set_direction( LCD_D7_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_WR_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_level( LCD_WR_PIN, 1 );
+		dev->_d0 = LCD_D0_PIN;
+		dev->_d1 = LCD_D1_PIN;
+		dev->_d2 = LCD_D2_PIN;
+		dev->_d3 = LCD_D3_PIN;
+		dev->_d4 = LCD_D4_PIN;
+		dev->_d5 = LCD_D5_PIN;
 		dev->_d6 = LCD_D6_PIN;
 		dev->_d7 = LCD_D7_PIN;
 	}
@@ -436,16 +442,21 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 	return ESP_OK;
 }
 
-void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm)
+void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int gpio_xm, int gpio_yp, int gpio_ym)
 {
+	ESP_LOGI(TAG, "_adc_yp=%d _adc_xm=%d", dev->_adc_yp, dev->_adc_xm);
+	ESP_LOGI(TAG, "_gpio_xp=%d _gpio_xm=%d", gpio_xp, gpio_xm);
 	dev->_calibration = true;
 	dev->_adc_yp = adc_yp;
 	dev->_adc_xm = adc_xm;
-	dev->_gpio_xp = dev->_d6;
-	dev->_gpio_xm = dev->_rs;
-	dev->_gpio_yp = dev->_wr;
-	dev->_gpio_ym = dev->_d7;
-	ESP_LOGI(TAG, "_adc_yp=%d _adc_xm=%d", dev->_adc_yp, dev->_adc_xm);
+	//dev->_gpio_xp = dev->_d6;
+	//dev->_gpio_xm = dev->_rs;
+	//dev->_gpio_yp = dev->_wr;
+	//dev->_gpio_ym = dev->_d7;
+	dev->_gpio_xp = gpio_xp;
+	dev->_gpio_xm = gpio_xm;
+	dev->_gpio_yp = gpio_yp;
+	dev->_gpio_ym = gpio_ym;
 }
 
 int touch_avr_analog(adc1_channel_t channel, int averagetime)

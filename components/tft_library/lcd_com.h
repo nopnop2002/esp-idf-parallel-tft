@@ -36,6 +36,12 @@ typedef struct {
 	int16_t _wr;
 	int16_t _rs;
 	int16_t _cs;
+	int16_t _d0;
+	int16_t _d1;
+	int16_t _d2;
+	int16_t _d3;
+	int16_t _d4;
+	int16_t _d5;
 	int16_t _d6;
 	int16_t _d7;
 	int16_t _delay;
@@ -79,7 +85,7 @@ void lcd_write_register_word(TFT_t * dev, uint16_t addr, uint16_t data);
 void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data);
 esp_err_t lcd_interface_cfg(TFT_t * dev, int interface);
 
-void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm);
+void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int gpio_xm, int gpio_yp, int gpio_ym);
 int touch_avr_analog(adc1_channel_t channel, int averagetime);
 void touch_gpio(int gpio, int mode, int level);
 int touch_getx(TFT_t * dev);

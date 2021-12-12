@@ -262,12 +262,23 @@ lcdDrawString(dev, yourFont, x, y, ascii, color);
 ```
 
 # 4-line resistance touch screen   
-OPEN-SMART Products has 4-line resistance touch screen.   
-![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
+Some TFT has 4-line resistance touch screen.   
+The 4-line resistor touch screen uses 4 pins.   
+- X(+):Digital Output
+- X(-):Digital Output/Analog Input
+- Y(+):Digital Output/Analog Input
+- Y(-):Digital Output
+
 
 When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
 
-![config-touch](https://user-images.githubusercontent.com/6020549/145660587-328b27de-66e8-4325-b0f3-1684f91b91c8.jpg)
+## OPEN-SMART 16Pin-Parallel Products   
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D6|LCD_RS|LCD_WR|LCD_D7|
+
+![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
+![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145698688-45b3014a-a6aa-40b0-b7c0-6a597dad3ff3.jpg)
 
 - ADC Channel   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
@@ -279,21 +290,45 @@ The difference between the coordinates read last time and the coordinates read t
 Decreasing this value will make the position more accurate, but less responsive.   
 Increasing this value will make the position more inaccurate but more responsive.   
 
-
-## Additional wiring for OPEN-SMART TFT-Shield   
-
+The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD-WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD-RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
-## Additional wiring for OPEN-SMART 16Pin-Parallel   
+## OPEN-SMART TFT-Shield Products   
+There is no marking about 4-line resistance touch screen.   
+But 4-line resistance touch screen available.   
 
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D6|LCD_RS|LCD_WR|LCD_D7|
+
+![Touch-OpenSmart-Sheild-1](https://user-images.githubusercontent.com/6020549/145698700-a1fb42a7-27d0-438b-aaa1-07e15c87eda7.JPG)
+![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145698688-45b3014a-a6aa-40b0-b7c0-6a597dad3ff3.jpg)
+
+The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |(Y+)WR||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
+## ELEGOO TFT-Shield Products   
+There is no marking about 4-line resistance touch screen.   
+But 4-line resistance touch screen available.   
+
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D0|LCD_RS|LCD_CS|LCD_D1|
+
+![Touch-Elegoo-1](https://user-images.githubusercontent.com/6020549/145698831-b7d986b5-0152-4422-8ab2-b6b82fd9b58e.JPG)
+![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145698685-9bf1a02a-a6ef-4b91-9c50-19cc7103d5bb.jpg)
+
+The following wiring is additionally required.   
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|(Y+)CS||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|(X-)RS||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 ## Calibration   
 Keep touching the point.   
@@ -302,6 +337,8 @@ Keep touching the point.
 
 ## Draw with touch   
 ![Touch3](https://user-images.githubusercontent.com/6020549/145660961-9317e203-ddfa-45b9-abde-c5433b1904af.JPG)
+![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
+![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145698852-e79d67ad-2475-4045-bc37-c48df6f7060a.JPG)
 
 If there is no touch for 10 seconds, it will end,   
 

@@ -1135,8 +1135,16 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 			if (touch_getxy(dev, &_xp, &_yp)) { 
 				ESP_LOGI(TAG, "_max_xp=%d _min_xp=%d _xp=%d", dev->_max_xp, dev->_min_xp, _xp);
 				ESP_LOGI(TAG, "_max_yp=%d _min_yp=%d _yp=%d", dev->_max_yp, dev->_min_yp, _yp);
-				if (_xp < dev->_max_xp && _xp > dev->_min_xp) continue;
-				if (_yp < dev->_max_yp && _yp > dev->_min_yp) continue;
+				if (dev->_max_xp > dev->_min_xp) {
+					if (_xp < dev->_min_xp && _xp > dev->_max_xp) continue;
+				} else {
+					if (_xp < dev->_max_xp && _xp > dev->_min_xp) continue;
+				}
+				if (dev->_max_yp > dev->_min_yp) {
+					if (_yp < dev->_min_yp && _yp > dev->_max_yp) continue;
+				} else {
+					if (_yp < dev->_max_yp && _yp > dev->_min_yp) continue;
+				}
 				// Convert from position to coordinate
 				//_xpos = ( (float)(_xp - dev->_min_xp) / _xd * _xs ) + 10;
 				//_ypos = ( (float)(_yp - dev->_min_yp) / _yd * _ys ) + 10;
@@ -1215,8 +1223,32 @@ void TFT(void *pvParameters)
 #endif
 
 #if CONFIG_ENABLE_TOUCH
-	//touch_interface_cfg(&dev, 6, 7);
-	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM);
+
+#if CONFIG_XP_GPIO_D6
+  int gpio_xp = dev._d6;
+#elif CONFIG_XP_GPIO_D0
+  int gpio_xp = dev._d0;
+#endif
+
+#if CONFIG_XM_GPIO_RS
+  int gpio_xm = dev._rs;
+#elif CONFIG_XM_GPIO_CS
+  int gpio_xm = dev._cs;
+#endif
+
+#if CONFIG_YP_GPIO_WR
+  int gpio_yp = dev._wr;
+#elif CONFIG_YP_GPIO_CS
+  int gpio_yp = dev._cs;
+#endif
+
+#if CONFIG_YM_GPIO_D7
+  int gpio_ym = dev._d7;
+#elif CONFIG_YM_GPIO_D1
+  int gpio_ym = dev._d1;
+#endif
+	//touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM);
+	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM, gpio_xp, gpio_xm, gpio_yp, gpio_ym);
 #endif
 
 #if 0
