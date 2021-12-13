@@ -330,24 +330,26 @@ The following wiring is additionally required.
 |LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
+__No additional wiring is required when using the Wemos D1 ESP32.__   
+
 ## ILI9341 TFT-Shield with Yellow Pin-header   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
 |X(+)|X(-)|Y(+)|Y(-)|
 |:-:|:-:|:-:|:-:|
-|LCD_D1|LCD_CS|LCD_RS|LCD_D0|
+|LCD_D0|LCD_RS|LCD_CS|LCD_D1|
 
 ![Touch-ILI9341-1](https://user-images.githubusercontent.com/6020549/145734786-a717d42d-0ad8-441a-846c-e486e07c0839.JPG)
-![config-touch-ili9341](https://user-images.githubusercontent.com/6020549/145734963-1a4708c8-c345-4731-b67d-0f2a0c8c5aab.jpg)
-
-__You need to SWAP the X and Y coordinates.__   
+![config-touch-ili9341](https://user-images.githubusercontent.com/6020549/145743627-90385ca4-0753-41b3-8d95-40f5db5231db.jpg)
 
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
-|LCD_RS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|LCD_CS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+__No additional wiring is required when using the Wemos D1 ESP32.__   
 
 ## Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
