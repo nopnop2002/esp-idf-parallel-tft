@@ -346,8 +346,8 @@ __You need to SWAP the X and Y coordinates.__
 The following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
-|LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|LCD_RS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_CS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 ## Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
