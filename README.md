@@ -340,7 +340,7 @@ The following wiring is additionally required.
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 __No additional wiring is required when using the Wemos D1 ESP32.__   
-__It's very good.__   
+__LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
 ## ILI9341 TFT-Shield with Yellow Pin-header   
 There is no marking about 4-line resistance touch screen.   
@@ -360,7 +360,7 @@ The following wiring is additionally required.
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 __No additional wiring is required when using the Wemos D1 ESP32.__   
-__It's very good.__   
+__LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
 ## Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
