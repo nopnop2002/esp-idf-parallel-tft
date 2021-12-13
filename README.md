@@ -339,7 +339,7 @@ But 4-line resistance touch screen available.
 |LCD_D1|LCD_CS|LCD_RS|LCD_D0|
 
 ![Touch-ILI9341-1](https://user-images.githubusercontent.com/6020549/145734786-a717d42d-0ad8-441a-846c-e486e07c0839.JPG)
-![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145734683-78392b48-81ab-42e9-b3d9-2260c52de8d2.jpg)
+![config-touch-ili9341](https://user-images.githubusercontent.com/6020549/145734963-1a4708c8-c345-4731-b67d-0f2a0c8c5aab.jpg)
 
 __You need to SWAP the X and Y coordinates.__   
 
