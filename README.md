@@ -224,7 +224,7 @@ The TFT shield worked fine.
 It's very smart.   
 ![WeMos-R32-13](https://user-images.githubusercontent.com/6020549/107716751-6c152d00-6d15-11eb-88ba-969947d759a9.JPG)
 
-![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/107591029-0eb5a900-6c4d-11eb-9599-00f1d011499f.jpg)
+![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/145746743-9c4a0e7c-5315-496f-8f66-129115044091.jpg)
 
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
