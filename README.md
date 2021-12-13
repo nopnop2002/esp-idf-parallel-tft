@@ -285,6 +285,8 @@ When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enabl
 ![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
 - ADC Channel   
+When reading analog values, ESP-IDF can use ADC1 and ADC2.   
+This project use ADC1 to read analog value.   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2 has 10 channels: GPIO01 - GPIO10.   
 
@@ -316,6 +318,9 @@ The following wiring is additionally required.
 |:-:|:-:|:-:|:-:|
 |LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+__4-line resistance touch screen cannot be used with the Wemos D1 ESP32.__   
+__Because LCD_WR (GPIO4) is ADC2_0.__
 
 ## ELEGOO TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
