@@ -342,7 +342,7 @@ The following wiring is additionally required.
 __No additional wiring is required when using the Wemos D1 ESP32.__   
 __LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
-## ILI9341 TFT-Shield with Yellow Pin-header   
+## ILI9341 2.4inch TFT-Shield with Yellow Pin-header   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
@@ -362,6 +362,23 @@ The following wiring is additionally required.
 __No additional wiring is required when using the Wemos D1 ESP32.__   
 __LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
+## ILI9486 3.5inch TFT-Shield   
+There is no marking about 4-line resistance touch screen.   
+But 4-line resistance touch screen available.   
+
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D6|LCD_RS|LCD_WR|LCD_D7|
+
+![Touch-ILI9486-1](https://user-images.githubusercontent.com/6020549/146495127-f5013a91-fe23-467b-ae02-5dd3e58ccf45.JPG)
+![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
+
+The following wiring is additionally required.   
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
+|LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
 ## Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
 If you find, please tell me.
@@ -377,6 +394,7 @@ Keep touching the point.
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
 ![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145734726-68d2272b-1452-47a9-b934-647f7a741ad1.JPG)
 ![Touch-ILI9341-2](https://user-images.githubusercontent.com/6020549/145734734-ad6fa02b-9ba7-48e3-83a6-224e3637c18a.JPG)
+![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
 If there is no touch for 10 seconds, it will end,   
 
