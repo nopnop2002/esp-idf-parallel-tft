@@ -390,13 +390,13 @@ Keep touching the point.
 
 
 ## Draw with touch   
+If there is no touch for 10 seconds, it will end.   
 ![Touch-OpenSmat-16pin](https://user-images.githubusercontent.com/6020549/145699328-c065278a-39b9-4a11-b2f3-6ca5d54c6e3f.JPG)
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
 ![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145734726-68d2272b-1452-47a9-b934-647f7a741ad1.JPG)
 ![Touch-ILI9341-2](https://user-images.githubusercontent.com/6020549/145734734-ad6fa02b-9ba7-48e3-83a6-224e3637c18a.JPG)
 ![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
-If there is no touch for 10 seconds, it will end.   
 
 ## How dose it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
