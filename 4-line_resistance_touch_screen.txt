@@ -2,18 +2,18 @@
 Y(+)          Y(-)          X(+)          X(-)
 INPUT         INPUT         OUTPUT(HIGH)  OUTPUT(LOW)
 Read the analog value twice from Y(+).
-X=valueYP[0]+valueYP[1]
+X=valueY(+)[0]+valueY(+)[1]
 
 - How to get Y coordinates.
 Y(+)          Y(-)          X(+)          X(-)
 OUTPUT(HIGH)  OUTPUT(LOW)   INPUT         INPUT
 Read the analog value twice from X(-).
-Y=valueXM[0]+valueXM[1]
+Y=valueX(-)[0]+valueX(-)[1]
 
 - How to get Z value.
 Y(+)          Y(-)          X(+)          X(-)
 INTPU         OUTPUT(HIGH)  OUTPUT(LOW)   INPUT
 Read the analog value from Y(+).
 Read the analog value from X(-).
-Z=ABS(valueYP-valueXM)
+Z=ABS(valueY(+)-valueX(-))
 
