@@ -304,6 +304,17 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 |LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD-RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
+LCD-WR(Y+) and ESP32 are connected by two wires.   
+LCD-RS(X-) and ESP32 are connected by two wires.   
+
+```
+LCD-WR(Y+) ----+---- Gpio for LCD-WR
+               +---- Gpio for ADC1 Channel#6
+
+LCD-RS(X-) ----+---- Gpio for LCD-RS
+               +---- Gpio for ADC1 Channel#7
+```
+
 ## OPEN-SMART TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
