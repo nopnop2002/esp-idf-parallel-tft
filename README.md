@@ -289,6 +289,7 @@ When reading analog values, ESP-IDF can use ADC1 and ADC2.
 This project use ADC1 to read analog value.   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2 has 10 channels: GPIO01 - GPIO10.   
+Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
 
 - Touch position accuacy   
 The coordinates read from Y(+) and X(-) are analog values.   
@@ -296,7 +297,8 @@ The difference between the coordinates read last time and the coordinates read t
 Decreasing this value will make the position more accurate, but less responsive.   
 Increasing this value will make the position more inaccurate but more responsive.   
 
-The following wiring is additionally required.   
+
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
