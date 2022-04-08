@@ -276,6 +276,20 @@ The 4-line resistor touch screen uses 4 pins.
 
 When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
 
+ESP32 cannot provide digital output and analog input with a single GPIO.   
+(X-)RS and ESP32 are connected by two wires.   
+(Y+)WR and ESP32 are connected by two wires.   
+
+```
+(X-)RS ----+---- Gpio for Output RS
+           +---- Gpio for Reading X-
+
+(Y+)WR ----+---- Gpio for Output WR
+           +---- Gpio for Reading Y+
+```
+
+
+
 ## OPEN-SMART 16Pin-Parallel Products   
 |X(+)|X(-)|Y(+)|Y(-)|
 |:-:|:-:|:-:|:-:|
@@ -297,23 +311,12 @@ The difference between the coordinates read last time and the coordinates read t
 Decreasing this value will make the position more accurate, but less responsive.   
 Increasing this value will make the position more inaccurate but more responsive.   
 
-
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD-RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
-LCD-WR(Y+) and ESP32 are connected by two wires.   
-LCD-RS(X-) and ESP32 are connected by two wires.   
-
-```
-LCD-WR(Y+) ----+---- Gpio for LCD-WR
-               +---- Gpio for ADC1 Channel#6
-
-LCD-RS(X-) ----+---- Gpio for LCD-RS
-               +---- Gpio for ADC1 Channel#7
-```
 
 ## OPEN-SMART TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
