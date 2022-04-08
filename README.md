@@ -276,7 +276,7 @@ The 4-line resistor touch screen uses 4 pins.
 
 When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
 
-ESP32 cannot provide digital output and analog input with a single GPIO.   
+ESP-IDF cannot provide both digital output and analog input at the same time using a single gpio.   
 (X-) and ESP32 are connected by two wires.   
 (Y+) and ESP32 are connected by two wires.   
 
