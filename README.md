@@ -281,12 +281,13 @@ Two GPIOs are required to perform digital output and analog input.
 (X-) and ESP32 are connected by two wires.   
 (Y+) and ESP32 are connected by two wires.   
 
-```
-(X-) ----+---- Gpio for Digital Output
-         +---- Gpio for Analog Input
 
-(Y+) ----+---- Gpio for Digital Output
-         +---- Gpio for Analog Input
+```
+(X-) ----+---- Gpio for Digital Output(Using GPIO number)
+         +---- Gpio for Analog Input(Using ADC1 Channel number)
+
+(Y+) ----+---- Gpio for Digital Output(Using GPIO number)
+         +---- Gpio for Analog Input(Using ADC1 Channel number)
 ```
 
 ## OPEN-SMART 16Pin-Parallel Products   
