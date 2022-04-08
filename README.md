@@ -310,7 +310,7 @@ The difference between the coordinates read last time and the coordinates read t
 Decreasing this value will make the position more accurate, but less responsive.   
 Increasing this value will make the position more inaccurate but more responsive.   
 
-When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is required.   
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
@@ -328,7 +328,7 @@ But 4-line resistance touch screen available.
 ![Touch-OpenSmart-Sheild-1](https://user-images.githubusercontent.com/6020549/145698700-a1fb42a7-27d0-438b-aaa1-07e15c87eda7.JPG)
 ![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
-The following wiring is additionally required.   
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
@@ -348,7 +348,7 @@ But 4-line resistance touch screen available.
 ![Touch-Elegoo-1](https://user-images.githubusercontent.com/6020549/145734702-a7719de0-3d7e-4f70-aada-e6f1cdd0ca20.JPG)
 ![config-touch-elegoo](https://user-images.githubusercontent.com/6020549/145734683-78392b48-81ab-42e9-b3d9-2260c52de8d2.jpg)
 
-The following wiring is additionally required.   
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
@@ -368,7 +368,7 @@ But 4-line resistance touch screen available.
 ![Touch-ILI9341-1](https://user-images.githubusercontent.com/6020549/145734786-a717d42d-0ad8-441a-846c-e486e07c0839.JPG)
 ![config-touch-ili9341](https://user-images.githubusercontent.com/6020549/145743627-90385ca4-0753-41b3-8d95-40f5db5231db.jpg)
 
-The following wiring is additionally required.   
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD_CS(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
@@ -388,7 +388,7 @@ But 4-line resistance touch screen available.
 ![Touch-ILI9486-1](https://user-images.githubusercontent.com/6020549/146495127-f5013a91-fe23-467b-ae02-5dd3e58ccf45.JPG)
 ![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
-The following wiring is additionally required.   
+When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
