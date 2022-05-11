@@ -112,6 +112,8 @@ You have to set this config value with menuconfig.
  This is for Arduino UNO.   
  Do not use this on the ESP32 as the GPIO on the ESP32 is not 5V tolerant.   
  __Never believe the seller's information.__   
+ I'll say it again.   
+ __Never believe the seller's information.__   
 - CONFIG_INTERFACE   
  Most drivers work using I2S parallel.   
  However, some drivers only work using GPIO parallels or REGISTER I/O parallels.   
