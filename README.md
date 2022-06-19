@@ -237,7 +237,7 @@ It's very smart.
 
 ![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107725257-2e220400-6d29-11eb-808a-a440336780d6.jpg)
 
-__If you use OPEN-SMART TFT-Shield Products, you have to use Custom GPIO.__   
+__If you use OPEN-SMART TFT-Shield Products, you have to change Custom GPIO.__   
 
 ![WeMos-R32-OpenSmart](https://user-images.githubusercontent.com/6020549/145744630-bce9eac3-3039-4cf6-952f-28c8ec277ec2.jpg)
 
