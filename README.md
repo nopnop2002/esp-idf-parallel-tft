@@ -74,11 +74,8 @@ These are OPEN-SMART 16Pin-Parallel Products.
 ![OPEN-SMART-16Pin](https://user-images.githubusercontent.com/6020549/110071604-ad9e7280-7dbf-11eb-8e09-a9ebfacfd795.JPG)
 
 # Software requirements
-esp-idf v4.4.   
+esp-idf v4.4 or later.   
 The i2s driver for esp32s2 is supported.   
-
-__Note about esp-idf v5.x__   
-There is no GPIO class in esp-idf v5.x.
 
 # Installation for ESP32
 
