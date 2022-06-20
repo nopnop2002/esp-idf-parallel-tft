@@ -20,4 +20,5 @@ set(component_srcs "fontx.c"
 	)
 
 idf_component_register(SRCS "${component_srcs}"
+                       PRIV_REQUIRES driver
                        INCLUDE_DIRS ".")

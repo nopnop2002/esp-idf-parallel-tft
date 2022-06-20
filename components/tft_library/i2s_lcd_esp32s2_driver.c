@@ -22,7 +22,13 @@
 #include "freertos/semphr.h"
 #include "esp_log.h"
 #include "driver/gpio.h"
+#include "esp32s2/rom/gpio.h"
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+#include "esp_private/periph_ctrl.h"
+#endif
+#include "soc/gpio_periph.h"
 #include "driver/i2s.h"
+#include "soc/i2s_struct.h"
 #include "esp_heap_caps.h"
 #include "esp32s2/rom/lldesc.h"
 #include "soc/system_reg.h"
@@ -38,6 +44,11 @@ static const char *TAG = "ESP32S2_I2S_LCD";
 
 #define LCD_CAM_DMA_NODE_BUFFER_MAX_SIZE  (4000) // 4-byte aligned
 #define LCD_DATA_MAX_WIDTH (24)  /*!< Maximum width of LCD data bus */
+
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
+#define ets_delay_us esp_rom_delay_us
+#define portTICK_RATE_MS portTICK_PERIOD_MS
+#endif
 
 typedef struct {
     uint32_t dma_buffer_size;
@@ -435,6 +446,16 @@ esp_err_t i2s_lcd_write_cmd(i2s_lcd_handle_t handle, uint16_t cmd)
     I2S_CHECK(NULL != i2s_lcd_drv, "handle pointer invalid", ESP_ERR_INVALID_ARG);
     gpio_set_level(i2s_lcd_drv->rs_io_num, LCD_CMD_LEV);
     i2s_write_data(i2s_lcd_drv->i2s_lcd_obj, (uint8_t *)&cmd, i2s_lcd_drv->i2s_lcd_obj->width == 16 ? 2 : 1);
+    gpio_set_level(i2s_lcd_drv->rs_io_num, LCD_DATA_LEV);
+    return ESP_OK;
+}
+
+esp_err_t i2s_lcd_write_command(i2s_lcd_handle_t handle, const uint8_t *cmd, uint32_t length)
+{
+    i2s_lcd_driver_t *i2s_lcd_drv = (i2s_lcd_driver_t *)handle;
+    I2S_CHECK(NULL != i2s_lcd_drv, "handle pointer invalid", ESP_ERR_INVALID_ARG);
+    gpio_set_level(i2s_lcd_drv->rs_io_num, LCD_CMD_LEV);
+    i2s_write_data(i2s_lcd_drv->i2s_lcd_obj, (uint8_t *)cmd, length);
     gpio_set_level(i2s_lcd_drv->rs_io_num, LCD_DATA_LEV);
     return ESP_OK;
 }

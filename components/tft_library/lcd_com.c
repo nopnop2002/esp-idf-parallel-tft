@@ -8,6 +8,7 @@
 #include "soc/dport_reg.h"
 #include "lcd_com.h"
 #include "i2s_lcd_driver.h"
+#include "hal/gpio_ll.h" // idf-py ver5
 #include "driver/gpio.h"
 #include "driver/adc_common.h"
 
@@ -162,7 +163,7 @@ void lcd_write_comm_byte(TFT_t * dev, uint8_t cmd)
 		reg_lcd_write_data(GPIO_PORT_NUM, c, 1);
 	}
 	gpio_set_level(dev->_cs, 1);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_write_comm_word(TFT_t * dev, uint16_t cmd)
@@ -182,7 +183,7 @@ void lcd_write_comm_word(TFT_t * dev, uint16_t cmd)
 		reg_lcd_write_data(GPIO_PORT_NUM, c, 2);
 	}
 	gpio_set_level(dev->_cs, 1);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_write_data_byte(TFT_t * dev, uint8_t data)
@@ -201,7 +202,7 @@ void lcd_write_data_byte(TFT_t * dev, uint8_t data)
 		reg_lcd_write_data(GPIO_PORT_NUM, d, 1);
 	}
 	gpio_set_level(dev->_cs, 1);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 
@@ -222,7 +223,7 @@ void lcd_write_data_word(TFT_t * dev, uint16_t data)
 		reg_lcd_write_data(GPIO_PORT_NUM, d, 2);
 	}
 	gpio_set_level(dev->_cs, 1);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_write_addr(TFT_t * dev, uint16_t addr1, uint16_t addr2)
@@ -245,7 +246,7 @@ void lcd_write_addr(TFT_t * dev, uint16_t addr1, uint16_t addr2)
 		reg_lcd_write_data(GPIO_PORT_NUM, c, 4);
 	}
 	gpio_set_level(dev->_cs, 1);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_write_color(TFT_t * dev, uint16_t color, uint16_t size)
@@ -270,7 +271,7 @@ void lcd_write_color(TFT_t * dev, uint16_t color, uint16_t size)
 	}
 	gpio_set_level(dev->_cs, 1);
 	free(data);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size)
@@ -295,12 +296,12 @@ void lcd_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size)
 	}
 	gpio_set_level(dev->_cs, 1);
 	free(data);
-	if (dev->_delay != 0) ets_delay_us(dev->_delay);
+	if (dev->_delay != 0) esp_rom_delay_us(dev->_delay);
 }
 
 void lcd_delay_ms(int delay_time)
 {
-	vTaskDelay(delay_time/portTICK_RATE_MS);
+	vTaskDelay(delay_time/portTICK_PERIOD_MS);
 }
 
 void lcd_write_register_word(TFT_t * dev, uint16_t addr, uint16_t data)
@@ -327,24 +328,24 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 	}
 #endif
 	ESP_LOGI(TAG, "LCD_CS_PIN=%d",LCD_CS_PIN);
-	gpio_pad_select_gpio( LCD_CS_PIN );
+	gpio_reset_pin( LCD_CS_PIN );
 	gpio_set_direction( LCD_CS_PIN, GPIO_MODE_OUTPUT );
 	gpio_set_level( LCD_CS_PIN, 1 );
 
 	ESP_LOGI(TAG, "LCD_RS_PIN=%d",LCD_RS_PIN);
-	gpio_pad_select_gpio( LCD_RS_PIN );
+	gpio_reset_pin( LCD_RS_PIN );
 	gpio_set_direction(LCD_RS_PIN, GPIO_MODE_OUTPUT);
 	gpio_set_level( LCD_RS_PIN, 1 );
 
 #if 0
 	ESP_LOGI(TAG, "LCD_WR_PIN=%d",LCD_WR_PIN);
-	gpio_pad_select_gpio( LCD_WR_PIN );
+	gpio_reset_pin( LCD_WR_PIN );
 	gpio_set_direction( LCD_WR_PIN, GPIO_MODE_OUTPUT );
 	gpio_set_level( LCD_WR_PIN, 1 );
 #endif
 
 	ESP_LOGI(TAG, "LCD_RD_PIN=%d",LCD_RD_PIN);
-	gpio_pad_select_gpio( LCD_RD_PIN );
+	gpio_reset_pin( LCD_RD_PIN );
 	gpio_set_direction( LCD_RD_PIN, GPIO_MODE_OUTPUT );
 	gpio_set_level( LCD_RD_PIN, 1 );
 
@@ -394,15 +395,15 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		} else {
 			ESP_LOGI(TAG, "INTERFACE is REGISTER I/O");
 		}
-		gpio_pad_select_gpio( LCD_D0_PIN );
-		gpio_pad_select_gpio( LCD_D1_PIN );
-		gpio_pad_select_gpio( LCD_D2_PIN );
-		gpio_pad_select_gpio( LCD_D3_PIN );
-		gpio_pad_select_gpio( LCD_D4_PIN );
-		gpio_pad_select_gpio( LCD_D5_PIN );
-		gpio_pad_select_gpio( LCD_D6_PIN );
-		gpio_pad_select_gpio( LCD_D7_PIN );
-		gpio_pad_select_gpio( LCD_WR_PIN );
+		gpio_reset_pin( LCD_D0_PIN );
+		gpio_reset_pin( LCD_D1_PIN );
+		gpio_reset_pin( LCD_D2_PIN );
+		gpio_reset_pin( LCD_D3_PIN );
+		gpio_reset_pin( LCD_D4_PIN );
+		gpio_reset_pin( LCD_D5_PIN );
+		gpio_reset_pin( LCD_D6_PIN );
+		gpio_reset_pin( LCD_D7_PIN );
+		gpio_reset_pin( LCD_WR_PIN );
 		gpio_set_direction( LCD_D0_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D1_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D2_PIN, GPIO_MODE_OUTPUT );
@@ -425,7 +426,7 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 
 
 	ESP_LOGI(TAG, "LCD_RESET_PIN=%d",LCD_RESET_PIN);
-	gpio_pad_select_gpio( LCD_RESET_PIN );
+	gpio_reset_pin( LCD_RESET_PIN );
 	gpio_set_direction( LCD_RESET_PIN, GPIO_MODE_OUTPUT );
 	gpio_set_level( LCD_RESET_PIN, 1 );
 	vTaskDelay( pdMS_TO_TICKS( 100 ) );
