@@ -101,6 +101,9 @@ __Note__
 - tjpgd library does not exist in ESP32-S2 ROM. Therefore, the JPEG file cannot be displayed.
 - PNG file cannot be displayed because the SRAM is small.   
 
+# Installation for ESP32-S3
+i2s_lcd_esp32s3_driver.c does not exist yet in [here](https://github.com/espressif/esp-iot-solution/tree/master/components/bus).   
+
 # Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
@@ -142,7 +145,7 @@ You have to set this config value with menuconfig.
 
 # Wireing  
 
-|TFT||ESP32|ESP32S2/S3||
+|TFT||ESP32|ESP32S2||
 |:-:|:-:|:-:|:-:|:-:|
 |LDC_RST|--|GPIO32|GPIO45|*1|
 |LDC_CS|--|GPIO33|GPIO42|*1|
@@ -155,8 +158,8 @@ You have to set this config value with menuconfig.
 |LDC_D3|--|GPIO25|GPIO4|*1 *2|
 |LDC_D4|--|GPIO17|GPIO5|*1 *2|
 |LDC_D5|--|GPIO16|GPIO6|*1 *2|
-|LDC_D6|--|GPIO27|GPIO7|*1 *2|
-|LDC_D7|--|GPIO14|GPIO8|*1 *2|
+|LDC_D6|--|GPIO27|GPIO11|*1 *2|
+|LDC_D7|--|GPIO14|GPIO12|*1 *2|
 |5V|--|5V|5V|*3|
 |3.3V|--|3.3V|3.3V|*3|
 |GND|--|GND|GND||

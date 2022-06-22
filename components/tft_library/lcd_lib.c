@@ -5,6 +5,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#define __TFT_LIB_C__
 #include "lcd_com.h"
 #include "lcd_lib.h"
 

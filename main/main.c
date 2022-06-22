@@ -1260,7 +1260,10 @@ void TFT(void *pvParameters)
 
 #if 0
 	while(1) {
+		ESP_LOGI(TAG, "ADC_WIDTH_BIT_DEFAULT=%d", ADC_WIDTH_BIT_DEFAULT);
 		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, BLACK);
+		WAIT;
+		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, WHITE);
 		WAIT;
 
 #if CONFIG_ENABLE_TOUCH

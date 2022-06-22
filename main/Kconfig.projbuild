@@ -234,7 +234,7 @@ menu "TFT Configuration"
 		int "D6 GPIO number"
 		range 0 46
 		default 27 if IDF_TARGET_ESP32
-		default 7 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 11 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D6.
 
@@ -243,7 +243,7 @@ menu "TFT Configuration"
 		int "D7 GPIO number"
 		range 0 46
 		default 14 if IDF_TARGET_ESP32
-		default 8 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 12 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		help
 			GPIO number (IOxx) to LCD D7.
 

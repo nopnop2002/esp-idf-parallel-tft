@@ -19,18 +19,34 @@
 #define DIRECTION180	2
 #define DIRECTION270	3
 
+/*
+The version of GCC has changed.
+In GCC 10.2.1, I get a "multiple definitions" error, but not in GCC 8.3.0.
+There was a change in behaviour about global variables between GCC 8.3.0 and GCC 10.2.1.
+In C you are supposed to only define a global variable in one translation unit,
+other translation unit that want to access the variable should declare it as "extern".
+GCC 8.3.0 has a collaborative definition, so no error occurs.
+But GCC 10.2.1 don't have cooperative definition, so error occurs.
+*/
+
+#ifndef __TFT_LIB_C__
+	#define DECLARE extern
+#else
+	#define DECLARE
+#endif
+
 // Controller-dependent function
-void (*DrawPixel)(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
-void (*DrawMultiPixels)(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
-void (*DrawFillRect)(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
-void (*DisplayOff)(TFT_t * dev);
-void (*DisplayOn)(TFT_t * dev);
-void (*InversionOff)(TFT_t * dev);
-void (*InversionOn)(TFT_t * dev);
-bool (*EnableScroll)(TFT_t * dev);
-void (*SetScrollArea)(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t bfa);
-void (*ResetScrollArea)(TFT_t * dev, uint16_t vsa);
-void (*StartScroll)(TFT_t * dev, uint16_t vsp);
+DECLARE void (*DrawPixel)(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
+DECLARE void (*DrawMultiPixels)(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
+DECLARE void (*DrawFillRect)(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+DECLARE void (*DisplayOff)(TFT_t * dev);
+DECLARE void (*DisplayOn)(TFT_t * dev);
+DECLARE void (*InversionOff)(TFT_t * dev);
+DECLARE void (*InversionOn)(TFT_t * dev);
+DECLARE bool (*EnableScroll)(TFT_t * dev);
+DECLARE void (*SetScrollArea)(TFT_t * dev, uint16_t tfa, uint16_t vsa, uint16_t bfa);
+DECLARE void (*ResetScrollArea)(TFT_t * dev, uint16_t vsa);
+DECLARE void (*StartScroll)(TFT_t * dev, uint16_t vsp);
 
 // Global function
 void lcdInitDevice(TFT_t * dev, int width, int height, int offsetx, int offsety);
