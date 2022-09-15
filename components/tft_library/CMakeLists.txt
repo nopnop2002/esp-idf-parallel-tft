@@ -17,6 +17,7 @@ set(component_srcs "fontx.c"
 	"hx8347.c"
 	"i2s_lcd_esp32_driver.c"
 	"i2s_lcd_esp32s2_driver.c"
+    "8080_lcd_esp32s3.c"
 	)
 
 idf_component_register(SRCS "${component_srcs}"
