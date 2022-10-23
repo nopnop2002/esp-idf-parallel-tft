@@ -283,8 +283,8 @@ When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enabl
 
 ESP-IDF cannot simultaneous both digital output and analog input using a single gpio.   
 Two GPIOs are required for simultaneous digital output and analog input.   
-(X-) and ESP32 connecte by two wires.   
-(Y+) and ESP32 connecte by two wires.   
+(X-) and ESP32 are connected with two wires.   
+(Y+) and ESP32 are connected with two wires.   
 
 ```
 (X-) ----+---- Gpio for Digital Output(Using GPIO number)
