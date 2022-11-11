@@ -77,6 +77,14 @@ These are OPEN-SMART 16Pin-Parallel Products.
 esp-idf v4.4 or later.   
 The i2s driver for esp32s2 is supported.   
 
+__Note for ESP-IDF V5.0__   
+ESP-IDF V5.0 gives this warning, but work.   
+```
+#warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
+```
+Presumably, ESP-IDF V5.1 will completely obsolete the legacy RMT driver.   
+
+
 # Installation for ESP32
 
 ```

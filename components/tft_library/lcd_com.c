@@ -10,7 +10,7 @@
 #include "i2s_lcd_driver.h"
 #include "hal/gpio_ll.h" // idf-py ver5
 #include "driver/gpio.h"
-#include "driver/adc_common.h"
+//#include "driver/adc_common.h"
 
 #define TAG "LCD_COM"
 
@@ -467,6 +467,7 @@ void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int g
 	dev->_gpio_xm = gpio_xm;
 	dev->_gpio_yp = gpio_yp;
 	dev->_gpio_ym = gpio_ym;
+	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
 }
 
 int touch_avr_analog(adc1_channel_t channel, int averagetime)
@@ -490,7 +491,7 @@ int touch_avr_analog(adc1_channel_t channel, int averagetime)
 			if(tmp > max)max = tmp;
 			if(tmp < min)min = tmp;
 			sum += tmp;
-			//	 sum+=analogRead(adpin);
+			//sum+=analogRead(adpin);
 		}
 		return (sum-min-max)/(averagetime-2);
 	} else {
@@ -524,8 +525,7 @@ int touch_getx(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 1);
 	touch_gpio(dev->_gpio_xm, MODE_OUTPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
-	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
+	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
 	int samples[NUMSAMPLES];
 	for (int i=0; i<NUMSAMPLES; i++) {
@@ -545,8 +545,7 @@ int touch_gety(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_INPUT, 0);
 	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
-	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
+	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
 	int samples[NUMSAMPLES];
 	for (int i=0; i<NUMSAMPLES; i++) {
@@ -566,8 +565,7 @@ int touch_getz(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 0);
 	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_10Bit));
-	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
+	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
 	int z1 =	adc1_get_raw(dev->_adc_yp);

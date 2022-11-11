@@ -285,7 +285,7 @@ static esp_err_t lcd_dma_config(i2s_lcd_obj_t *i2s_lcd_obj, uint32_t max_dma_buf
     i2s_lcd_obj->dma_node_cnt = (i2s_lcd_obj->dma_buffer_size) / i2s_lcd_obj->dma_node_buffer_size; // Number of DMA nodes
     i2s_lcd_obj->dma_half_node_cnt = i2s_lcd_obj->dma_node_cnt / 2;
 
-    ESP_LOGI(TAG, "lcd_buffer_size: %d, lcd_dma_size: %d, lcd_dma_node_cnt: %d", i2s_lcd_obj->dma_buffer_size, i2s_lcd_obj->dma_node_buffer_size, i2s_lcd_obj->dma_node_cnt);
+    //ESP_LOGI(TAG, "lcd_buffer_size: %d, lcd_dma_size: %d, lcd_dma_node_cnt: %d", i2s_lcd_obj->dma_buffer_size, i2s_lcd_obj->dma_node_buffer_size, i2s_lcd_obj->dma_node_cnt);
 
     i2s_lcd_obj->dma    = (lldesc_t *)heap_caps_malloc(i2s_lcd_obj->dma_node_cnt * sizeof(lldesc_t), MALLOC_CAP_DMA | MALLOC_CAP_8BIT);
     i2s_lcd_obj->dma_buffer = (uint8_t *)heap_caps_malloc(i2s_lcd_obj->dma_buffer_size * sizeof(uint8_t), MALLOC_CAP_DMA | MALLOC_CAP_8BIT);
