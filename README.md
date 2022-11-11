@@ -82,7 +82,7 @@ ESP-IDF V5.0 gives this warning, but work.
 ```
 #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
 ```
-Presumably, ESP-IDF V5.1 will completely obsolete the legacy RMT driver.   
+Presumably, ESP-IDF V5.1 will completely obsolete the legacy ADC driver.   
 
 
 # Installation for ESP32
