@@ -75,7 +75,7 @@ These are OPEN-SMART 16Pin-Parallel Products.
 
 # Software requirements
 esp-idf v4.4 or later.   
-The i2s driver for esp32s2 is supported.   
+The i2s driver for esp32s2/s3 is supported.   
 
 __Note for ESP-IDF V5.0__   
 ESP-IDF V5.0 gives this warning, but work.   
@@ -85,32 +85,20 @@ ESP-IDF V5.0 gives this warning, but work.
 Presumably, ESP-IDF V5.1 will completely obsolete the legacy ADC driver.   
 
 
-# Installation for ESP32
+# Installation
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-parallel-tft
 cd esp-idf-parallel-tft/
-idf.py set-target esp32
+idf.py set-target {esp32/esp32s2/esp32s3}
 idf.py menuconfig
 idf.py flash
 ```
 
-# Installation for ESP32-S2
+__Note for ESP32-S2__   
+tjpgd library does not exist in ESP32-S2 ROM. Therefore, the JPEG file cannot be displayed.   
+PNG file cannot be displayed because the SRAM is small.   
 
-```
-git clone https://github.com/nopnop2002/esp-idf-parallel-tft
-cd esp-idf-parallel-tft/
-idf.py set-target esp32s2
-idf.py menuconfig
-idf.py flash
-```
-
-__Note__   
-- tjpgd library does not exist in ESP32-S2 ROM. Therefore, the JPEG file cannot be displayed.
-- PNG file cannot be displayed because the SRAM is small.   
-
-# Installation for ESP32-S3
-i2s_lcd_esp32s3_driver.c does not exist yet in [here](https://github.com/espressif/esp-iot-solution/tree/master/components/bus).   
 
 # Configuration   
 You have to set this config value with menuconfig.   
@@ -153,7 +141,7 @@ You have to set this config value with menuconfig.
 
 # Wireing  
 
-|TFT||ESP32|ESP32S2||
+|TFT||ESP32|ESP32S2/S3||
 |:-:|:-:|:-:|:-:|:-:|
 |LDC_RST|--|GPIO32|GPIO45|*1|
 |LDC_CS|--|GPIO33|GPIO42|*1|
@@ -166,8 +154,8 @@ You have to set this config value with menuconfig.
 |LDC_D3|--|GPIO25|GPIO4|*1 *2|
 |LDC_D4|--|GPIO17|GPIO5|*1 *2|
 |LDC_D5|--|GPIO16|GPIO6|*1 *2|
-|LDC_D6|--|GPIO27|GPIO11|*1 *2|
-|LDC_D7|--|GPIO14|GPIO12|*1 *2|
+|LDC_D6|--|GPIO27|GPIO7|*1 *2|
+|LDC_D7|--|GPIO14|GPIO8|*1 *2|
 |5V|--|5V|5V|*3|
 |3.3V|--|3.3V|3.3V|*3|
 |GND|--|GND|GND||

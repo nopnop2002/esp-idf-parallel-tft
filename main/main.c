@@ -1174,7 +1174,7 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t tim
 			} // end if
 		} // end while
 
-		ESP_LOGI(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
+		ESP_LOGD(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
 		lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
 		lastTouched = xTaskGetTickCount();
 	} // end while
@@ -1345,7 +1345,7 @@ void TFT(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-#ifdef CONFIG_IDF_TARGET_ESP32
+#ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
