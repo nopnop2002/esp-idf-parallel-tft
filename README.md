@@ -482,5 +482,7 @@ https://github.com/espressif/esp-iot-solution/tree/master/components/bus
  i2s_lcd_esp32_driver.c   
 - for esp32s2   
  i2s_lcd_esp32s2_driver.c   
+- for esp32s3   
+ 8080_lcd_esp32s3.c   
 - Common header   
  i2s_lcd_driver.h   
