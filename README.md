@@ -387,7 +387,6 @@ But 4-line resistance touch screen available.
 |LCD_D6|LCD_RS|LCD_WR|LCD_D7|
 
 ![Touch-ILI9486-1](https://user-images.githubusercontent.com/6020549/146495127-f5013a91-fe23-467b-ae02-5dd3e58ccf45.JPG)
-![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
 
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
