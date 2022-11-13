@@ -300,13 +300,13 @@ Two GPIOs are required for simultaneous digital output and analog input.
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
 This project use ADC1 to read analog value.   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
-ESP32S2 has 10 channels: GPIO01 - GPIO10.   
+ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.   
 Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
-|TFT||ESP32|ESP32S2|
-|:-:|:-:|:-:|:-:|
-|LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
-|LCD-RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+|TFT||ADC1|ESP32|ESP32S2/S3|
+|:-:|:-:|:-:|:-:|:-:|
+|LCD-WR(Y+)||ADC1_6|GPIO34|GPIO07|
+|LCD-RS(X-)||ADC1_7|GPIO35|GPIO08|
 
 - GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
