@@ -304,10 +304,10 @@ ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.
 Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 
-|TFT|ESP32|ESP32S2|
-|:-:|:-:|:-:|
-|LCD-WR(Y+)|GPIO34|GPIO07|
-|LCD-RS(X-)|GPIO35|GPIO08|
+|TFT||ESP32|ESP32S2|
+|:-:|:-:|:-:|:-:|
+|LCD-WR(Y+)||GPIO34|GPIO07|
+|LCD-RS(X-)||GPIO35|GPIO08|
 
 - GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
