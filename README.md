@@ -339,7 +339,7 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
 __4-line resistance touch screen cannot be used with the Wemos D1 ESP32.__   
-__Because LCD_WR (GPIO4) is ADC2_0.__
+__Because the combination of GPIO and ADC does not match.__
 
 ### ELEGOO TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
@@ -394,6 +394,9 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 |:-:|:-:|:-:|:-:|
 |LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
+
+__4-line resistance touch screen cannot be used with the Wemos D1 ESP32.__   
+__Because the combination of GPIO and ADC does not match.__
 
 ### Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
