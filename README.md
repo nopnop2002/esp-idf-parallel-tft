@@ -208,9 +208,9 @@ You can specify multiple fonts at the same time.
 # Image support
 BMP file   
 ![Image1](https://user-images.githubusercontent.com/6020549/104248104-3974dc00-54ac-11eb-9b97-56a062f13e5b.JPG)
-JPEG file(ESP32 only)   
+JPEG file(Not supported by ESP32S2)   
 ![Image2](https://user-images.githubusercontent.com/6020549/104248108-3aa60900-54ac-11eb-8545-3c8971a344a9.JPG)
-PNG file(ESP32 only)    
+PNG file(Not supported by ESP32S2)    
 ![Image3](https://user-images.githubusercontent.com/6020549/104248110-3b3e9f80-54ac-11eb-9487-a0379f40fd35.JPG)
 
 # Using Wemos D1 ESP32   
