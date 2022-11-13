@@ -266,6 +266,8 @@ strcpy((char *)ascii, "MyFont");
 lcdDrawString(dev, yourFont, x, y, ascii, color);
 ```
 
+---
+
 # 4-line resistance touch screen   
 Some TFT has 4-line resistance touch screen.   
 The 4-line resistor touch screen uses 4 pins.   
@@ -290,13 +292,9 @@ Two GPIOs are required for simultaneous digital output and analog input.
          +---- Gpio for Analog Input(Using ADC1 Channel number)
 ```
 
-## OPEN-SMART 16Pin-Parallel Products   
-|X(+)|X(-)|Y(+)|Y(-)|
-|:-:|:-:|:-:|:-:|
-|LCD_D6|LCD_RS|LCD_WR|LCD_D7|
+## Configuration for touch screen
 
-![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
-![config-touch-open-smart](https://user-images.githubusercontent.com/6020549/145734677-72d26c81-99f7-411b-ad60-23659566cfec.jpg)
+![config-touch](https://user-images.githubusercontent.com/6020549/201503687-973577d5-9375-4985-aacc-b46bccbf3b58.jpg)
 
 - ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
@@ -304,21 +302,26 @@ This project use ADC1 to read analog value.
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2 has 10 channels: GPIO01 - GPIO10.   
 Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
-
-- Touch position accuacy   
-The coordinates read from Y(+) and X(-) are analog values.   
-The difference between the coordinates read last time and the coordinates read this time is determined, and if it is within this range, it is regarded as a valid coordinate.   
-Decreasing this value will make the position more accurate, but less responsive.   
-Increasing this value will make the position more inaccurate but more responsive.   
-
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 |TFT||ESP32|ESP32S2|
 |:-:|:-:|:-:|:-:|
 |LCD-WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD-RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
+- GPIO number    
+It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
 
-## OPEN-SMART TFT-Shield Products   
+
+
+### OPEN-SMART 16Pin-Parallel Products   
+|X(+)|X(-)|Y(+)|Y(-)|
+|:-:|:-:|:-:|:-:|
+|LCD_D6|LCD_RS|LCD_WR|LCD_D7|
+
+![Touch0](https://user-images.githubusercontent.com/6020549/145660530-1aeb060d-93f7-4dc8-b6ea-fd6250cc1c44.JPG)
+
+
+### OPEN-SMART TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
@@ -338,7 +341,7 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 __4-line resistance touch screen cannot be used with the Wemos D1 ESP32.__   
 __Because LCD_WR (GPIO4) is ADC2_0.__
 
-## ELEGOO TFT-Shield Products   
+### ELEGOO TFT-Shield Products   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
@@ -358,7 +361,7 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 __No additional wiring is required when using the Wemos D1 ESP32.__   
 __LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
-## ILI9341 2.4inch TFT-Shield with Yellow Pin-header   
+### ILI9341 2.4inch TFT-Shield with Yellow Pin-header   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
@@ -378,7 +381,7 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 __No additional wiring is required when using the Wemos D1 ESP32.__   
 __LCD_CS is assigned to ADC1_6 and LCD_RS is assigned to ADC1_7.__   
 
-## ILI9486 3.5inch TFT-Shield   
+### ILI9486 3.5inch TFT-Shield   
 There is no marking about 4-line resistance touch screen.   
 But 4-line resistance touch screen available.   
 
@@ -395,24 +398,28 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 |LCD_WR(Y+)||ADC1_6(GPIO34)|ADC1_6(GPIO07)|
 |LCD_RS(X-)||ADC1_7(GPIO35)|ADC1_7(GPIO08)|
 
-## Other TFT   
+### Other TFT   
 I don't know which pin is X(+), X(-), Y(+), Y(-).   
 If you find, please tell me.
 
-## Calibration   
-Keep touching the point.   
+## Calibrating the touch screen   
+Keep touching the corner point.   
 ![TouchCalib-1](https://user-images.githubusercontent.com/6020549/145699311-fce1049d-bb9b-460a-9724-bab62cdbf674.JPG)
 ![TouchCalib-2](https://user-images.githubusercontent.com/6020549/145699316-98171b90-70c7-4359-b72e-ed2f1cd4bf13.JPG)
 
-
 ## Draw with touch   
-If there is no touch for 10 seconds, it will end.   
+If there is no touch for 20 seconds, it will end.   
 ![Touch-OpenSmat-16pin](https://user-images.githubusercontent.com/6020549/145699328-c065278a-39b9-4a11-b2f3-6ca5d54c6e3f.JPG)
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
 ![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145734726-68d2272b-1452-47a9-b934-647f7a741ad1.JPG)
 ![Touch-ILI9341-2](https://user-images.githubusercontent.com/6020549/145734734-ad6fa02b-9ba7-48e3-83a6-224e3637c18a.JPG)
 ![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
+## Select with touch   
+If there is no touch for 20 seconds, it will end.   
+I borrowed the icon from [here](https://www.flaticon.com/packs/social-media-343).   
+![Touch-Icon-1](https://user-images.githubusercontent.com/6020549/201503323-3e872abe-fce5-4ba9-a154-5232f7ae1b52.JPG)
+![Touch-Icon-2](https://user-images.githubusercontent.com/6020549/201503325-3cf35bcf-87cc-47b3-a44e-fa0275198814.JPG)
 
 ## How dose it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf

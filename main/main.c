@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
+#include <math.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -155,8 +156,8 @@
 
 #endif
 
-#define INTERVAL		400
-#define WAIT	vTaskDelay(INTERVAL)
+#define INTERVAL 400
+#define WAIT vTaskDelay(INTERVAL)
 
 static const char *TAG = "MAIN";
 
@@ -1019,14 +1020,13 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	lcdDrawFillCircle(dev, dev->_min_xc, dev->_min_yc, 10, CYAN);
 	strcpy((char *)ascii, "Calibration");
 	ypos = ((height - fontHeight) / 2) - 1;
-	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
-	lcdSetFontDirection(dev, DIRECTION180);
+	xpos = (width - (strlen((char *)ascii) * fontWidth)) / 2;
 	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
-	ypos = ypos - fontHeight;
+	ypos = ypos + fontHeight;
 	int _xpos = xpos;
 	for(int i=0;i<10;i++) {
 		lcdDrawFillCircle(dev, _xpos, ypos, fontWidth/2, RED);
-		_xpos = _xpos - fontWidth - 5;
+		_xpos = _xpos + fontWidth + 5;
 	}
 
 	int16_t xp = INT16_MIN;
@@ -1044,7 +1044,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 		if (counter == 100) break;
 		if ((counter % 10) == 0) {
 			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
-			xpos = xpos - fontWidth - 5;
+			xpos = xpos + fontWidth + 5;
 		}
 	} // end while
 	ESP_LOGI(TAG, "_min_xp=%d _min_yp=%d", xp, yp);
@@ -1057,13 +1057,13 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	//lcdDrawFillCircle(dev, width-10, height-10, 10, CYAN);
 	lcdDrawFillCircle(dev, dev->_max_xc, dev->_max_yc, 10, CYAN);
 	ypos = ((height - fontHeight) / 2) - 1;
-	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	xpos = (width - (strlen((char *)ascii) * fontWidth)) / 2;
 	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
-	ypos = ypos - fontHeight;
+	ypos = ypos + fontHeight;
 	_xpos = xpos;
 	for(int i=0;i<10;i++) {
 		lcdDrawFillCircle(dev, _xpos, ypos, fontWidth/2, RED);
-		_xpos = _xpos - fontWidth - 5;
+		_xpos = _xpos + fontWidth + 5;
 	}
 
 	xp = INT16_MAX;
@@ -1081,7 +1081,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 		if (counter == 100) break;
 		if ((counter % 10) == 0) {
 			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
-			xpos = xpos - fontWidth - 5;
+			xpos = xpos + fontWidth + 5;
 		}
 	} // end while
 	ESP_LOGI(TAG, "max_xp=%d max_yp=%d", xp, yp);
@@ -1090,7 +1090,41 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	dev->_calibration = false;
 }
 
-void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+// Convert from touch position to touch coordinates
+// xp:touch position x
+// yp:touch position y
+// xpos:touch coordinates x
+// ypos:touch coordinates y
+esp_err_t ConvertCoordinate(TFT_t * dev, int xp, int yp, int *xpos, int *ypos) {
+	float _xd = dev->_max_xp - dev->_min_xp;
+	float _yd = dev->_max_yp - dev->_min_yp;
+	float _xs = dev->_max_xc - dev->_min_xc;
+	float _ys = dev->_max_yc - dev->_min_yc;
+	ESP_LOGI(TAG, "_xs=%f _ys=%f", _xs, _ys);
+
+	ESP_LOGI(TAG, "_max_xp=%d _min_xp=%d xp=%d", dev->_max_xp, dev->_min_xp, xp);
+	ESP_LOGI(TAG, "_max_yp=%d _min_yp=%d yp=%d", dev->_max_yp, dev->_min_yp, yp);
+
+	// Determine if within range
+	if (dev->_max_xp > dev->_min_xp) {
+		if (xp < dev->_min_xp && xp > dev->_max_xp) return ESP_FAIL;
+	} else {
+		if (xp < dev->_max_xp && xp > dev->_min_xp) return ESP_FAIL;
+	}
+	if (dev->_max_yp > dev->_min_yp) {
+		if (yp < dev->_min_yp && yp > dev->_max_yp) return ESP_FAIL;
+	} else {
+		if (yp < dev->_max_yp && yp > dev->_min_yp) return ESP_FAIL;
+	}
+
+	// Convert from position to coordinate
+	*xpos = ( (float)(xp - dev->_min_xp) / _xd * _xs ) + dev->_min_xc;
+	*ypos = ( (float)(yp - dev->_min_yp) / _yd * _ys ) + dev->_min_yc;
+	ESP_LOGI(TAG, "*xpos=%d *ypos=%d", *xpos, *ypos);
+	return ESP_OK;
+}
+
+void TouchPenTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
 	// get font width & height
 	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
@@ -1103,83 +1137,221 @@ void TouchTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t tim
 	int ypos = 0;
 
 	lcdFillScreen(dev, BLACK);
-	strcpy((char *)ascii, "Touch");
+	strcpy((char *)ascii, "Touch Screen");
+	xpos = (width - strlen((char *)ascii) * fontWidth) / 2;
 	ypos = ((height - fontHeight) / 2) - 1;
-	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
-	lcdSetFontDirection(dev, DIRECTION180);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
-
-	sprintf((char *)ascii, "ACCURACY=%d", CONFIG_XPT_ACCURACY);
-	ypos = ypos - fontHeight;
-	xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
-	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
-
-	float _xd = dev->_max_xp - dev->_min_xp;
-	float _yd = dev->_max_yp - dev->_min_yp;
-	//float _xs = width-10-10;
-	//float _ys = height-10-10;
-	float _xs = dev->_max_xc - dev->_min_xc;
-	float _ys = dev->_max_yc - dev->_min_yc;
-	ESP_LOGD(TAG, "_xs=%f _ys=%f", _xs, _ys);
 
 	TickType_t lastTouched = xTaskGetTickCount();
-	bool isRunning = true;
-	while(isRunning) {
-		int _xpos = 0;
-		int _ypos = 0;
-		int _xpos_prev = 0;
-		int _ypos_prev = 0;
+	int _xpos = 0;
+	int _ypos = 0;
+	int _xpos_prev = 0;
+	int _ypos_prev = 0;
 
-		while(1){
-			vTaskDelay(1);
-			int _xp;
-			int _yp;
-			if (touch_getxy(dev, &_xp, &_yp)) { 
-				ESP_LOGI(TAG, "_max_xp=%d _min_xp=%d _xp=%d", dev->_max_xp, dev->_min_xp, _xp);
-				ESP_LOGI(TAG, "_max_yp=%d _min_yp=%d _yp=%d", dev->_max_yp, dev->_min_yp, _yp);
-				if (dev->_max_xp > dev->_min_xp) {
-					if (_xp < dev->_min_xp && _xp > dev->_max_xp) continue;
-				} else {
-					if (_xp < dev->_max_xp && _xp > dev->_min_xp) continue;
-				}
-				if (dev->_max_yp > dev->_min_yp) {
-					if (_yp < dev->_min_yp && _yp > dev->_max_yp) continue;
-				} else {
-					if (_yp < dev->_max_yp && _yp > dev->_min_yp) continue;
-				}
-				// Convert from position to coordinate
-				//_xpos = ( (float)(_xp - dev->_min_xp) / _xd * _xs ) + 10;
-				//_ypos = ( (float)(_yp - dev->_min_yp) / _yd * _ys ) + 10;
-				_xpos = ( (float)(_xp - dev->_min_xp) / _xd * _xs ) + dev->_min_xc;
-				_ypos = ( (float)(_yp - dev->_min_yp) / _yd * _ys ) + dev->_min_yc;
-				ESP_LOGD(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
-#if 1
-				// Valid if the current coordinates are close to the previous coordinates
-				if ( (_xpos > _xpos_prev-CONFIG_XPT_ACCURACY && _xpos < _xpos_prev+CONFIG_XPT_ACCURACY) && 
-					(_ypos > _ypos_prev-CONFIG_XPT_ACCURACY && _ypos < _ypos_prev+CONFIG_XPT_ACCURACY) ) break;
-				//if (_xpos == _xpos_prev && _ypos == _ypos_prev) break;
-				_xpos_prev = _xpos;
-				_ypos_prev = _ypos;
-#else
-				break;
-#endif
-			} else {
-				TickType_t current = xTaskGetTickCount();
-				//if (current - lastTouched > 1000) {
-				if (current - lastTouched > timeout) {
-					isRunning = false;
-					break;
-				}
+	while(1){
+		vTaskDelay(1);
+		int _xp;
+		int _yp;
+		if (touch_getxy(dev, &_xp, &_yp)) { 
+			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &_xpos, &_ypos);
+			if (ret != ESP_OK) continue;
+			ESP_LOGD(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
+			lastTouched = xTaskGetTickCount();
 
-			} // end if
-		} // end while
+			// Disable touches when touching the same position
+			if (_xpos == _xpos_prev && _ypos == _ypos_prev) continue;
 
-		ESP_LOGD(TAG, "_xpos=%d _ypos=%d", _xpos, _ypos);
-		lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
-		lastTouched = xTaskGetTickCount();
+			lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
+			_xpos_prev = _xpos;
+			_ypos_prev = _ypos;
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			//if (current - lastTouched > 1000) break;
+			if (current - lastTouched > timeout) break;
+
+		} // end if
+	} // end while
+
+}
+
+void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int ypos) {
+	// open PNG file
+	FILE* fp = fopen(file, "rb");
+	if (fp == NULL) {
+		ESP_LOGW(__FUNCTION__, "File not found [%s]", file);
+		return;
+	}
+
+	char buf[1024];
+	size_t remain = 0;
+	int len;
+
+	int _width = width;
+	if (width > 240) _width = 240;
+	int _height = height;
+	if (height > 320) _height = 320;
+	pngle_t *pngle = pngle_new(_width, _height);
+
+	pngle_set_init_callback(pngle, png_init);
+	pngle_set_draw_callback(pngle, png_draw);
+	pngle_set_done_callback(pngle, png_finish);
+
+	double display_gamma = 2.2;
+	pngle_set_display_gamma(pngle, display_gamma);
+
+
+	while (!feof(fp)) {
+		if (remain >= sizeof(buf)) {
+			ESP_LOGE(__FUNCTION__, "Buffer exceeded");
+			while(1) vTaskDelay(1);
+		}
+
+		len = fread(buf + remain, 1, sizeof(buf) - remain, fp);
+		if (len <= 0) {
+			//printf("EOF\n");
+			break;
+		}
+
+		int fed = pngle_feed(pngle, buf, remain + len);
+		if (fed < 0) {
+			ESP_LOGE(__FUNCTION__, "ERROR; %s", pngle_error(pngle));
+			while(1) vTaskDelay(1);
+		}
+
+		remain = remain + len - fed;
+		if (remain > 0) memmove(buf, buf + fed, remain);
+	}
+
+	fclose(fp);
+
+	uint16_t pngWidth = pngle_get_width(pngle);
+	uint16_t pngHeight = pngle_get_height(pngle);
+	ESP_LOGD(__FUNCTION__, "pngWidth=%d pngHeight=%d", pngWidth, pngHeight);
+	int _xpos = xpos - (pngHeight/2);
+	int _ypos = ypos - (pngWidth/2);
+	ESP_LOGD(__FUNCTION__, "xpos=%d ypos=%d _xpos=%d _ypos=%d", xpos, ypos, _xpos, _ypos);
+	uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * pngWidth);
+
+	for(int y = 0; y < pngHeight; y++){
+		for(int x = 0;x < pngWidth; x++){
+			//pixel_png pixel = pngle->pixels[y][x];
+			//colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+			colors[x] = pngle->pixels[y][x];
+		}
+		lcdDrawMultiPixels(dev, _xpos, y+_ypos, pngWidth, colors);
+		vTaskDelay(1);
+	}
+	free(colors);
+	pngle_destroy(pngle, _width, _height);
+	return;
+}
+
+
+typedef struct {
+	int x_center;
+	int y_center;
+	char text[32];
+} AREA_t;
+
+void ShowAllPngImage(TFT_t * dev, char * path, int max, FontxFile *fx, int width, int height, AREA_t *area) {
+	lcdSetFontDirection(dev, 0);
+	lcdFillScreen(dev, WHITE);
+
+	char file[64];
+	int x_center = (width / 2) + 60;
+	int y_center = 40 + ((height - 320) / 2);
+	int fileNum = 0;
+
+	DIR* dir = opendir(path);
+	assert(dir != NULL);
+	while (true) {
+		struct dirent*pe = readdir(dir);
+		if (!pe) break;
+		ESP_LOGI(__FUNCTION__,"d_name=%s d_ino=%d d_type=%x", pe->d_name, pe->d_ino, pe->d_type);
+		strcpy(file, "/icons/");
+		strcat(file, pe->d_name);
+		ShowPngImage(dev, file, width, height, x_center, y_center);
+
+		area[fileNum].x_center = x_center;
+		area[fileNum].y_center = y_center;
+		strcpy(area[fileNum].text, pe->d_name);
+
+		fileNum++;
+		if (fileNum == max) break;
+		y_center = y_center + 80;
+		if (fileNum == 4) {
+			x_center = (width / 2) - 60;
+			y_center = 40 + ((height - 320) / 2);;
+		}
+	}
+	closedir(dir);
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	uint8_t ascii[24];
+	strcpy((char *)ascii, "Touch Screen");
+	int xpos = ((width - fontHeight) / 2) - 1;
+	int ypos = (height - strlen((char *)ascii) * fontWidth) / 2;
+	lcdSetFontDirection(dev, DIRECTION90);
+	lcdDrawString(dev, fx, xpos, ypos, ascii, BLACK);
+
+	return;
+}
+
+void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	AREA_t area[8];
+	// Show all small image
+	ShowAllPngImage(dev, "/icons/", 8, fx, width, height, area);
+
+	TickType_t lastTouched = xTaskGetTickCount();
+	while(1) {
+		vTaskDelay(1);
+		int _xp = 0;
+		int _yp = 0;
+		if (touch_getxy(dev, &_xp, &_yp)) { 
+			int _xpos = 0;
+			int _ypos = 0;
+			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &_xpos, &_ypos);
+			if (ret != ESP_OK) continue;
+			ESP_LOGD(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
+			lastTouched = xTaskGetTickCount();
+
+			for (int index=0;index<8;index++) {
+				// Calculate distance from center
+				double _xd = _xpos - area[index].x_center;
+				double _yd = _ypos - area[index].y_center;
+				double _radius = sqrt((_xd*_xd) + (_yd*_yd));
+				ESP_LOGI(__FUNCTION__, "area.x_center=%d area.y_center=%d _radius=%f", area[0].x_center, area[0].y_center, _radius);
+
+				// Distance is in range
+				if (_radius < 30.0) {
+					// Show large image
+					ESP_LOGI(__FUNCTION__, "area.text=[%s]", area[0].text);
+					char file[64];
+					strcpy(file, "/images/");
+					strcat(file, area[index].text);
+					ESP_LOGI(__FUNCTION__, "file=[%s]", file);
+					PNGTest(dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+					vTaskDelay(500);
+					// Show all small image
+					ShowAllPngImage(dev, "/icons/", 8, fx, width, height, area);
+				}
+			}
+		
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			if (current - lastTouched > timeout) break;
+		} // end if
+
 	} // end while
 }
-#endif
+#endif // CONFIG_ENABLE_TOUCH
 
 void TFT(void *pvParameters)
 {
@@ -1256,7 +1428,6 @@ void TFT(void *pvParameters)
 #elif CONFIG_YM_GPIO_D1
   int gpio_ym = dev._d1;
 #endif
-	//touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM);
 	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM, gpio_xp, gpio_xm, gpio_yp, gpio_ym);
 #endif
 
@@ -1264,13 +1435,20 @@ void TFT(void *pvParameters)
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
+		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
+		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
 #endif
 
-		ESP_LOGI(TAG, "ADC_WIDTH_BIT_DEFAULT=%d", ADC_WIDTH_BIT_DEFAULT);
-		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, BLACK);
+		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, WHITE);
+
+		char file[32];
+		strcpy(file, "/images/esp32.bmp");
+		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		strcpy(file, "/images/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 	}
@@ -1280,7 +1458,10 @@ void TFT(void *pvParameters)
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+#ifndef CONFIG_IDF_TARGET_ESP32S2
+		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
+#endif
 #endif
 
 		AddressTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, BLACK);
@@ -1341,16 +1522,16 @@ void TFT(void *pvParameters)
 		WAIT;
 
 		char file[32];
-		strcpy(file, "/spiffs/esp32.bmp");
+		strcpy(file, "/images/esp32.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 #ifndef CONFIG_IDF_TARGET_ESP32S2
-		strcpy(file, "/spiffs/esp32.jpeg");
+		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		strcpy(file, "/spiffs/esp_logo.png");
+		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 #endif
@@ -1419,7 +1600,7 @@ void TFT(void *pvParameters)
 	} // end while
 }
 
-static void SPIFFS_Directory(char * path) {
+static void listSPIFFS(char * path) {
 	DIR* dir = opendir(path);
 	assert(dir != NULL);
 	while (true) {
@@ -1430,14 +1611,11 @@ static void SPIFFS_Directory(char * path) {
 	closedir(dir);
 }
 
-
-void app_main()
-{
-	ESP_LOGI(TAG, "Initializing SPIFFS");
+esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 	esp_vfs_spiffs_conf_t conf = {
-		.base_path = "/spiffs",
-		.partition_label = NULL,
-		.max_files = 10,
+		.base_path = path,
+		.partition_label = label,
+		.max_files = max_files,
 		.format_if_mount_failed =true
 	};
 
@@ -1446,25 +1624,57 @@ void app_main()
 	esp_err_t ret = esp_vfs_spiffs_register(&conf);
 
 	if (ret != ESP_OK) {
-		if (ret == ESP_FAIL) {
+		if (ret ==ESP_FAIL) {
 			ESP_LOGE(TAG, "Failed to mount or format filesystem");
-		} else if (ret == ESP_ERR_NOT_FOUND) {
+		} else if (ret== ESP_ERR_NOT_FOUND) {
 			ESP_LOGE(TAG, "Failed to find SPIFFS partition");
 		} else {
 			ESP_LOGE(TAG, "Failed to initialize SPIFFS (%s)",esp_err_to_name(ret));
 		}
-		return;
+		return ret;
 	}
 
+#if 0
+	ESP_LOGI(TAG, "Performing SPIFFS_check().");
+	ret = esp_spiffs_check(conf.partition_label);
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "SPIFFS_check() failed (%s)", esp_err_to_name(ret));
+		return ret;
+	} else {
+			ESP_LOGI(TAG, "SPIFFS_check() successful");
+	}
+#endif
+
 	size_t total = 0, used = 0;
-	ret = esp_spiffs_info(NULL, &total,&used);
+	ret = esp_spiffs_info(conf.partition_label, &total, &used);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG,"Failed to get SPIFFS partition information (%s)",esp_err_to_name(ret));
 	} else {
+		ESP_LOGI(TAG,"Mount %s to %s success", path, label);
 		ESP_LOGI(TAG,"Partition size: total: %d, used: %d", total, used);
 	}
 
-	SPIFFS_Directory("/spiffs/");
+	return ret;
+}
+
+
+void app_main()
+{
+	ESP_LOGI(TAG, "Initializing SPIFFS");
+	esp_err_t ret;
+	ret = mountSPIFFS("/spiffs", "storage0", 10);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/spiffs/");
+
+	// Image file borrowed from here
+	// https://www.flaticon.com/packs/social-media-343
+	ret = mountSPIFFS("/icons", "storage1", 10);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/icons/");
+
+	ret = mountSPIFFS("/images", "storage2", 10);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/images/");
 
 	xTaskCreate(TFT, "TFT", 1024*6, NULL, 2, NULL);
 

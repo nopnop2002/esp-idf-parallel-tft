@@ -317,16 +317,6 @@ menu "TFT Configuration"
 		help
 			ADC Channel X-.
 
-	config XPT_ACCURACY
-		depends on ENABLE_TOUCH
-		int "Touch position accuracy"
-		range 2 10
-		default 5
-		help
-			Tolerance of touch position.
-			If the difference from the previous position is within this range, it is considered valid.
-			The higher the value, the less accurate the position, but the less responsive it is.
-
 	choice XP_GPIO
 		depends on ENABLE_TOUCH
 		prompt "GPIO number (IOxx) to Touch X(+)"
@@ -403,9 +393,4 @@ menu "TFT Configuration"
 				"GPIO_D7"
 	endchoice
 
-	config SWAP_XY
-		bool "Swap X and Y coordinates"
-		default false
-		help
-			Swap X and Y coordinates.
 endmenu
