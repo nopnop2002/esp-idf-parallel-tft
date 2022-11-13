@@ -222,7 +222,7 @@ Attached the TFT shield.
 The TFT shield worked fine.   
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
-It's very good.   
+It's great because it doesn't require any wiring.   
 ![WeMos-R32-13](https://user-images.githubusercontent.com/6020549/201453096-40b41987-30bf-4703-af59-3652b9bdbea3.JPG)
 
 ![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/145746743-9c4a0e7c-5315-496f-8f66-129115044091.jpg)
