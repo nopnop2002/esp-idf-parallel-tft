@@ -938,6 +938,11 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	int len;
 
 	pngle_t *pngle = pngle_new(_width, _height);
+	ESP_LOGD(__FUNCTION__, "pngle=%p", pngle);
+	if (pngle == NULL) {
+		fclose(fp);
+		return 0;
+	}
 
 	pngle_set_init_callback(pngle, png_init);
 	pngle_set_draw_callback(pngle, png_draw);
@@ -960,15 +965,17 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 		}
 
 		int fed = pngle_feed(pngle, buf, remain + len);
+		ESP_LOGD(__FUNCTION__, "pngle_feed fed=%d", fed);
 		if (fed < 0) {
 			ESP_LOGE(__FUNCTION__, "ERROR; %s", pngle_error(pngle));
-			while(1) vTaskDelay(1);
+			pngle_destroy(pngle, _width, _height);
+			return 0;
 		}
 
 		remain = remain + len - fed;
 		if (remain > 0) memmove(buf, buf + fed, remain);
 	}
-
+	ESP_LOGD(__FUNCTION__, "pngle_feed finish");
 	fclose(fp);
 
 	uint16_t pngWidth = width;
@@ -1477,14 +1484,12 @@ void TFT(void *pvParameters)
 		WAIT;
 
 #ifndef CONFIG_IDF_TARGET_ESP32S2
+		//tjpgd library does not exist in ESP32-S2 ROM
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 #endif
 
-		strcpy(file, "/images/esp_logo.png");
-		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
 	}
 #endif
 
@@ -1561,14 +1566,16 @@ void TFT(void *pvParameters)
 		WAIT;
 
 #ifndef CONFIG_IDF_TARGET_ESP32S2
+		//tjpgd library does not exist in ESP32-S2 ROM
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 
+		//ESP32-S2's rom is tool small
 		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 
 #if 0
 		if (lcdEnableScroll(&dev)) {
