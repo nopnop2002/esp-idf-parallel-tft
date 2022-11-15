@@ -100,7 +100,6 @@ With ESP-IDF Ver5, the JPEG decode library is now provided from the IDF Componen
 ESP-IDF Ver4 cannot display JPEG files.   
 PNG file cannot be displayed because the SRAM is small.   
 
-
 # Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
