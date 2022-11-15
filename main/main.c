@@ -1460,7 +1460,7 @@ void TFT(void *pvParameters)
 	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM, gpio_xp, gpio_xm, gpio_yp, gpio_ym);
 #endif
 
-#if 1
+#if 0
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
