@@ -828,6 +828,8 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 			_y++;
 		} // end for row
 		free(colors);
+	} else {
+		ESP_LOGW(__FUNCTION__, "Unsupported BMP file format");
 	} // end if 
 	free(result);
 	fclose(fp);
@@ -839,6 +841,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 }
 
 TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
+	ESP_LOGD(__FUNCTION__, "file=[%s]", file);
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
@@ -879,7 +882,6 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 			return 0;
 		}
 
-
 #if 0
 		for(int y = 0; y < jpegHeight; y++){
 			for(int x = 0;x < jpegWidth; x++){
@@ -905,7 +907,7 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 		release_image(&pixels, _width, _height);
 		ESP_LOGD(__FUNCTION__, "Finish");
 	} else {
-		ESP_LOGE(__FUNCTION__, "decode_image err=%d imageWidth=%d imageHeight=%d", err, imageWidth, imageHeight);
+		ESP_LOGE(__FUNCTION__, "decode_image err=%d", err);
 	}
 
 	endTick = xTaskGetTickCount();
@@ -915,6 +917,7 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 }
 
 TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
+	ESP_LOGD(__FUNCTION__, "file=[%s]", file);
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
@@ -1389,6 +1392,21 @@ void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 }
 #endif // CONFIG_ENABLE_TOUCH
 
+// Check memory leek
+void traceHeap() {
+	static int flag = 0;
+	static uint32_t _first_free_heap_size = 0;
+	if (flag == 0) {
+		flag++;
+	} else if (flag == 1) {
+		_first_free_heap_size = esp_get_free_heap_size();
+		flag++;
+	} else {
+		int _diff_free_heap_size = _first_free_heap_size - esp_get_free_heap_size();
+		ESP_LOGI(__FUNCTION__, "_diff_free_heap_size=%d", _diff_free_heap_size);
+	}
+}
+
 void TFT(void *pvParameters)
 {
 	// set font file
@@ -1478,23 +1496,13 @@ void TFT(void *pvParameters)
 		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		char file[32];
-		strcpy(file, "/images/esp32.bmp");
-		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-#ifndef CONFIG_IDF_TARGET_ESP32S2
-		//tjpgd library does not exist in ESP32-S2 ROM
-		strcpy(file, "/images/esp32.jpeg");
-		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-#endif
-
 	}
 #endif
 
 
 	while(1) {
+		traceHeap();
+
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
@@ -1565,13 +1573,28 @@ void TFT(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-#ifndef CONFIG_IDF_TARGET_ESP32S2
-		//tjpgd library does not exist in ESP32-S2 ROM
+
+		/***
+		Tiny JPG Decoder is not in ESP32-S2 ROM
+		ESP-IDF V5 supports this as external code
+		ESP32-S2 and ESP-IDF V5 selecte external code
+		ESP32-S2 has a small ROM, so it can't handle large images
+		***/
+#ifdef CONFIG_IDF_TARGET_ESP32S2
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+		ESP_LOGW(TAG, "IDF_TARGET_ESP32S2");
+		strcpy(file, "/images/esp32_small.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+#endif
+#else
+		ESP_LOGW(TAG, "IDF_TARGET_ESP32/ESP32S3");
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+#endif
 		WAIT;
 
-		//ESP32-S2's rom is tool small
+#ifndef CONFIG_IDF_TARGET_ESP32S2
+		//ESP32-S2's rom is too small
 		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
@@ -1713,7 +1736,7 @@ void app_main()
 	if (ret != ESP_OK) return;
 	listSPIFFS("/icons/");
 
-	ret = mountSPIFFS("/images", "storage2", 10);
+	ret = mountSPIFFS("/images", "storage2", 14);
 	if (ret != ESP_OK) return;
 	listSPIFFS("/images/");
 

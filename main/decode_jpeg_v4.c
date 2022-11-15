@@ -81,13 +81,12 @@ uint8_t getScale(int screenWidth, int screenHeight, uint16_t decodeWidth, uint16
 //Decode the embedded image into pixel lines that can be used with the rest of the logic.
 esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int screenHeight, int * imageWidth, int * imageHeight) {
 	char *work = NULL;
-	JRESULT r;
 	JDEC decoder;
 	JpegDev jd;
 	*pixels = NULL;
 	esp_err_t ret = ESP_OK;
 
-	ESP_LOGW(__FUNCTION__, "original");
+	ESP_LOGW(__FUNCTION__, "v4 version");
 	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
 	*pixels = calloc(screenHeight, sizeof(pixel_jpeg *));
 	if (*pixels == NULL) {
@@ -126,9 +125,10 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	ESP_LOGD(__FUNCTION__, "jd.fp=%p", jd.fp);
 
 	//Prepare and decode the jpeg.
-	r = jd_prepare(&decoder, infunc, work, WORKSZ, (void *) &jd);
-	if (r != JDR_OK) {
-		ESP_LOGE(__FUNCTION__, "Image decoder: jd_prepare failed (%d)", r);
+	JRESULT res;
+	res = jd_prepare(&decoder, infunc, work, WORKSZ, &jd);
+	if (res != JDR_OK) {
+		ESP_LOGE(__FUNCTION__, "Image decoder: jd_prepare failed (%d)", res);
 		ret = ESP_ERR_NOT_SUPPORTED;
 		goto err;
 	}
@@ -149,9 +149,9 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	ESP_LOGD(__FUNCTION__, "imageWidth=%d imageHeight=%d", *imageWidth, *imageHeight);
 
 
-	r = jd_decomp(&decoder, outfunc, scale);
-	if (r != JDR_OK) {
-		ESP_LOGE(__FUNCTION__, "Image decoder: jd_decode failed (%d)", r);
+	res = jd_decomp(&decoder, outfunc, scale);
+	if (res != JDR_OK) {
+		ESP_LOGE(__FUNCTION__, "Image decoder: jd_decode failed (%d)", res);
 		ret = ESP_ERR_NOT_SUPPORTED;
 		goto err;
 	}
@@ -178,7 +178,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 esp_err_t release_image(pixel_jpeg ***pixels, int screenWidth, int screenHeight) {
 	if (*pixels != NULL) {
 		for (int i = 0; i < screenHeight; i++) {
-			if ((*pixels)[i]) free((*pixels)[i]);
+			free((*pixels)[i]);
 		}
 		free(*pixels);
 	}
