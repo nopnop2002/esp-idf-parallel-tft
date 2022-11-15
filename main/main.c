@@ -699,6 +699,12 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 
 	// read bmp header
 	bmpfile_t *result = (bmpfile_t*)malloc(sizeof(bmpfile_t));
+	if (result == NULL) {
+		ESP_LOGE(__FUNCTION__, "malloc fail");
+		return 0;
+	}
+
+
 	ret = fread(result->header.magic, 1, 2, fp);
 	assert(ret == 2);
 	ESP_LOGD(__FUNCTION__,"result->header.magic=%c %c", result->header.magic[0], result->header.magic[1]);
@@ -782,6 +788,13 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 #define BUFFPIXEL 20
 		uint8_t sdbuffer[3*BUFFPIXEL]; // pixel buffer (R+G+B per pixel)
 		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * w);
+		if (colors == NULL) {
+			ESP_LOGE(__FUNCTION__, "malloc fail");
+			free(result);
+			fclose(fp);
+			return 0;
+		}
+
 
 		for (int row=0; row<h; row++) { // For each scanline...
 			if (row < _rows || row > _rowe) continue;
@@ -838,11 +851,11 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	if (height > 320) _height = 320;
 
 	pixel_jpeg **pixels;
-	uint16_t imageWidth;
-	uint16_t imageHeight;
+	int imageWidth;
+	int imageHeight;
 	esp_err_t err = decode_jpeg(&pixels, file, _width, _height, &imageWidth, &imageHeight);
 	if (err == ESP_OK) {
-		ESP_LOGI(__FUNCTION__, "imageWidth=%d imageHeight=%d", imageWidth, imageHeight);
+		ESP_LOGD(__FUNCTION__, "imageWidth=%d imageHeight=%d", imageWidth, imageHeight);
 
 		uint16_t jpegWidth = width;
 		uint16_t offsetX = 0;
@@ -860,6 +873,12 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 		}
 		ESP_LOGD(__FUNCTION__, "jpegHeight=%d offsetY=%d", jpegHeight, offsetY);
 		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * jpegWidth);
+		if (colors == NULL) {
+			ESP_LOGE(__FUNCTION__, "malloc fail");
+			release_image(&pixels, _width, _height);
+			return 0;
+		}
+
 
 #if 0
 		for(int y = 0; y < jpegHeight; y++){
@@ -968,6 +987,11 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	}
 	ESP_LOGD(__FUNCTION__, "pngHeight=%d offsetY=%d", pngHeight, offsetY);
 	uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * pngWidth);
+	if (colors == NULL) {
+		ESP_LOGE(__FUNCTION__, "malloc fail");
+		pngle_destroy(pngle, _width, _height);
+		return 0;
+	}
 
 #if 0
 	for(int y = 0; y < pngHeight; y++){
@@ -1232,6 +1256,11 @@ void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int
 	int _ypos = ypos - (pngWidth/2);
 	ESP_LOGD(__FUNCTION__, "xpos=%d ypos=%d _xpos=%d _ypos=%d", xpos, ypos, _xpos, _ypos);
 	uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * pngWidth);
+	if (colors == NULL) {
+		ESP_LOGE(__FUNCTION__, "malloc fail");
+		pngle_destroy(pngle, _width, _height);
+		return 0;
+	}
 
 	for(int y = 0; y < pngHeight; y++){
 		for(int x = 0;x < pngWidth; x++){
@@ -1431,7 +1460,7 @@ void TFT(void *pvParameters)
 	touch_interface_cfg(&dev, CONFIG_ADC_CHANNEL_YP, CONFIG_ADC_CHANNEL_XM, gpio_xp, gpio_xm, gpio_yp, gpio_ym);
 #endif
 
-#if 0
+#if 1
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
@@ -1447,10 +1476,15 @@ void TFT(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
+#ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 
+		strcpy(file, "/images/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 	}
 #endif
 
@@ -1530,11 +1564,11 @@ void TFT(void *pvParameters)
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 
 		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 
 #if 0
 		if (lcdEnableScroll(&dev)) {
