@@ -74,7 +74,7 @@ These are OPEN-SMART 16Pin-Parallel Products.
 ![OPEN-SMART-16Pin](https://user-images.githubusercontent.com/6020549/110071604-ad9e7280-7dbf-11eb-8e09-a9ebfacfd795.JPG)
 
 # Software requirements
-ESP-IDF V4.4 or V5.0
+esp-idf v4.4/v5.0.   
 
 __Note for ESP-IDF V5.0__   
 ESP-IDF V5.0 gives this warning, but work.   
