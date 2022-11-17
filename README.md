@@ -101,6 +101,10 @@ However, since the ROM is small, a large image cannot be displayed.
 With ESP-IDF Ver4.4, you cannot be displayed JPEG files because the IDF Component Registry cannot be used.   
 PNG file cannot be displayed because the SRAM is small.   
 
+__Note for ESP32-C2__   
+ESP32-C2 is supported from esp-idf v5.0, but v5.0 has a fatal bug in ROM Library and cannot be built.   
+
+
 # Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_DRIVER   
