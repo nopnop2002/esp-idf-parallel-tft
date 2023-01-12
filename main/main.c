@@ -1269,7 +1269,7 @@ void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int
 	if (colors == NULL) {
 		ESP_LOGE(__FUNCTION__, "malloc fail");
 		pngle_destroy(pngle, _width, _height);
-		return 0;
+		return;
 	}
 
 	for(int y = 0; y < pngHeight; y++){
