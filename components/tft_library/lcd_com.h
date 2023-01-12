@@ -29,7 +29,7 @@ typedef struct {
 	uint16_t _height;
 	uint16_t _offsetx;
 	uint16_t _offsety;
-	uint16_t _font_direction;
+	font_direction_t _font_direction;
 	uint16_t _font_fill;
 	uint16_t _font_fill_color;
 	uint16_t _font_underline;

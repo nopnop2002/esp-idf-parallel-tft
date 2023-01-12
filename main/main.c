@@ -310,22 +310,22 @@ TickType_t DirectionTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = RED;
 	strcpy((char *)ascii, "Direction=0");
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdDrawString(dev, fx, 0, fontHeight-1, ascii, color);
 
 	color = BLUE;
 	strcpy((char *)ascii, "Direction=2");
-	lcdSetFontDirection(dev, 2);
+	lcdSetFontDirection(dev, DIRECTION180);
 	lcdDrawString(dev, fx, (width-1), (height-1)-(fontHeight*1), ascii, color);
 
 	color = CYAN;
 	strcpy((char *)ascii, "Direction=1");
-	lcdSetFontDirection(dev, 1);
+	lcdSetFontDirection(dev, DIRECTION90);
 	lcdDrawString(dev, fx, (width-1)-fontHeight, 0, ascii, color);
 
 	color = GREEN;
 	strcpy((char *)ascii, "Direction=3");
-	lcdSetFontDirection(dev, 3);
+	lcdSetFontDirection(dev, DIRECTION270);
 	lcdDrawString(dev, fx, (fontHeight-1), height-1, ascii, color);
 
 	endTick = xTaskGetTickCount();
@@ -351,7 +351,7 @@ TickType_t HorizontalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = RED;
 	strcpy((char *)ascii, "Direction=0");
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdDrawString(dev, fx, 0, fontHeight*1-1, ascii, color);
 	lcdSetFontUnderLine(dev, RED);
 	lcdDrawString(dev, fx, 0, fontHeight*2-1, ascii, color);
@@ -366,7 +366,7 @@ TickType_t HorizontalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = BLUE;
 	strcpy((char *)ascii, "Direction=2");
-	lcdSetFontDirection(dev, 2);
+	lcdSetFontDirection(dev, DIRECTION180);
 	lcdDrawString(dev, fx, width-1, height-(fontHeight*1)-1, ascii, color);
 	lcdSetFontUnderLine(dev, BLUE);
 	lcdDrawString(dev, fx, width-1, height-(fontHeight*2)-1, ascii, color);
@@ -402,7 +402,7 @@ TickType_t VerticalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = RED;
 	strcpy((char *)ascii, "Direction=1");
-	lcdSetFontDirection(dev, 1);
+	lcdSetFontDirection(dev, DIRECTION90);
 	lcdDrawString(dev, fx, width-(fontHeight*1), 0, ascii, color);
 	lcdSetFontUnderLine(dev, RED);
 	lcdDrawString(dev, fx, width-(fontHeight*2), 0, ascii, color);
@@ -417,7 +417,7 @@ TickType_t VerticalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = BLUE;
 	strcpy((char *)ascii, "Direction=3");
-	lcdSetFontDirection(dev, 3);
+	lcdSetFontDirection(dev, DIRECTION270);
 	lcdDrawString(dev, fx, (fontHeight*1)-1, height-1, ascii, color);
 	lcdSetFontUnderLine(dev, BLUE);
 	lcdDrawString(dev, fx, (fontHeight*2)-1, height-1, ascii, color);
@@ -638,7 +638,7 @@ TickType_t ScrollTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	int ymax = (lines+1) * fontHeight;
 	ESP_LOGD(__FUNCTION__, "ymax=%d",ymax);
 
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, BLACK);
 
 	strcpy((char *)ascii, "Vertical Smooth Scroll");
@@ -686,7 +686,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, BLACK);
 
 	// open BMP file
@@ -845,7 +845,7 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, BLACK);
 
 	int _width = width;
@@ -921,7 +921,7 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, BLACK);
 
 	int _width = width;
@@ -1294,7 +1294,7 @@ typedef struct {
 } AREA_t;
 
 void ShowAllPngImage(TFT_t * dev, char * path, int max, FontxFile *fx, int width, int height, AREA_t *area) {
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, WHITE);
 
 	char file[64];
@@ -1614,13 +1614,13 @@ void TFT(void *pvParameters)
 		uint16_t margin = 10;
 		lcdFillScreen(&dev, BLACK);
 		color = WHITE;
-		lcdSetFontDirection(&dev, 0);
+		lcdSetFontDirection(&dev, DIRECTION0);
 		uint16_t xpos = 0;
 		uint16_t ypos = 15;
 		int xd = 0;
 		int yd = 1;
 		if(CONFIG_WIDTH < CONFIG_HEIGHT) {
-			lcdSetFontDirection(&dev, 1);
+			lcdSetFontDirection(&dev, DIRECTION90);
 			xpos = (CONFIG_WIDTH-1)-16;
 			ypos = 0;
 			xd = 1;
@@ -1659,7 +1659,7 @@ void TFT(void *pvParameters)
 			strcpy((char *)ascii, "32Dot Mincyo Font");
 			lcdDrawString(&dev, fx32M, xpos, ypos, ascii, color);
 		}
-		lcdSetFontDirection(&dev, 0);
+		lcdSetFontDirection(&dev, DIRECTION0);
 		WAIT;
 	} // end while
 }
