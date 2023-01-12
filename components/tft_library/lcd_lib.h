@@ -13,11 +13,12 @@
 #define CYAN			0x07FF
 #define PURPLE			0xF81F
 
-
-#define DIRECTION0		0
-#define DIRECTION90		1
-#define DIRECTION180	2
-#define DIRECTION270	3
+typedef enum {
+  DIRECTION0,
+  DIRECTION90,
+  DIRECTION180,
+  DIRECTION270
+} font_direction_t
 
 /*
 The version of GCC has changed.
@@ -78,7 +79,7 @@ int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * 
 //int lcdDrawSJISChar(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint16_t sjis, uint16_t color);
 //int lcdDrawUTF8Char(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t *utf8, uint16_t color);
 //int lcdDrawUTF8String(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, unsigned char *utfs, uint16_t color);
-void lcdSetFontDirection(TFT_t * dev, uint16_t);
+void lcdSetFontDirection(TFT_t * dev, font_direction_t);
 void lcdSetFontFill(TFT_t * dev, uint16_t color);
 void lcdUnsetFontFill(TFT_t * dev);
 void lcdSetFontUnderLine(TFT_t * dev, uint16_t color);

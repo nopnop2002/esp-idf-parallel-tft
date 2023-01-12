@@ -575,13 +575,13 @@ int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * 
 	if(_DEBUG_)printf("lcdDrawString length=%d\n",length);
 	for(int i=0;i<length;i++) {
 		if(_DEBUG_)printf("ascii[%d]=%x x=%d y=%d\n",i,ascii[i],x,y);
-		if (dev->_font_direction == 0)
+		if (dev->_font_direction == DIRECTION0)
 			x = lcdDrawChar(dev, fx, x, y, ascii[i], color);
-		if (dev->_font_direction == 1)
+		if (dev->_font_direction == DIRECTION90)
 			y = lcdDrawChar(dev, fx, x, y, ascii[i], color);
-		if (dev->_font_direction == 2)
+		if (dev->_font_direction == DIRECTION180)
 			x = lcdDrawChar(dev, fx, x, y, ascii[i], color);
-		if (dev->_font_direction == 3)
+		if (dev->_font_direction == DIRECTION270)
 			y = lcdDrawChar(dev, fx, x, y, ascii[i], color);
 	}
 	if (dev->_font_direction == 0) return x;
@@ -746,7 +746,7 @@ int lcdDrawUTF8String(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, unsign
 
 // Set font direction
 // dir:Direction
-void lcdSetFontDirection(TFT_t * dev, uint16_t dir) {
+void lcdSetFontDirection(TFT_t * dev, font_direction_t dir) {
 	dev->_font_direction = dir;
 }
 
