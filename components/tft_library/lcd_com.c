@@ -459,15 +459,13 @@ void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int g
 	dev->_calibration = true;
 	dev->_adc_yp = adc_yp;
 	dev->_adc_xm = adc_xm;
-	//dev->_gpio_xp = dev->_d6;
-	//dev->_gpio_xm = dev->_rs;
-	//dev->_gpio_yp = dev->_wr;
-	//dev->_gpio_ym = dev->_d7;
 	dev->_gpio_xp = gpio_xp;
 	dev->_gpio_xm = gpio_xm;
 	dev->_gpio_yp = gpio_yp;
 	dev->_gpio_ym = gpio_ym;
 	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
 }
 
 int touch_avr_analog(adc1_channel_t channel, int averagetime)
@@ -478,19 +476,10 @@ int touch_avr_analog(adc1_channel_t channel, int averagetime)
 		int min = 1024;
 		for(int i = 0; i<averagetime; i++)
 		{
-			int tmp = adc1_get_raw(channel);
-			if (ADC_WIDTH_BIT_DEFAULT == 2) {
-				tmp = tmp / 2; // 11 bits -> 10 bits.
-			}
-			if (ADC_WIDTH_BIT_DEFAULT == 3) {
-				tmp = tmp / 4; // 12 bits -> 10 bits.
-			}
-			if (ADC_WIDTH_BIT_DEFAULT == 4) {
-				tmp = tmp / 8; // 13 bits -> 10 bits.
-			}
-			if(tmp > max)max = tmp;
-			if(tmp < min)min = tmp;
-			sum += tmp;
+			int adc_raw = adc1_get_raw(channel);
+			if(adc_raw > max)max = adc_raw;
+			if(adc_raw < min)min = adc_raw;
+			sum += adc_raw;
 			//sum+=analogRead(adpin);
 		}
 		return (sum-min-max)/(averagetime-2);
@@ -525,8 +514,6 @@ int touch_getx(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 1);
 	touch_gpio(dev->_gpio_xm, MODE_OUTPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
 	int samples[NUMSAMPLES];
 	for (int i=0; i<NUMSAMPLES; i++) {
 		samples[i] = touch_avr_analog(dev->_adc_yp, AVERAGETIME);
@@ -545,8 +532,6 @@ int touch_gety(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_INPUT, 0);
 	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
 	int samples[NUMSAMPLES];
 	for (int i=0; i<NUMSAMPLES; i++) {
 		samples[i] = touch_avr_analog(dev->_adc_xm, AVERAGETIME);
@@ -565,24 +550,8 @@ int touch_getz(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 0);
 	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
 
-	//ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
-	int z1 =	adc1_get_raw(dev->_adc_yp);
-	int z2 =	adc1_get_raw(dev->_adc_xm);
-
-	if (ADC_WIDTH_BIT_DEFAULT == 2) {
-		z1 = z1 / 2; // 11 bits -> 10 bits.
-		z2 = z2 / 2; // 11 bits -> 10 bits.
-	}
-	if (ADC_WIDTH_BIT_DEFAULT == 3) {
-		z1 = z1 / 4; // 12 bits -> 10 bits.
-		z2 = z2 / 4; // 12 bits -> 10 bits.
-	}
-	if (ADC_WIDTH_BIT_DEFAULT == 4) {
-		z1 = z1 / 8; // 13 bits -> 10 bits.
-		z2 = z2 / 8; // 13 bits -> 10 bits.
-	}
+	int z1 = adc1_get_raw(dev->_adc_yp);
+	int z2 = adc1_get_raw(dev->_adc_xm);
 
 	int icomp =  z1 > z2? z1 - z2: z2 -  z1;
 	ESP_LOGD(TAG, "z1=%d z2=%d icomp=%d", z1, z2, icomp);
@@ -603,13 +572,8 @@ int touch_getz(TFT_t * dev)
 
 void touch_getxyz(TFT_t * dev, int *xp, int *yp, int *zp)
 {
-#if CONFIG_SWAP_XY
-	*yp = touch_getx(dev);
-	*xp = touch_gety(dev);
-#else
 	*xp = touch_getx(dev);
 	*yp = touch_gety(dev);
-#endif
 	*zp = touch_getz(dev);
 	touch_gpio(dev->_gpio_yp, MODE_OUTPUT, 0);
 	touch_gpio(dev->_gpio_ym, MODE_OUTPUT, 0);

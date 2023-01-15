@@ -1,9 +1,8 @@
 #ifndef   __LCD_COM_H__
 #define   __LCD_COM_H__
 
-#include "driver/adc.h"
-#include "esp_adc_cal.h"
 #include "i2s_lcd_driver.h"
+#include "driver/adc.h"
 
 #define TFTLCD_DELAY	0xFFFF
 #define TFTLCD_DELAY16	0xFFFF
