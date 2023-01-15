@@ -473,7 +473,8 @@ int touch_avr_analog(adc1_channel_t channel, int averagetime)
 	if (averagetime > 2) {
 		int sum = 0;
 		int max = 0;
-		int min = 1024;
+		//int min = 1024;
+		int min = INT_MAX;
 		for(int i = 0; i<averagetime; i++)
 		{
 			int adc_raw = adc1_get_raw(channel);
@@ -482,6 +483,15 @@ int touch_avr_analog(adc1_channel_t channel, int averagetime)
 			sum += adc_raw;
 			//sum+=analogRead(adpin);
 		}
+		// A simple filter to exclude min and max values
+		// adc_row[0]=100;
+		// adc_row[1]=110;
+		// adc_row[2]=120;
+		// adc_row[3]=130;
+		// sum=100+110+120+130=460
+		// min=100
+		// max=130
+		// (460-100-130)/2=115
 		return (sum-min-max)/(averagetime-2);
 	} else {
 		return 0;
