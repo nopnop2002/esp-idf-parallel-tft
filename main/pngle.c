@@ -29,8 +29,6 @@
 #include <math.h>
 
 #include "esp_log.h"
-//#include "miniz.h"
-#include "rom/miniz.h"
 #include "pngle.h"
 
 #define PNGLE_ERROR(s) (pngle->error = (s), pngle->state = PNGLE_STATE_ERROR, -1)
