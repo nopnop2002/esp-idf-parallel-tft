@@ -416,11 +416,20 @@ If there is no touch for 10 seconds, it will end.
 ![Touch-ILI9341-2](https://user-images.githubusercontent.com/6020549/145734734-ad6fa02b-9ba7-48e3-83a6-224e3637c18a.JPG)
 ![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
+## Button with touch   
+If there is no touch for 10 seconds, it will end.   
+![Touch-Keyboard](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/76bab0dd-4262-40fe-a248-64a29602eada)
+
+## Move with touch   
+If there is no touch for 10 seconds, it will end.   
+![Touch-Move-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/10eac755-d770-43c8-80ec-68ea59fcb49a)
+![Touch-Move-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/617abf8d-2cb6-46f2-9b80-2d9680aacac0)
+
 ## Select with touch   
 If there is no touch for 10 seconds, it will end.   
 I borrowed the icon from [here](https://www.flaticon.com/packs/social-media-343).   
-![Touch-Icon-1](https://user-images.githubusercontent.com/6020549/201503323-3e872abe-fce5-4ba9-a154-5232f7ae1b52.JPG)
-![Touch-Icon-2](https://user-images.githubusercontent.com/6020549/201503325-3cf35bcf-87cc-47b3-a44e-fa0275198814.JPG)
+![Touch-Icon-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/f3b6de6c-f63c-4b4f-9323-e5fad03d0720)
+![Touch-Icon-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/29a4afdd-8ca3-4ce4-aa92-bf8edb84314d)
 
 ## How dose it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf

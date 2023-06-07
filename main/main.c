@@ -203,18 +203,14 @@ TickType_t ColorBarTest(TFT_t * dev, int width, int height) {
 		y1 = height/3;
 		y2 = (height/3)*2;
 		lcdDrawFillRect(dev, 0, 0, width-1, y1-1, RED);
-		vTaskDelay(1);
 		lcdDrawFillRect(dev, 0, y1-1, width-1, y2-1, GREEN);
-		vTaskDelay(1);
 		lcdDrawFillRect(dev, 0, y2-1, width-1, height-1, BLUE);
 	} else {
 		uint16_t x1,x2;
 		x1 = width/3;
 		x2 = (width/3)*2;
 		lcdDrawFillRect(dev, 0, 0, x1-1, height-1, RED);
-		vTaskDelay(1);
 		lcdDrawFillRect(dev, x1-1, 0, x2-1, height-1, GREEN);
-		vTaskDelay(1);
 		lcdDrawFillRect(dev, x2-1, 0, width-1, height-1, BLUE);
 	}
 
@@ -638,7 +634,7 @@ TickType_t ScrollTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	int ymax = (lines+1) * fontHeight;
 	ESP_LOGD(__FUNCTION__, "ymax=%d",ymax);
 
-	lcdSetFontDirection(dev, 0);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdFillScreen(dev, BLACK);
 
 	strcpy((char *)ascii, "Vertical Smooth Scroll");
@@ -686,7 +682,6 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, BLACK);
 
 	// open BMP file
@@ -845,7 +840,6 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, BLACK);
 
 	int _width = width;
@@ -889,7 +883,6 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 				uint16_t color = rgb565_conv(pixel.red, pixel.green, pixel.blue);
 				lcdDrawPixel(dev, x+offsetX, y+offsetY, color);
 			}
-			vTaskDelay(1);
 		}
 #endif
 
@@ -900,7 +893,6 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 				colors[x] = pixels[y][x];
 			}
 			lcdDrawMultiPixels(dev, offsetX, y+offsetY, jpegWidth, colors);
-			vTaskDelay(1);
 		}
 
 		free(colors);
@@ -921,7 +913,6 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, BLACK);
 
 	int _width = width;
@@ -1020,7 +1011,6 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 			colors[x] = pngle->pixels[y][x];
 		}
 		lcdDrawMultiPixels(dev, offsetX, y+offsetY, pngWidth, colors);
-		vTaskDelay(1);
 	}
 	free(colors);
 	pngle_destroy(pngle, _width, _height);
@@ -1067,7 +1057,6 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	int16_t yp = INT16_MAX;
 	int counter = 0;
 	while(1) {
-		vTaskDelay(1);
 		int _xp;
 		int _yp;
 		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
@@ -1080,6 +1069,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
 			xpos = xpos + fontWidth + 5;
 		}
+		vTaskDelay(1);
 	} // end while
 	ESP_LOGI(__FUNCTION__, "_min_xp=%d _min_yp=%d", xp, yp);
 	dev->_min_xp = xp;
@@ -1104,7 +1094,6 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	yp = INT16_MIN;
 	counter = 0;
 	while(1) {
-		vTaskDelay(1);
 		int _xp;
 		int _yp;
 		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
@@ -1117,6 +1106,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 			lcdDrawFillCircle(dev, xpos, ypos, fontWidth/2, GREEN);
 			xpos = xpos + fontWidth + 5;
 		}
+		vTaskDelay(1);
 	} // end while
 	ESP_LOGI(__FUNCTION__, "max_xp=%d max_yp=%d", xp, yp);
 	dev->_max_xp = xp;
@@ -1184,7 +1174,6 @@ void TouchPenTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t 
 	int _ypos_prev = 0;
 
 	while(1){
-		vTaskDelay(1);
 		int _xp;
 		int _yp;
 		if (touch_getxy(dev, &_xp, &_yp)) { 
@@ -1279,7 +1268,6 @@ void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int
 			colors[x] = pngle->pixels[y][x];
 		}
 		lcdDrawMultiPixels(dev, _xpos, y+_ypos, pngWidth, colors);
-		vTaskDelay(1);
 	}
 	free(colors);
 	pngle_destroy(pngle, _width, _height);
@@ -1290,11 +1278,11 @@ void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int
 typedef struct {
 	int x_center;
 	int y_center;
+	int radius;
 	char text[32];
 } AREA_t;
 
 void ShowAllPngImage(TFT_t * dev, char * path, int max, FontxFile *fx, int width, int height, AREA_t *area) {
-	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, WHITE);
 
 	char file[64];
@@ -1314,6 +1302,7 @@ void ShowAllPngImage(TFT_t * dev, char * path, int max, FontxFile *fx, int width
 
 		area[fileNum].x_center = x_center;
 		area[fileNum].y_center = y_center;
+		area[fileNum].radius = 30;
 		strcpy(area[fileNum].text, pe->d_name);
 
 		fileNum++;
@@ -1334,7 +1323,7 @@ void ShowAllPngImage(TFT_t * dev, char * path, int max, FontxFile *fx, int width
 	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 
 	uint8_t ascii[24];
-	strcpy((char *)ascii, "Touch Screen");
+	strcpy((char *)ascii, "Touch Icon");
 	int xpos = ((width - fontHeight) / 2) - 1;
 	int ypos = (height - strlen((char *)ascii) * fontWidth) / 2;
 	lcdSetFontDirection(dev, DIRECTION90);
@@ -1350,7 +1339,6 @@ void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 
 	TickType_t lastTouched = xTaskGetTickCount();
 	while(1) {
-		vTaskDelay(1);
 		int _xp = 0;
 		int _yp = 0;
 		if (touch_getxy(dev, &_xp, &_yp)) { 
@@ -1366,10 +1354,10 @@ void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 				double _xd = _xpos - area[index].x_center;
 				double _yd = _ypos - area[index].y_center;
 				double _radius = sqrt((_xd*_xd) + (_yd*_yd));
-				ESP_LOGI(__FUNCTION__, "area.x_center=%d area.y_center=%d _radius=%f", area[0].x_center, area[0].y_center, _radius);
+				ESP_LOGD(__FUNCTION__, "area.x_center=%d area.y_center=%d _radius=%f", area[0].x_center, area[0].y_center, _radius);
 
 				// Distance is in range
-				if (_radius < 30.0) {
+				if (_radius < area[index].radius) {
 					// Show large image
 					ESP_LOGI(__FUNCTION__, "area.text=[%s]", area[0].text);
 					char file[64];
@@ -1392,6 +1380,202 @@ void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 
 	} // end while
 }
+
+void ShowSoftKeyboard(TFT_t * dev, int page, char * input, FontxFile *fx, int width, int height, AREA_t *area) {
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	int x_center = (width / 2) + 60;
+	int y_center = 40 + ((height - 320) / 2);
+	int offset = 0;
+	uint8_t ascii[64];
+	memset((char*)ascii, 0, sizeof(ascii));
+
+	// Draw new page
+	if (page >= 0) {
+		lcdSetFontDirection(dev, DIRECTION90);
+		lcdFillScreen(dev, BLACK);
+
+		for (int i=0;i<10; i++) {
+			int text = 0x30 + i;
+			if (page == 1) text = text + 17;
+			if (page == 2) text = text + 27;
+			if (page == 3) text = text + 37;
+			area[offset+i].x_center = x_center;
+			area[offset+i].y_center = y_center;
+			area[offset+i].radius = 25;
+			area[offset+i].text[0] = text;
+			area[offset+i].text[1] = 0;
+			ascii[0] = text;
+			//lcdDrawCircle(dev, area[offset+i].x_center, area[offset+i].y_center, area[offset+i].radius, RED);
+			lcdDrawFillRect2(dev, area[offset+i].x_center-5, area[offset+i].y_center+5, area[offset+i].radius, CYAN);
+			lcdDrawFillRect2(dev, area[offset+i].x_center, area[offset+i].y_center, area[offset+i].radius, BLUE);
+
+			int xpos = x_center - (fontHeight / 2) - 2;
+			int ypos = y_center - (fontWidth / 2);
+			ESP_LOGD(__FUNCTION__, "i=%d xpos=%d ypos=%d", i, xpos, ypos);
+			lcdDrawString(dev, fx, xpos, ypos, ascii, BLACK);
+
+			y_center = y_center + 60;
+			if (i == 4) {
+				x_center = (width / 2) - 0;
+				y_center = 40 + ((height - 320) / 2);;
+			}
+		} // end for
+
+		strcpy((char *)ascii, "Touch Button");
+		int xpos = (width - fontHeight);
+		int ypos = (height - strlen((char *)ascii) * fontWidth) / 2;
+		lcdSetFontDirection(dev, DIRECTION90);
+		lcdDrawString(dev, fx, xpos, ypos, ascii, BLUE);
+
+	} // end if
+
+	
+	// Draw entered text
+	if (strlen(input) == 0) return;
+	x_center = (width / 2) - 80;
+	y_center = 20 + ((height - 320) / 2);
+	strcpy((char *)ascii, input);
+	lcdSetFontUnderLine(dev, CYAN);
+	lcdDrawString(dev, fx, x_center, y_center, ascii, CYAN);
+	lcdUnsetFontUnderLine(dev);
+
+	return;
+}
+
+void TouchKeyTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	AREA_t area[10];
+	char input[32];
+	memset(input, 0, sizeof(input));
+	int page = 0;
+	TickType_t lastTouched = xTaskGetTickCount();
+
+	ShowSoftKeyboard(dev, page, input, fx, width, height, area);
+	while(1) {
+		int _xp = 0;
+		int _yp = 0;
+		if (touch_getxy(dev, &_xp, &_yp)) {
+			TickType_t diffTick = xTaskGetTickCount() - lastTouched;
+			ESP_LOGD(__FUNCTION__, "diffTick=%"PRIu32,diffTick);
+			if (diffTick < 20) continue;
+			
+			int _xpos = 0;
+			int _ypos = 0;
+			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &_xpos, &_ypos);
+			if (ret != ESP_OK) continue;
+			ESP_LOGD(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
+			lastTouched = xTaskGetTickCount();
+
+			bool isMatch = false;
+			for (int index=0;index<10;index++) {
+				// Calculate distance from center
+				double _xd = _xpos - area[index].x_center;
+				double _yd = _ypos - area[index].y_center;
+				double _radius = sqrt((_xd*_xd) + (_yd*_yd));
+				ESP_LOGD(__FUNCTION__, "area.x_center=%d area.y_center=%d _radius=%f", area[0].x_center, area[0].y_center, _radius);
+
+				// Distance is in range
+				if (_radius < area[index].radius) {
+					ESP_LOGI(__FUNCTION__, "area.text=[%s]", area[0].text);
+					isMatch = true;
+					if (strlen(input) < 15) strcat(input, area[index].text);
+					ESP_LOGI(__FUNCTION__, "input=[%s]", input);
+				}
+			}
+			if (isMatch) {
+				ShowSoftKeyboard(dev, -1, input, fx, width, height, area);
+			} else {
+				page++;
+				if (page == 4) page = 0;
+				ShowSoftKeyboard(dev, page, input, fx, width, height, area);
+			} 
+
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			if (current - lastTouched > timeout) break;
+		} // end if
+
+	} // end while
+}
+
+
+void TouchMoveTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	lcdFillScreen(dev, BLACK);
+	int x_center = (width / 2) - 1;
+	int y_center = (height / 2) -1;
+	ESP_LOGI(__FUNCTION__, "x_center=%d y_center=%d", x_center, y_center);
+	//lcdDrawFillCircle(dev, x_center, y_center, 20, RED);
+	//lcdDrawRect2(dev, x_center, y_center, 20, RED);
+	lcdDrawFillRect2(dev, x_center, y_center, 20, RED);
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	uint8_t ascii[24];
+	strcpy((char *)ascii, "Touch Screen");
+	int x_text = ((width - fontHeight) / 2) - 1;
+	int y_text = (height - strlen((char *)ascii) * fontWidth) / 2;
+	lcdSetFontDirection(dev, DIRECTION90);
+	lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+
+	int x_prev = x_center;
+	int y_prev = y_center;
+	TickType_t lastTouched = xTaskGetTickCount();
+	while(1) {
+		int _xp = 0;
+		int _yp = 0;
+		if (touch_getxy(dev, &_xp, &_yp)) {
+			TickType_t diffTick = xTaskGetTickCount() - lastTouched;
+			ESP_LOGD(__FUNCTION__, "diffTick=%"PRIu32,diffTick);
+			if (diffTick < 20) continue;
+
+			int x_new = 0;
+			int y_new = 0;
+			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &x_new, &y_new);
+			if (ret != ESP_OK) continue;
+			ESP_LOGI(__FUNCTION__, "x_prev=%d y_prev=%d", x_prev, y_prev);
+			ESP_LOGI(__FUNCTION__, "x_new=%d y_new=%d", x_new, y_new);
+			lastTouched = xTaskGetTickCount();
+
+			// Find the distance between two points
+			int distance = (int)sqrt((x_new - x_prev) * (x_new - x_prev) + (y_new - y_prev) * (y_new - y_prev));
+			ESP_LOGD(__FUNCTION__, "distance=%d",distance);
+
+			// Find the angle between two points
+			double radian = atan2(y_new - y_prev, x_new - x_prev);
+			ESP_LOGD(__FUNCTION__, "radian=%f",radian);
+
+			int x_move = x_prev;
+			int y_move = y_prev;
+			for (int _distance=10; _distance<distance;_distance=_distance+10) {
+				lcdDrawFillRect2(dev, x_move, y_move, 20, BLACK);
+				x_move = cos(radian) * _distance + x_prev;
+				y_move = sin(radian) * _distance + y_prev;
+				lcdDrawFillRect2(dev, x_move, y_move, 20, RED);
+			}
+			lcdDrawFillRect2(dev, x_move, y_move, 20, BLACK);
+			lcdDrawFillRect2(dev, x_new, y_new, 20, RED);
+			x_prev = x_new;;
+			y_prev = y_new;;
+			lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			if (current - lastTouched > timeout) break;
+		} // end if
+
+	} // end while
+}
+
 #endif // CONFIG_ENABLE_TOUCH
 
 // Check memory leek
@@ -1491,8 +1675,11 @@ void TFT(void *pvParameters)
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		//TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		//TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		//TouchMoveTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		WAIT;
 #endif
 
 		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
@@ -1508,6 +1695,8 @@ void TFT(void *pvParameters)
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchMoveTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #ifndef CONFIG_IDF_TARGET_ESP32S2
 		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #endif
@@ -1616,13 +1805,13 @@ void TFT(void *pvParameters)
 		uint16_t margin = 10;
 		lcdFillScreen(&dev, BLACK);
 		color = WHITE;
-		lcdSetFontDirection(&dev, 0);
+		lcdSetFontDirection(&dev, DIRECTION0);
 		uint16_t xpos = 0;
 		uint16_t ypos = 15;
 		int xd = 0;
 		int yd = 1;
 		if(CONFIG_WIDTH < CONFIG_HEIGHT) {
-			lcdSetFontDirection(&dev, 1);
+			lcdSetFontDirection(&dev, DIRECTION90);
 			xpos = (CONFIG_WIDTH-1)-16;
 			ypos = 0;
 			xd = 1;
@@ -1661,7 +1850,7 @@ void TFT(void *pvParameters)
 			strcpy((char *)ascii, "32Dot Mincyo Font");
 			lcdDrawString(&dev, fx32M, xpos, ypos, ascii, color);
 		}
-		lcdSetFontDirection(&dev, 0);
+		lcdSetFontDirection(&dev, DIRECTION0);
 		WAIT;
 	} // end while
 }
