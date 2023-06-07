@@ -42,6 +42,14 @@ void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_
 	(*DrawFillRect)(dev, x1, y1, x2, y2, color);
 }
 
+void lcdDrawFillRect2(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t size, uint16_t color) {
+	uint16_t x1 = x0-size;
+	uint16_t y1 = y0-size;
+	uint16_t x2 = x0+size;
+	uint16_t y2 = y0+size;
+	(*DrawFillRect)(dev, x1, y1, x2, y2, color);
+}
+
 // Display OFF
 void lcdDisplayOff(TFT_t * dev) {
 	(*DisplayOff)(dev);
@@ -163,6 +171,13 @@ void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 	lcdDrawLine(dev, x2, y1, x2, y2, color);
 	lcdDrawLine(dev, x2, y2, x1, y2, color);
 	lcdDrawLine(dev, x1, y2, x1, y1, color);
+}
+
+void lcdDrawRect2(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t size, uint16_t color) {
+	lcdDrawLine(dev, x0-size, y0-size, x0+size, y0-size, color);
+	lcdDrawLine(dev, x0+size, y0-size, x0+size, y0+size, color);
+	lcdDrawLine(dev, x0+size, y0+size, x0-size, y0+size, color);
+	lcdDrawLine(dev, x0-size, y0+size, x0-size, y0-size, color);
 }
 
 // Draw rectangle with angle
