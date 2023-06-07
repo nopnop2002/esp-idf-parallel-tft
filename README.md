@@ -409,7 +409,7 @@ Keep touching the corner point.
 ![TouchCalib-2](https://user-images.githubusercontent.com/6020549/145699316-98171b90-70c7-4359-b72e-ed2f1cd4bf13.JPG)
 
 ## Draw with touch   
-If there is no touch for 20 seconds, it will end.   
+If there is no touch for 10 seconds, it will end.   
 ![Touch-OpenSmat-16pin](https://user-images.githubusercontent.com/6020549/145699328-c065278a-39b9-4a11-b2f3-6ca5d54c6e3f.JPG)
 ![Touch-OpenSmart-Shield-2](https://user-images.githubusercontent.com/6020549/145698848-77901c4a-bc64-4c14-8bec-7a7c63d073c5.JPG)
 ![Touch-Elegoo-2](https://user-images.githubusercontent.com/6020549/145734726-68d2272b-1452-47a9-b934-647f7a741ad1.JPG)
@@ -417,7 +417,7 @@ If there is no touch for 20 seconds, it will end.
 ![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
 ## Select with touch   
-If there is no touch for 20 seconds, it will end.   
+If there is no touch for 10 seconds, it will end.   
 I borrowed the icon from [here](https://www.flaticon.com/packs/social-media-343).   
 ![Touch-Icon-1](https://user-images.githubusercontent.com/6020549/201503323-3e872abe-fce5-4ba9-a154-5232f7ae1b52.JPG)
 ![Touch-Icon-2](https://user-images.githubusercontent.com/6020549/201503325-3cf35bcf-87cc-47b3-a44e-fa0275198814.JPG)
