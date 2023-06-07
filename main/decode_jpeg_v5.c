@@ -8,22 +8,19 @@
 #if defined(ESP_ROM_HAS_JPEG_DECODE)
 #include "rom/tjpgd.h"
 #define JPEG "rom tjpgd"
+/* The ROM code of TJPGD is older and has different return type in decode callback */
+typedef unsigned int jpeg_decode_out_t;
 #else
 #error Using JPEG decoder from ROM is not supported for selected target. Please select external code in menuconfig.
 #endif
 
-/* The ROM code of TJPGD is older and has different return type in decode callback */
-typedef unsigned int jpeg_decode_out_t;
 #else
 /* When Tiny JPG Decoder is not in ROM or selected external code */
 #include "tjpgd.h"
 #define JPEG "external tjpgd"
-
 /* The TJPGD outside the ROM code is newer and has different return type in decode callback */
 typedef int jpeg_decode_out_t;
 #endif
-
-
 
 //Data that is passed from the decoder function to the infunc/outfunc functions.
 typedef struct {

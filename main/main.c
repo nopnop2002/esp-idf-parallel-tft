@@ -1071,7 +1071,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 		int _xp;
 		int _yp;
 		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
-		ESP_LOGI(TAG, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
+		ESP_LOGI(__FUNCTION__, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
 		if (_xp > xp) xp = _xp;
 		if (_yp < yp) yp = _yp;
 		counter++;
@@ -1081,7 +1081,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 			xpos = xpos + fontWidth + 5;
 		}
 	} // end while
-	ESP_LOGI(TAG, "_min_xp=%d _min_yp=%d", xp, yp);
+	ESP_LOGI(__FUNCTION__, "_min_xp=%d _min_yp=%d", xp, yp);
 	dev->_min_xp = xp;
 	dev->_min_yp = yp;
 
@@ -1108,7 +1108,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 		int _xp;
 		int _yp;
 		if (touch_getxy(dev, &_xp, &_yp) == false) continue;
-		ESP_LOGI(TAG, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
+		ESP_LOGI(__FUNCTION__, "counter=%d _xp=%d _yp=%d xp=%d yp=%d", counter, _xp, _yp, xp, yp);
 		if (_xp < xp) xp = _xp;
 		if (_yp > yp) yp = _yp;
 		counter++;
@@ -1118,7 +1118,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 			xpos = xpos + fontWidth + 5;
 		}
 	} // end while
-	ESP_LOGI(TAG, "max_xp=%d max_yp=%d", xp, yp);
+	ESP_LOGI(__FUNCTION__, "max_xp=%d max_yp=%d", xp, yp);
 	dev->_max_xp = xp;
 	dev->_max_yp = yp;
 	dev->_calibration = false;
@@ -1134,10 +1134,10 @@ esp_err_t ConvertCoordinate(TFT_t * dev, int xp, int yp, int *xpos, int *ypos) {
 	float _yd = dev->_max_yp - dev->_min_yp;
 	float _xs = dev->_max_xc - dev->_min_xc;
 	float _ys = dev->_max_yc - dev->_min_yc;
-	ESP_LOGI(TAG, "_xs=%f _ys=%f", _xs, _ys);
+	ESP_LOGD(__FUNCTION__, "_xs=%f _ys=%f", _xs, _ys);
 
-	ESP_LOGI(TAG, "_max_xp=%d _min_xp=%d xp=%d", dev->_max_xp, dev->_min_xp, xp);
-	ESP_LOGI(TAG, "_max_yp=%d _min_yp=%d yp=%d", dev->_max_yp, dev->_min_yp, yp);
+	ESP_LOGD(__FUNCTION__, "_max_xp=%d _min_xp=%d xp=%d", dev->_max_xp, dev->_min_xp, xp);
+	ESP_LOGD(__FUNCTION__, "_max_yp=%d _min_yp=%d yp=%d", dev->_max_yp, dev->_min_yp, yp);
 
 	// Determine if within range
 	if (dev->_max_xp > dev->_min_xp) {
@@ -1154,7 +1154,7 @@ esp_err_t ConvertCoordinate(TFT_t * dev, int xp, int yp, int *xpos, int *ypos) {
 	// Convert from position to coordinate
 	*xpos = ( (float)(xp - dev->_min_xp) / _xd * _xs ) + dev->_min_xc;
 	*ypos = ( (float)(yp - dev->_min_yp) / _yd * _ys ) + dev->_min_yc;
-	ESP_LOGI(TAG, "*xpos=%d *ypos=%d", *xpos, *ypos);
+	ESP_LOGD(__FUNCTION__, "*xpos=%d *ypos=%d", *xpos, *ypos);
 	return ESP_OK;
 }
 
@@ -1190,12 +1190,12 @@ void TouchPenTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t 
 		if (touch_getxy(dev, &_xp, &_yp)) { 
 			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &_xpos, &_ypos);
 			if (ret != ESP_OK) continue;
-			ESP_LOGD(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
 			lastTouched = xTaskGetTickCount();
 
-			// Disable touches when touching the same position
+			// Ignore touches when touching the same position
 			if (_xpos == _xpos_prev && _ypos == _ypos_prev) continue;
 
+			ESP_LOGI(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
 			lcdDrawFillCircle(dev, _xpos-1, _ypos-1, 3, CYAN);
 			_xpos_prev = _xpos;
 			_ypos_prev = _ypos;
@@ -1378,8 +1378,10 @@ void TouchIconTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 					ESP_LOGI(__FUNCTION__, "file=[%s]", file);
 					PNGTest(dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 					vTaskDelay(500);
+
 					// Show all small image
 					ShowAllPngImage(dev, "/icons/", 8, fx, width, height, area);
+					lastTouched = xTaskGetTickCount();
 				}
 			}
 		
@@ -1489,8 +1491,8 @@ void TFT(void *pvParameters)
 	while(1) {
 #if CONFIG_ENABLE_TOUCH
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
-		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
+		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #endif
 
 		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
@@ -1507,7 +1509,7 @@ void TFT(void *pvParameters)
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #ifndef CONFIG_IDF_TARGET_ESP32S2
-		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 2000);
+		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #endif
 #endif
 
