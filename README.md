@@ -485,19 +485,19 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 |FillTest|1620|2700|1920|1560|
 |ColorBarTest|80|410|150|30|
 |ArrowTest|250|450|160|140|
-|LineTest|2690|1030|430|1570|
-|CircleTest|2400|970|410|1410|
-|RoundRectTest|2400|970|400|1430|
-|RectAngleTest|5960|2000|940|4050|
-|TriangleTest|6550|2110|990|4740|
+|LineTest|2770|1030|430|1570|
+|CircleTest|2470|970|410|1410|
+|RoundRectTest|2510|970|400|1430|
+|RectAngleTest|5990|2000|940|4050|
+|TriangleTest|6950|2110|990|4740|
 |DirectionTest|420|500|190|240|
-|HorizontalTest|990|710|290|590|
-|VerticalTest|990|710|290|590|
-|FillRectTest|160|710|340|120|
-|ColorTest|240|850|340|150|
-|BMPTest|1600|6880|6360|6120|
-|JPEGTest|2540|800|350|150|
-|PNGTest|2830|1070|610|420|
+|HorizontalTest|1030|710|290|590|
+|VerticalTest|1010|710|290|590|
+|FillRectTest|170|710|340|120|
+|ColorTest|250|850|340|150|
+|BMPTest|7470|6880|6360|6120|
+|JPEGTest|2530|800|350|150|
+|PNGTest|2800|1070|610|420|
 
 
 
