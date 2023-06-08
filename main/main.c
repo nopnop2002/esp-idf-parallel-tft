@@ -1611,6 +1611,13 @@ void ShowSoftKeyboard(TFT_t * dev, int page, char * input, FontxFile *fx, int wi
 }
 
 void TouchKeyTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
 	AREA_t area[10];
 	char input[32];
 	memset(input, 0, sizeof(input));
@@ -1643,6 +1650,24 @@ void TouchKeyTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t 
 
 				// Distance is in range
 				if (_radius < area[index].radius) {
+
+					// Erase shadow and button
+					lcdDrawFillRect2(dev, area[index].x_center-5, area[index].y_center+5, area[index].radius, BLACK);
+					lcdDrawFillRect2(dev, area[index].x_center, area[index].y_center, area[index].radius, BLUE);
+					vTaskDelay(10);
+
+					// Draw shadow and button
+					lcdDrawFillRect2(dev, area[index].x_center-5, area[index].y_center+5, area[index].radius, CYAN);
+					lcdDrawFillRect2(dev, area[index].x_center, area[index].y_center, area[index].radius, BLUE);
+
+					// Draw character
+					int xpos = area[index].x_center - (fontHeight / 2) - 2;
+					int ypos = area[index].y_center - (fontWidth / 2);
+					uint8_t ascii[2];
+					ascii[0] = area[index].text[0];
+					ascii[1] = 0;
+					lcdDrawString(dev, fx, xpos, ypos, ascii, BLACK);
+
 					ESP_LOGI(__FUNCTION__, "area.text=[%s]", area[0].text);
 					isMatch = true;
 					if (strlen(input) < 15) strcat(input, area[index].text);
