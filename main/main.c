@@ -10,6 +10,8 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "esp_system.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 #include "esp_vfs.h"
 #include "esp_spiffs.h"
 
@@ -1022,8 +1024,86 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 }
 
 #if CONFIG_ENABLE_TOUCH
+bool TouchGetCalibration(TFT_t * dev) {
+	// Open NVS
+	ESP_LOGI(__FUNCTION__, "Opening Non-Volatile Storage (NVS) handle... ");
+	nvs_handle_t my_handle;
+	esp_err_t err;
+	err = nvs_open("storage", NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+		return false;
+	}
+	ESP_LOGI(__FUNCTION__, "Opening Non-Volatile Storage (NVS) handle done");
+
+	// Read NVS
+	int16_t calibration;
+	err = nvs_get_i16(my_handle, "calibration", &calibration);
+	ESP_LOGI(__FUNCTION__, "nvs_get_i16(calibration)=%d", err);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+		
+	err = nvs_get_i16(my_handle, "touch_min_xc", &dev->_min_xc);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_min_yc", &dev->_min_yc);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_max_xc", &dev->_max_xc);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_max_yc", &dev->_max_yc);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_min_xp", &dev->_min_xp);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_min_yp", &dev->_min_yp);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_max_xp", &dev->_max_xp);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+	err = nvs_get_i16(my_handle, "touch_max_yp", &dev->_max_yp);
+	if (err != ESP_OK) {
+		nvs_close(my_handle);
+		return false;
+	}
+
+	// Close NVS
+	nvs_close(my_handle);
+
+	return true;
+}
+
+
 void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	if (dev->_calibration == false) return;
+
+	// Read Touch Calibration from NVS
+	bool ret = TouchGetCalibration(dev);
+	ESP_LOGI(__FUNCTION__, "TouchGetCalibration=%d", ret);
+	if (ret) {
+		ESP_LOGI(__FUNCTION__, "Restore Touch Calibration from NVS");
+		dev->_calibration = false;
+		return;
+	}
 
 	// get font width & height
 	uint8_t buffer[FontxGlyphBufSize];
@@ -1036,7 +1116,7 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	int xpos = 0;
 	int ypos = 0;
 
-	// Calibration
+	// Do Calibration
 	lcdFillScreen(dev, BLACK);
 	dev->_min_xc = 15;
 	dev->_min_yc = 15;
@@ -1112,6 +1192,84 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 	dev->_max_xp = xp;
 	dev->_max_yp = yp;
 	dev->_calibration = false;
+
+#if CONFIG_SAVE_CALIBRATION
+	// Open NVS
+	ESP_LOGI(__FUNCTION__, "Opening Non-Volatile Storage (NVS) handle... ");
+	nvs_handle_t my_handle;
+	esp_err_t err = nvs_open("storage", NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+		return;
+	}
+	ESP_LOGI(__FUNCTION__, "Opening Non-Volatile Storage (NVS) handle done");
+
+	// Write Touch Calibration to NVS
+	err = nvs_set_i16(my_handle, "touch_min_xc", dev->_min_xc);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_min_yc", dev->_min_yc);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_max_xc", dev->_max_xc);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_max_yc", dev->_max_yc);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_min_xp", dev->_min_xp);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_min_yp", dev->_min_yp);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_max_xp", dev->_max_xp);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "touch_max_yp", dev->_max_yp);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_set_i16(my_handle, "calibration", 1);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) writing NVS handle!", esp_err_to_name(err));
+		nvs_close(my_handle);
+		return;
+	}
+	err = nvs_commit(my_handle);
+	if (err != ESP_OK) {
+		ESP_LOGE(__FUNCTION__, "Error (%s) commit NVS handle!", esp_err_to_name(err));
+	}
+
+
+	// Close NVS
+	nvs_close(my_handle);
+	ESP_LOGI(__FUNCTION__, "Write Touch Calibration done");
+#endif
+
 }
 
 // Convert from touch position to touch coordinates
@@ -2069,6 +2227,17 @@ esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 
 void app_main()
 {
+	// Initialize NVS
+	ESP_LOGI(TAG, "Initialize NVS");
+	esp_err_t err = nvs_flash_init();
+	if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+		// NVS partition was truncated and needs to be erased
+		// Retry nvs_flash_init
+		ESP_ERROR_CHECK(nvs_flash_erase());
+		err = nvs_flash_init();
+	}
+	ESP_ERROR_CHECK( err );
+
 	ESP_LOGI(TAG, "Initializing SPIFFS");
 	esp_err_t ret;
 	ret = mountSPIFFS("/spiffs", "storage0", 10);

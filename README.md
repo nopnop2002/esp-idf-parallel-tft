@@ -295,7 +295,7 @@ Two GPIOs are required for simultaneous digital output and analog input.
 
 ## Configuration for touch screen
 
-![config-touch](https://user-images.githubusercontent.com/6020549/201503687-973577d5-9375-4985-aacc-b46bccbf3b58.jpg)
+![config-touch-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/5efd74fe-3b3e-4cbe-b04a-266cee5a44ee)
 
 - ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
@@ -313,6 +313,16 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 - GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
 
+
+![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
+
+- Save calibration data to NVS   
+Write calibration data to NVS.   
+Read calibration data from NVS when starting the firmware and use it.   
+To clear the calibration data recorded in NVS, execute the following command.   
+```
+idf.py erase_flash
+```
 
 
 ### OPEN-SMART 16Pin-Parallel Products   

@@ -299,6 +299,13 @@ menu "TFT Configuration"
 		help
 			Enable 4-line resistance touch screen.
 
+	config SAVE_CALIBRATION
+		depends on ENABLE_TOUCH
+		bool "Save calibration data to NVS"
+		default false
+		help
+			Save calibration data to NVS.
+
 	config ADC_CHANNEL_YP
 		depends on ENABLE_TOUCH
 		int "ADC Channel Y+"
