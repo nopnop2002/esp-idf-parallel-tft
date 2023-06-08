@@ -477,7 +477,7 @@ Compiling with the O2 option doesn't help much.
 |JPEGTest|1210|490|170|140|
 |PNGTest|1480|750|440|1010|
 
-![graph](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c6a1f75c-8206-4eb1-b8bb-6ad0194794ec)
+![graph](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/1f7ae5e8-f2e8-4e4f-8d90-7f2d2cf52ec5)
 
 # Performance comparison using ILI9341(240x320)
 SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).   
