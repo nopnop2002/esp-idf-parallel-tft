@@ -8,20 +8,15 @@
 #define TFTLCD_DELAY16	0xFFFF
 #define TFTLCD_DELAY8	0x7F
 
-#define INTERFACE_I2S  1
-#define INTERFACE_GPIO 2
-#define INTERFACE_REG  3
+typedef enum {INTERFACE_I2S, INTERFACE_GPIO, INTERFACE_REG} INTERFACE;
+
+
+typedef enum {MODE_RESET, MODE_OUTPUT, MODE_INPUT} MODE;
 
 #define GPIO_PORT_NUM  0
-
-#define MODE_RESET  0
-#define MODE_OUTPUT 1
-#define MODE_INPUT  2
-
-#define NUMSAMPLES  2 // Number of samples
-#define COMP        2 // Coordinate tolerance
-#define AVERAGETIME 4 // Number of samples when averaging
-#define RXPLATE    300
+#define NUM_SAMPLES    2 // Number of samples
+#define COMP_TOLERANCE 2 // Coordinate tolerance
+#define AVERAGE_TIME   4 // Number of samples when averaging
 
 typedef struct {
 	uint16_t _width;

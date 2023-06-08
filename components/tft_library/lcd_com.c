@@ -516,6 +516,9 @@ void touch_gpio(int gpio, int mode, int level)
 	}
 }
 
+// Get X coordinate from 4-line resistance touch screen
+// Read the analog value twice from Y{+}
+// X=valueY{+}[0]+valueY{+}[1]
 int touch_getx(TFT_t * dev)
 {
 	int xp = 0;
@@ -524,16 +527,19 @@ int touch_getx(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_OUTPUT, 1);
 	touch_gpio(dev->_gpio_xm, MODE_OUTPUT, 0);
 
-	int samples[NUMSAMPLES];
-	for (int i=0; i<NUMSAMPLES; i++) {
-		samples[i] = touch_avr_analog(dev->_adc_yp, AVERAGETIME);
+	int samples[NUM_SAMPLES];
+	for (int i=0; i<NUM_SAMPLES; i++) {
+		samples[i] = touch_avr_analog(dev->_adc_yp, AVERAGE_TIME);
 	}
 	int icomp =  samples[0] > samples[1]? samples[0] - samples[1]: samples[1] -  samples[0];
-	ESP_LOGD(TAG, "touch_getx adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP=%d", dev->_adc_yp, samples[0], samples[1], icomp, COMP);
-	if(icomp <= COMP) xp = samples[0] + samples[1];
+	ESP_LOGD(TAG, "touch_getx adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP_TOLERANCE=%d", dev->_adc_yp, samples[0], samples[1], icomp, COMP_TOLERANCE);
+	if(icomp <= COMP_TOLERANCE) xp = samples[0] + samples[1];
 	return xp;
 }
 
+// Get Y coordinate from 4-line resistance touch screen
+// Read the analog value twice from X{-}s
+// Y=valueX{-}[0]+valueX{-}[1]
 int touch_gety(TFT_t * dev)
 {
 	int yp = 0;
@@ -542,17 +548,21 @@ int touch_gety(TFT_t * dev)
 	touch_gpio(dev->_gpio_xp, MODE_INPUT, 0);
 	touch_gpio(dev->_gpio_xm, MODE_INPUT, 0);
 
-	int samples[NUMSAMPLES];
-	for (int i=0; i<NUMSAMPLES; i++) {
-		samples[i] = touch_avr_analog(dev->_adc_xm, AVERAGETIME);
+	int samples[NUM_SAMPLES];
+	for (int i=0; i<NUM_SAMPLES; i++) {
+		samples[i] = touch_avr_analog(dev->_adc_xm, AVERAGE_TIME);
 	}
 	int icomp =  samples[0] > samples[1]? samples[0] - samples[1]: samples[1] -  samples[0];
-	ESP_LOGD(TAG, "adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP=%d", dev->_adc_xm, samples[0], samples[1], icomp, COMP);
-	if(icomp <= COMP) yp = samples[0] + samples[1];
+	ESP_LOGD(TAG, "adc=%d samples[0]=%d samples[1]=%d icomp=%d COMP_TOLERANCE=%d", dev->_adc_xm, samples[0], samples[1], icomp, COMP_TOLERANCE);
+	if(icomp <= COMP_TOLERANCE) yp = samples[0] + samples[1];
 	return yp;
 
 }
 
+// Get Z value from 4-line resistance touch screen
+// Read the analog value from Y{+}
+// Read the analog value from X{-}
+// Z=ABS(valueY{+}-valueX{-})
 int touch_getz(TFT_t * dev)
 {
 	touch_gpio(dev->_gpio_yp, MODE_INPUT, 0);
@@ -566,18 +576,6 @@ int touch_getz(TFT_t * dev)
 	int icomp =  z1 > z2? z1 - z2: z2 -  z1;
 	ESP_LOGD(TAG, "z1=%d z2=%d icomp=%d", z1, z2, icomp);
 	return icomp;
-
-#if 0
-	float rtouch = 0;
-	rtouch	= z2;
-	rtouch /= z1;
-	rtouch -= 1;
-	rtouch *= (2046-dev->_rawxp)/2;
-	rtouch *= RXPLATE;
-	rtouch /= 1024;
-	ESP_LOGI(pcTaskGetTaskName(0), "rtouch=%f", rtouch);
-	return rtouch;
-#endif
 }
 
 void touch_getxyz(TFT_t * dev, int *xp, int *yp, int *zp)
