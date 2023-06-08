@@ -425,7 +425,12 @@ If there is no touch for 10 seconds, it will end.
 ![Touch-Move-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/10eac755-d770-43c8-80ec-68ea59fcb49a)
 ![Touch-Move-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/617abf8d-2cb6-46f2-9b80-2d9680aacac0)
 
-## Select with touch   
+## Menu with Touch   
+If there is no touch for 10 seconds, it will end.   
+![Touch-Menu-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/0852357a-fb20-441f-be65-288c9ec1e8e7)
+![Touch-Menu-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/50cc507d-95fa-4713-ac38-f944e3943873)
+
+## Select image with touch   
 If there is no touch for 10 seconds, it will end.   
 I borrowed the icon from [here](https://www.flaticon.com/packs/social-media-343).   
 ![Touch-Icon-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/f3b6de6c-f63c-4b4f-9323-e5fad03d0720)

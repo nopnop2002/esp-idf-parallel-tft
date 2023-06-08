@@ -1278,6 +1278,10 @@ void ShowPngImage(TFT_t * dev, char * file, int width, int height, int xpos, int
 typedef struct {
 	int x_center;
 	int y_center;
+	int x_low;
+	int y_low;
+	int x_high;
+	int y_high;
 	int radius;
 	char text[32];
 } AREA_t;
@@ -1576,6 +1580,154 @@ void TouchMoveTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 	} // end while
 }
 
+void TouchMakeMenu(TFT_t * dev, int page, FontxFile *fx, int width, int height, AREA_t *area) {
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+
+	uint8_t ascii[24];
+	int x_center = width - (fontHeight * 2);
+	lcdSetFontDirection(dev, DIRECTION90);
+	lcdFillScreen(dev, BLACK);
+
+	int y_center = height / 8 * 1;
+	//lcdDrawCircle(dev, x_center, y_center, 20, RED);
+	strcpy((char *)ascii, "Menu1");
+	int x_text = x_center;
+	int y_text = y_center - (strlen((char *)ascii) * fontWidth / 2);
+	int x_rect = x_text + fontHeight;
+	int y_rect = y_text + (strlen((char *)ascii) * fontWidth);
+	area[0].x_low = x_text;
+	area[0].x_high = x_rect;
+	area[0].y_low = y_text;
+	area[0].y_high = y_rect;
+	ESP_LOGD(__FUNCTION__, "x_low=%d x_high=%d y_low=%d y_high=%d", area[0].x_low, area[0].x_high, area[0].y_low, area[0].y_high);
+	if (page == 0) {
+		lcdDrawFillRect(dev, x_text, y_text, x_rect, y_rect, RED);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, BLACK);
+		strcpy((char *)ascii, "Hello World");
+		x_text = (width / 2) - 1;
+		y_text = (height / 2) - (strlen((char *)ascii) * fontWidth / 2);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, CYAN);
+	} else {
+		lcdDrawRect(dev, x_text, y_text, x_rect, y_rect, WHITE);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+	}
+
+	y_center = height / 8 * 3;
+	//lcdDrawCircle(dev, x_center, y_center, 20, RED);
+	strcpy((char *)ascii, "Menu2");
+	x_text = x_center;
+	y_text = y_center - (strlen((char *)ascii) * fontWidth / 2);
+	x_rect = x_text + fontHeight;
+	y_rect = y_text + (strlen((char *)ascii) * fontWidth);
+	area[1].x_low = x_text;
+	area[1].x_high = x_rect;
+	area[1].y_low = y_text;
+	area[1].y_high = y_rect;
+	ESP_LOGD(__FUNCTION__, "x_low=%d x_high=%d y_low=%d y_high=%d", area[0].x_low, area[0].x_high, area[0].y_low, area[0].y_high);
+	if (page == 1) {
+		lcdDrawFillRect(dev, x_text, y_text, x_rect, y_rect, RED);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, BLACK);
+		strcpy((char *)ascii, "Hello America");
+		x_text = (width / 2) - 1;
+		y_text = (height / 2) - (strlen((char *)ascii) * fontWidth / 2);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, CYAN);
+	} else {
+		lcdDrawRect(dev, x_text, y_text, x_rect, y_rect, WHITE);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+	}
+
+	y_center = height / 8 * 5;
+	//lcdDrawCircle(dev, x_center, y_center, 20, RED);
+	strcpy((char *)ascii, "Menu3");
+	x_text = x_center;
+	y_text = y_center - (strlen((char *)ascii) * fontWidth / 2);
+	x_rect = x_text + fontHeight;
+	y_rect = y_text + (strlen((char *)ascii) * fontWidth);
+	area[2].x_low = x_text;
+	area[2].x_high = x_rect;
+	area[2].y_low = y_text;
+	area[2].y_high = y_rect;
+	ESP_LOGD(__FUNCTION__, "x_low=%d x_high=%d y_low=%d y_high=%d", area[0].x_low, area[0].x_high, area[0].y_low, area[0].y_high);
+	if (page == 2) {
+		lcdDrawFillRect(dev, x_text, y_text, x_rect, y_rect, RED);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, BLACK);
+		strcpy((char *)ascii, "Hello Japan");
+		x_text = (width / 2) - 1;
+		y_text = (height / 2) - (strlen((char *)ascii) * fontWidth / 2);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, CYAN);
+	} else {
+		lcdDrawRect(dev, x_text, y_text, x_rect, y_rect, WHITE);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+	}
+
+	y_center = height / 8 * 7;
+	//lcdDrawCircle(dev, x_center, y_center, 20, RED);
+	strcpy((char *)ascii, "Menu4");
+	x_text = x_center;
+	y_text = y_center - (strlen((char *)ascii) * fontWidth / 2);
+	x_rect = x_text + fontHeight;
+	y_rect = y_text + (strlen((char *)ascii) * fontWidth);
+	area[3].x_low = x_text;
+	area[3].x_high = x_rect;
+	area[3].y_low = y_text;
+	area[3].y_high = y_rect;
+	if (page == 3) {
+		lcdDrawFillRect(dev, x_text, y_text, x_rect, y_rect, RED);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, BLACK);
+		strcpy((char *)ascii, "Hello Africa");
+		x_text = (width / 2) - 1;
+		y_text = (height / 2) - (strlen((char *)ascii) * fontWidth / 2);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, CYAN);
+	} else {
+		lcdDrawRect(dev, x_text, y_text, x_rect, y_rect, WHITE);
+		lcdDrawString(dev, fx, x_text, y_text, ascii, WHITE);
+	}
+}
+
+void TouchMenuTest(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	AREA_t area[4];
+	int page = 0;
+	TouchMakeMenu(dev, page, fx, width, height, area);
+	TickType_t lastTouched = xTaskGetTickCount();
+	while(1) {
+		int _xp = 0;
+		int _yp = 0;
+		if (touch_getxy(dev, &_xp, &_yp)) { 
+			TickType_t diffTick = xTaskGetTickCount() - lastTouched;
+			ESP_LOGD(__FUNCTION__, "diffTick=%"PRIu32,diffTick);
+			if (diffTick < 20) continue;
+
+			int _xpos = 0;
+			int _ypos = 0;
+			esp_err_t ret = ConvertCoordinate(dev, _xp, _yp, &_xpos, &_ypos);
+			if (ret != ESP_OK) continue;
+			ESP_LOGD(__FUNCTION__, "_xpos=%d _ypos=%d", _xpos, _ypos);
+			lastTouched = xTaskGetTickCount();
+
+			for (int index=0;index<4;index++) {
+				ESP_LOGI(__FUNCTION__, "_xpos=%d x_low=%d x_high=%d", _xpos, area[index].x_low, area[index].x_high);
+				ESP_LOGI(__FUNCTION__, "_ypos=%d y_low=%d y_high=%d", _ypos, area[index].y_low, area[index].y_high);
+				if (_xpos >= area[index].x_low && _xpos <= area[index].x_high) {
+					if (_ypos >= area[index].y_low && _ypos <= area[index].y_high) {
+						page = index;
+						ESP_LOGI(__FUNCTION__, "page=%d", page);
+						TouchMakeMenu(dev, page, fx, width, height, area);
+					}
+				}
+			} // end for
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			if (current - lastTouched > timeout) break;
+		} // end if
+
+	} // end while
+}
 #endif // CONFIG_ENABLE_TOUCH
 
 // Check memory leek
@@ -1677,8 +1829,9 @@ void TFT(void *pvParameters)
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		//TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		//TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchMenuTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		//TouchMoveTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
-		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		//TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		WAIT;
 #endif
 
@@ -1696,6 +1849,7 @@ void TFT(void *pvParameters)
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		TouchMenuTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		TouchMoveTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 #ifndef CONFIG_IDF_TARGET_ESP32S2
 		TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
