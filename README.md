@@ -456,26 +456,26 @@ https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/118599243-30916f80-b7ea-11eb-8766-5dd8fecd66aa.jpg)
 
 # Performance comparison using ILI9488(320x480)
-
-|Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|
-|:-:|:-:|:-:|:-:|
-|AddressTest|820|280|40|
-|FillTest|3900|2370|1620|
-|ColorBarTest|810|290|60|
-|ArrowTest|860|300|160|
-|LineTest|2060|860|3150|
-|CircleTest|1950|830|2840|
-|RoundRectTest|1970|820|2930|
-|RectAngleTest|2810|1340|5180|
-|TriangleTest|2960|1530|6090|
-|DirectionTest|900|330|250|
-|HorizontalTest|1110|430|610|
-|VerticalTest|1110|430|610|
-|FillRectTest|1300|590|200|
-|ColorTest|1660|650|220|
-|BMPTest|7280|6500|6130|
-|JPEGTest|1210|490|170|
-|PNGTest|1480|750|440|
+Compiling with the O2 option doesn't help much.   
+|Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|I2S parallel(O2)|
+|:-:|:-:|:-:|:-:|:-:|
+|AddressTest|820|280|40|30|
+|FillTest|3900|2370|1620|1590|
+|ColorBarTest|810|290|60|40|
+|ArrowTest|860|300|160|140|
+|LineTest|2060|860|3150|2900|
+|CircleTest|1950|830|2840|2610|
+|RoundRectTest|1970|820|2930|2690|
+|RectAngleTest|2810|1340|5180|4880|
+|TriangleTest|2960|1530|6090|5640|
+|DirectionTest|900|330|250|230|
+|HorizontalTest|1110|430|610|550|
+|VerticalTest|1110|430|610|550|
+|FillRectTest|1300|590|200|140|
+|ColorTest|1660|650|220|180|
+|BMPTest|7280|6500|6130|5790|
+|JPEGTest|1210|490|170|140|
+|PNGTest|1480|750|440|1010|
 
 # Performance comparison using ILI9341(240x320)
 SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).   
