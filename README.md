@@ -319,6 +319,7 @@ It uses four GPIOs, but the GPIOs differ depending on the TFT model.
 - Save calibration data to NVS   
 Write calibration data to NVS.   
 Read calibration data from NVS when starting the firmware and use it.   
+If you use the same TFT, you don't need to calibrate again.   
 To clear the calibration data recorded in NVS, execute the following command.   
 ```
 idf.py erase_flash
