@@ -459,23 +459,23 @@ https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 |Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|
 |:-:|:-:|:-:|:-:|
-|AddressTest|1300|430|70|
-|FillTest|5320|2810|1680|
-|ColorBarTest|1290|460|110|
-|ArrowTest|1360|460|210|
-|LineTest|3190|1280|3650|
-|CircleTest|3030|1230|3310|
-|RoundRectTest|3060|1220|3400|
-|RectAngleTest|4110|1890|11480|
-|TriangleTest|4700|2110|13290|
-|DirectionTest|1440|530|340|
-|HorizontalTest|1750|640|740|
-|VerticalTest|1750|640|730|
-|FillRectTest|2340|890|280|
-|ColorTest|2630|970|400|
-|BMPTest|3350|2190|1370|
-|JPEGTest|3870|2990|2630|
-|PNGTest|4310|3450|3050|
+|AddressTest|820|280|40|
+|FillTest|3900|2370|1620|
+|ColorBarTest|810|290|60|
+|ArrowTest|860|300|160|
+|LineTest|2060|860|3150|
+|CircleTest|1950|830|2840|
+|RoundRectTest|1970|820|2930|
+|RectAngleTest|2810|1340|5180|
+|TriangleTest|2960|1530|6090|
+|DirectionTest|900|330|250|
+|HorizontalTest|1110|430|610|
+|VerticalTest|1110|430|610|
+|FillRectTest|1300|590|200|
+|ColorTest|1660|650|220|
+|BMPTest|7280|6500|6130|
+|JPEGTest|1210|490|170|
+|PNGTest|1480|750|440|
 
 # Performance comparison using ILI9341(240x320)
 SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).   
@@ -483,21 +483,21 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 |Test|SPI|GPIO parallel|REGISTER I/O parallel|I2S parallel|
 |:-:|:-:|:-:|:-:|:-:|
 |FillTest|1620|2700|1920|1560|
-|ColorBarTest|80|420|160|50|
-|ArrowTest|250|460|170|140|
-|LineTest|2690|1040|420|1530|
-|CircleTest|2400|980|410|1370|
-|RoundRectTest|2400|980|400|1390|
-|RectAngleTest|5960|2010|940|6720|
-|TriangleTest|6550|2120|990|7630|
-|DirectionTest|420|520|200|240|
-|HorizontalTest|990|720|300|580|
-|VerticalTest|990|710|300|580|
-|FillRectTest|160|730|300|120|
-|ColorTest|240|850|330|190|
-|BMPTest|1600|1930|1320|960|
-|JPEGTest|2540|2940|2650|2530|
-|PNGTest|2830|3210|2940|2810|
+|ColorBarTest|80|410|150|30|
+|ArrowTest|250|450|160|140|
+|LineTest|2690|1030|430|1570|
+|CircleTest|2400|970|410|1410|
+|RoundRectTest|2400|970|400|1430|
+|RectAngleTest|5960|2000|940|4050|
+|TriangleTest|6550|2110|990|4740|
+|DirectionTest|420|500|190|240|
+|HorizontalTest|990|710|290|590|
+|VerticalTest|990|710|290|590|
+|FillRectTest|160|710|340|120|
+|ColorTest|240|850|340|150|
+|BMPTest|1600|6880|6360|6120|
+|JPEGTest|2540|800|350|150|
+|PNGTest|2830|1070|610|420|
 
 
 
