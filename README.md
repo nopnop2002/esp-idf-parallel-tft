@@ -428,6 +428,7 @@ If there is no touch for 10 seconds, it will end.
 ![Touch-ILI9486-2](https://user-images.githubusercontent.com/6020549/146495160-94c9c2de-9ca3-4124-afb9-5109568ab60c.JPG)
 
 ## Button with touch   
+You can only enter up to 15 characters.   
 If there is no touch for 10 seconds, it will end.   
 ![Touch-Keyboard](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/76bab0dd-4262-40fe-a248-64a29602eada)
 
