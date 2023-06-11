@@ -120,6 +120,8 @@ You have to set this config value with menuconfig.
  I2S parallel is the fastest when drawing to consecutive addresses.   
  However, REGISTER I/O parallel is the fastest when drawing to non-contiguous addresses.   
  When using REGISTER I/O parallel, GPIO from D0 to D7 is 1 to 31.(GPIO0 is boot mode pin)   
+ I2S parallel is suitable for image-intensive applications.   
+ REGISTER I/O parallel is suitable for character-intensive applications.   
  GPIO parallel is most slow.   
 - CONFIG_WIDTH   
 - CONFIG_HEIGHT   
