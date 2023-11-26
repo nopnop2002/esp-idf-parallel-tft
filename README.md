@@ -73,6 +73,10 @@ These are all 2.4 inch, 320x240 TFTs.
 These are OPEN-SMART 16Pin-Parallel Products.
 ![OPEN-SMART-16Pin](https://user-images.githubusercontent.com/6020549/110071604-ad9e7280-7dbf-11eb-8e09-a9ebfacfd795.JPG)
 
+These are OPEN-SMART TFT-Shield Products.
+![OPEN-SMART-Shield](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/e48327d2-4470-426b-88d5-92607208586f)
+
+
 # Software requirements
 esp-idf v4.4/v5.0.   
 
