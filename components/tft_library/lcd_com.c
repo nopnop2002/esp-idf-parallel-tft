@@ -321,13 +321,6 @@ void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data)
 
 esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 {
-#if 0
-	if (interface == INTERFACE_I2S) {
-		ESP_LOGI(TAG, "interface=I2S");
-	} else if (interface == INTERFACE_GPIO) {
-		ESP_LOGI(TAG, "interface=GPIO");
-	}
-#endif
 	ESP_LOGI(TAG, "LCD_CS_PIN=%d",LCD_CS_PIN);
 	gpio_reset_pin( LCD_CS_PIN );
 	gpio_set_direction( LCD_CS_PIN, GPIO_MODE_OUTPUT );
@@ -338,12 +331,10 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 	gpio_set_direction(LCD_RS_PIN, GPIO_MODE_OUTPUT);
 	gpio_set_level( LCD_RS_PIN, 1 );
 
-#if 0
 	ESP_LOGI(TAG, "LCD_WR_PIN=%d",LCD_WR_PIN);
 	gpio_reset_pin( LCD_WR_PIN );
 	gpio_set_direction( LCD_WR_PIN, GPIO_MODE_OUTPUT );
 	gpio_set_level( LCD_WR_PIN, 1 );
-#endif
 
 	ESP_LOGI(TAG, "LCD_RD_PIN=%d",LCD_RD_PIN);
 	gpio_reset_pin( LCD_RD_PIN );
@@ -413,7 +404,6 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		gpio_reset_pin( LCD_D5_PIN );
 		gpio_reset_pin( LCD_D6_PIN );
 		gpio_reset_pin( LCD_D7_PIN );
-		gpio_reset_pin( LCD_WR_PIN );
 		gpio_set_direction( LCD_D0_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D1_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D2_PIN, GPIO_MODE_OUTPUT );
@@ -422,8 +412,6 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		gpio_set_direction( LCD_D5_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D6_PIN, GPIO_MODE_OUTPUT );
 		gpio_set_direction( LCD_D7_PIN, GPIO_MODE_OUTPUT );
-		gpio_set_direction( LCD_WR_PIN, GPIO_MODE_OUTPUT );
-		gpio_set_level( LCD_WR_PIN, 1 );
 		dev->_d0 = LCD_D0_PIN;
 		dev->_d1 = LCD_D1_PIN;
 		dev->_d2 = LCD_D2_PIN;
@@ -433,7 +421,6 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 		dev->_d6 = LCD_D6_PIN;
 		dev->_d7 = LCD_D7_PIN;
 	}
-
 
 	ESP_LOGI(TAG, "LCD_RESET_PIN=%d",LCD_RESET_PIN);
 	gpio_reset_pin( LCD_RESET_PIN );
