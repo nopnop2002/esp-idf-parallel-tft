@@ -465,10 +465,13 @@ void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int g
 	dev->_gpio_yp = gpio_yp;
 	dev->_gpio_ym = gpio_ym;
 	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
-	//ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
-	//ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_12));
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_12));
+#else
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+#endif
 }
 
 int touch_avr_analog(adc1_channel_t channel, int averagetime)
