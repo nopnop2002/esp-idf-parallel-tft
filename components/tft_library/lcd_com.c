@@ -69,13 +69,14 @@
 		} \
 	} while (0)
 	
-
 #define reg_digital_write(GPIO_PIN, data) \
 	do { \
 		if (data) { \
-			GPIO.out_w1ts = (1 << GPIO_PIN); \
+			if ( GPIO_PIN < 32 ) GPIO.out_w1ts = (1 << GPIO_PIN); \
+			else GPIO.out1_w1ts.val = (1 << (GPIO_PIN - 32)); \
 		} else { \
-			GPIO.out_w1tc = (1 << GPIO_PIN); \
+			if ( GPIO_PIN < 32 ) GPIO.out_w1tc = (1 << GPIO_PIN); \
+			else GPIO.out1_w1tc.val = (1 << (GPIO_PIN - 32)); \
 		} \
 	} while (0)
 
@@ -464,8 +465,10 @@ void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int g
 	dev->_gpio_yp = gpio_yp;
 	dev->_gpio_ym = gpio_ym;
 	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
-	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+	//ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_11));
+	//ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_11));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_12));
+	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_xm, ADC_ATTEN_DB_12));
 }
 
 int touch_avr_analog(adc1_channel_t channel, int averagetime)

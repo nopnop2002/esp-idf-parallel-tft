@@ -244,6 +244,21 @@ __If you use OPEN-SMART TFT-Shield Products, you have to change Custom GPIO.__
 
 ![WeMos-R32-OpenSmart](https://user-images.githubusercontent.com/6020549/145744630-bce9eac3-3039-4cf6-952f-28c8ec277ec2.jpg)
 
+
+
+# Using TZT D1 ESP32-S3   
+I bought this for $5.   
+![tzt-d1-esp32s3](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/ba6772f1-c8b7-4e7d-9d0a-0fb8fb8cbea5)
+
+You can attach TFT without changing anything.   
+But i2c parallel doesn't work. I don't know why.   
+![tzt-d1-esp32s3-Generic](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/ea622d34-ffa9-4de0-941f-98460e10f416)
+![tzt-d1-esp32s3-Open-Smart](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/8316345e-cef6-4768-afbc-f42be5b4bf70)
+
+If you use TZT D1 ESP32-S3, you have to change Custom GPIO.  
+![config-esp32s3-generic](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/607bd6c5-537a-48c1-a4aa-76030bdad451)
+
+
 # JPEG Decoder   
 The ESP-IDF component includes Tiny JPEG Decompressor.   
 The document of Tiny JPEG Decompressor is [here](http://elm-chan.org/fsw/tjpgd/00index.html).   
