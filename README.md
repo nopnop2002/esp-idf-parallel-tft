@@ -81,7 +81,7 @@ These are OPEN-SMART TFT-Shield Products.
 esp-idf v4.4/v5.x.   
 
 __Note for ESP-IDF V5.x__   
-ESP-IDF V5.0 gives this warning, but work.   
+ESP-IDF V5.x gives this warning, but work.   
 ```
 #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
 ```
