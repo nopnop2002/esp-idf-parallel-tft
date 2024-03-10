@@ -223,7 +223,7 @@ PNG file
 I bought this for $4.   
 ![WeMos-R32-11](https://user-images.githubusercontent.com/6020549/107591015-09585e80-6c4d-11eb-9198-d882408d0d4a.JPG)
 
-To attach the TFT, you need to do changed some pin assignments.   
+To attach the TFT-Shield, you need to do changed some pin assignments.   
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
 It's great because it doesn't require any wiring.   
@@ -246,7 +246,7 @@ __If you use OPEN-SMART TFT-Shield Products, you must use custom GPIO.__
 I bought this for $5.   
 ![tzt-d1-esp32s3](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/ba6772f1-c8b7-4e7d-9d0a-0fb8fb8cbea5)
 
-You can attach TFT without changing anything.   
+You can attach the TFT-Shield without changing anything.   
 But I2S parallel doesn't work. I don't know why.   
 ![tzt-d1-esp32s3-Generic](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/ea622d34-ffa9-4de0-941f-98460e10f416)
 ![tzt-d1-esp32s3-Open-Smart](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/8316345e-cef6-4768-afbc-f42be5b4bf70)
