@@ -229,7 +229,6 @@ Because GPIO34/35/36/39 are READ ONLY.
 
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
-
 With this change, GPIO will look like this:   
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
@@ -477,7 +476,8 @@ https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 ![LibraryLayer](https://user-images.githubusercontent.com/6020549/118599243-30916f80-b7ea-11eb-8766-5dd8fecd66aa.jpg)
 
-# Performance comparison using ILI9488(320x480)
+# Performance comparison using ILI9488(320x480)   
+I2S parallel is not always faster.   
 Compiling with the O2 option doesn't help much.   
 |Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|I2S parallel(O2)|
 |:-:|:-:|:-:|:-:|:-:|
