@@ -223,9 +223,7 @@ PNG file
 I bought this for $4.   
 ![WeMos-R32-11](https://user-images.githubusercontent.com/6020549/107591015-09585e80-6c4d-11eb-9198-d882408d0d4a.JPG)
 
-I have changed some pin assignments.   
-Attached the TFT shield.   
-The TFT shield worked fine.   
+To attach the TFT, you need to do changed some pin assignments.   
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
 It's great because it doesn't require any wiring.   
