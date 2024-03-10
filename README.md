@@ -227,16 +227,18 @@ To attach the TFT-Shield, you need to do changed some pin assignments like this.
 Because GPIO34/35/36/39 are READ ONLY.   
 ![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/145746743-9c4a0e7c-5315-496f-8f66-129115044091.jpg)
 
-![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
-It's great because it doesn't require any wiring.   
-![WeMos-R32-13](https://user-images.githubusercontent.com/6020549/201453096-40b41987-30bf-4703-af59-3652b9bdbea3.JPG)
+![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
 ![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107723948-ff565e80-6d25-11eb-89cc-74fcd2fa11f3.jpg)
 
 ![WeMos-R32-4](https://user-images.githubusercontent.com/6020549/107725257-2e220400-6d29-11eb-808a-a440336780d6.jpg)
+
+It's great because it doesn't require any wiring.   
+![WeMos-R32-13](https://user-images.githubusercontent.com/6020549/201453096-40b41987-30bf-4703-af59-3652b9bdbea3.JPG)
+
 
 __If you use OPEN-SMART TFT-Shield Products, you must use custom GPIO.__   
 ![WeMos-R32-OpenSmart](https://user-images.githubusercontent.com/6020549/145744630-bce9eac3-3039-4cf6-952f-28c8ec277ec2.jpg)
