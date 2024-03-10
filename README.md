@@ -227,9 +227,10 @@ To attach the TFT-Shield, you need to do changed some pin assignments like this.
 Because GPIO34/35/36/39 are READ ONLY.   
 ![WeMos-R32-1](https://user-images.githubusercontent.com/6020549/145746743-9c4a0e7c-5315-496f-8f66-129115044091.jpg)
 
-
 ![WeMos-R32-12](https://user-images.githubusercontent.com/6020549/107591018-0c534f00-6c4d-11eb-81d1-22f141ea1044.JPG)
 
+
+With this change, GPIO will look like this:   
 ![WeMos-R32-2](https://user-images.githubusercontent.com/6020549/107591035-12e1c680-6c4d-11eb-9c67-5967c7b8a59f.jpg)
 
 ![WeMos-R32-3](https://user-images.githubusercontent.com/6020549/107723948-ff565e80-6d25-11eb-89cc-74fcd2fa11f3.jpg)
