@@ -1023,6 +1023,46 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
+TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height, uint16_t start, uint16_t end) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+	uint8_t xmoji = width / fontWidth;
+	uint8_t ymoji = height / fontHeight;
+	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
+
+
+	uint16_t color;
+	lcdFillScreen(dev, BLACK);
+	uint8_t code;
+
+	color = CYAN;
+	lcdSetFontDirection(dev, DIRECTION0);
+	//code = 0xA0;
+	code = start;
+	for(int y=0;y<ymoji;y++) {
+		uint16_t xpos = 0;
+		uint16_t ypos =  fontHeight*(y+1)-1;
+		for(int x=0;x<xmoji;x++) {
+			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
+			if (code == 0xFF) break;
+			code++;
+			if(code > end) break;
+		}
+	}
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
 #if CONFIG_ENABLE_TOUCH
 bool TouchGetCalibration(TFT_t * dev) {
 	// Open NVS
@@ -1940,6 +1980,9 @@ void TFT(void *pvParameters)
 	InitFontx(fx24G,"/spiffs/ILGH24XB.FNT",""); // 12x24Dot Gothic
 	InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
 
+	FontxFile fx32L[2];
+	InitFontx(fx32L,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Latinc
+
 	FontxFile fx16M[2];
 	FontxFile fx24M[2];
 	FontxFile fx32M[2];
@@ -2010,17 +2053,13 @@ void TFT(void *pvParameters)
 
 #if 0
 	while(1) {
-#if CONFIG_ENABLE_TOUCH
-		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		//TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
-		//TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
-		TouchMenuTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
-		//TouchMoveTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
-		//TouchIconTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 0x00, 0x7f);
 		WAIT;
-#endif
 
-		ArrowTest(&dev, fx16G, DRIVER, CONFIG_WIDTH, CONFIG_HEIGHT);
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 0x80, 0xff);
+		WAIT;
+
+		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT, 0x80, 0xff);
 		WAIT;
 
 	}
@@ -2096,6 +2135,15 @@ void TFT(void *pvParameters)
 		WAIT;
 
 		ColorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 0x00, 0x7f);
+		WAIT;
+
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 0x80, 0xff);
+		WAIT;
+
+		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT, 0x80, 0xff);
 		WAIT;
 
 		char file[32];

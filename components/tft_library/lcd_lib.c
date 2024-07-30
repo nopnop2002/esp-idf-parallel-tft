@@ -475,10 +475,10 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 	int16_t xsd = 0;
 	int16_t ysd = 0;
 	int16_t next = 0;
-	int16_t x0  = 0;
-	int16_t x1  = 0;
-	int16_t y0  = 0;
-	int16_t y1  = 0;
+	int16_t x0 = 0;
+	int16_t x1 = 0;
+	int16_t y0 = 0;
+	int16_t y1 = 0;
 
 	if (dev->_font_direction == 0) {
 		xd1 = +1;
@@ -599,6 +599,28 @@ int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * 
 		if (dev->_font_direction == 3)
 			y = lcdDrawChar(dev, fx, x, y, ascii[i], color);
 	}
+	if (dev->_font_direction == 0) return x;
+	if (dev->_font_direction == 2) return x;
+	if (dev->_font_direction == 1) return y;
+	if (dev->_font_direction == 3) return y;
+	return 0;
+}
+
+// Draw character using code
+// x:X coordinate
+// y:Y coordinate
+// code:character code
+// color:color
+int lcdDrawCode(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t code,uint16_t color) {
+	if(_DEBUG_)printf("code=%x x=%d y=%d\n",code,x,y);
+	if (dev->_font_direction == 0)
+		x = lcdDrawChar(dev, fx, x, y, code, color);
+	if (dev->_font_direction == 1)
+		y = lcdDrawChar(dev, fx, x, y, code, color);
+	if (dev->_font_direction == 2)
+		x = lcdDrawChar(dev, fx, x, y, code, color);
+	if (dev->_font_direction == 3)
+		y = lcdDrawChar(dev, fx, x, y, code, color);
 	if (dev->_font_direction == 0) return x;
 	if (dev->_font_direction == 2) return x;
 	if (dev->_font_direction == 1) return y;
