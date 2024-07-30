@@ -279,13 +279,70 @@ Your font file is uploaded to SPIFFS partition using meke flash.
 
 Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX format.   
 
+# Font File Editor(FONTX Editor)   
+[There](http://elm-chan.org/fsw/fontxedit.zip) is a font file editor.   
+This can be done on Windows 10.   
+Developer page is [here](http://elm-chan.org/fsw_e.html).   
+
+![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
+
+This library uses the following as default fonts:   
+- font/ILGH16XB.FNT // 8x16Dot Gothic
+- font/ILGH24XB.FNT // 12x24Dot Gothic
+- font/ILGH32XB.FNT // 16x32Dot Gothic
+- font/ILMH16XB.FNT // 8x16Dot Mincyo
+- font/ILMH24XB.FNT // 12x24Dot Mincyo
+- font/ILMH32XB.FNT // 16x32Dot Mincyo
+
+From 0x00 to 0x7f, the characters image of Alphanumeric are stored.   
+From 0x80 to 0xff, the characters image of Japanese are stored.   
+Changing this file will change the font.
+
+# How to build your own font file   
+step1)   
+download fontxedit.exe.   
+
+step2)   
+download BDF font file from Internet.   
+I downloaded from [here](https://github.com/fcambus/spleen).   
+fontxedit.exe can __ONLY__ import Monospaced bitmap fonts file.   
+Monospaced bitmap fonts can also be downloaded [here](https://github.com/Tecate/bitmap-fonts).
+
+step3)   
+import the BDF font file into your fontxedit.exe.   
+this tool can convert from BDF to FONTX.   
+![fontx-editor-2](https://github.com/user-attachments/assets/3353bf23-01f0-455d-8c9c-b56d55b4dc9c)
+
+step4)   
+adjust font size.   
+![fontx-editor-3](https://github.com/user-attachments/assets/0a99fb0b-1725-472e-8310-ca57362ae6d1)
+
+step5)   
+check font pattern.   
+when you have made any changes, press the apply button.   
+![fontx-editor-4](https://github.com/user-attachments/assets/44b8ed95-0c3e-4507-87fa-b94c3c2349de)
+
+step6)   
+save as .fnt file from your fontedit.exe.   
+![fontx-editor-5](https://github.com/user-attachments/assets/db5b62a8-3a61-49aa-8505-b906067f1111)
+
+step7)   
+upload your font file to $HOME/esp-idf-ili9340/font directory.   
+
+step8)   
+add font to use   
 ```
-FontxFile yourFont[2];
-InitFontx(yourFont,"/spiffs/your_font_file_name","");
-uint8_t ascii[10];
-strcpy((char *)ascii, "MyFont");
-lcdDrawString(dev, yourFont, x, y, ascii, color);
+FontxFile fx32L[2];
+InitFontx(fx32L,"/spiffs/LATIN32B.FNT",""); // 16x32Dot LATIN
 ```
+Font file that From 0x00 to 0x7f, the characters image of Standard ASCII are stored.   
+![AsciiCode-1](https://github.com/user-attachments/assets/9311b258-fecd-460f-a349-599b2a6c1fbc)
+
+Font file that From 0x80 to 0xff, the characters image of Japanese are stored.   
+![AsciiCode-2](https://github.com/user-attachments/assets/dc6c5733-9ad4-4e24-b65d-9b1905f99a45)
+
+Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
+![AsciiCode-3](https://github.com/user-attachments/assets/32778605-48d2-4dd4-b268-985adc2bef02)
 
 ---
 
