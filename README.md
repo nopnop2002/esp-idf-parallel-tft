@@ -101,7 +101,7 @@ idf.py flash
 __Note for ESP32-S2__   
 The tjpgd library is not present in ESP32-S2 ROM.   
 With ESP-IDF Ver5, the JPEG decode library is now provided from the IDF Component Registry, and the JPEG decode library is now available for ESP32-S2.   
-However, since the ROM is small, a large image cannot be displayed.   
+However, since the SRAM is small, a large image cannot be displayed.   
 With ESP-IDF Ver4.4, you cannot be displayed JPEG files because the IDF Component Registry cannot be used.   
 Due to the small SRAM capacity, there is a possibility that an error may occur when displaying PNG files.
 You can avoid this error by enabling PSRAM.
