@@ -2163,11 +2163,13 @@ void TFT(void *pvParameters)
 		ESP_LOGW(TAG, "ESP32-S2 only has a small amount of RAM");
 		strcpy(file, "/images/esp32_small.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 #endif
 #else
 		ESP_LOGD(TAG, "IDF_TARGET_ESP32/ESP32S3");
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 #endif
 
 		/***
