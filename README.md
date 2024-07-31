@@ -344,6 +344,35 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![AsciiCode-3](https://github.com/user-attachments/assets/32778605-48d2-4dd4-b268-985adc2bef02)
 
+# Convert from TTF font to FONTX font  
+step1)   
+Download WFONTX64.exe from [here](https://github.com/nemuisan/WFONTX64/releases).
+Developer page is [here](https://github.com/nemuisan/WFONTX64).   
+
+step2)   
+Select ttf font.   
+![WFINTX64-1](https://github.com/user-attachments/assets/0fc874b5-4ffa-4cba-b22f-9430b406ba04)
+
+step3)   
+Enter Height, Width, FontX2 name.   
+Specify half of Height for Width.   
+Specify your favorite font name in the FontX2 name field using up to 8 characters.   
+![WFINTX64-2](https://github.com/user-attachments/assets/6cdc69af-891e-4f43-8c65-8db0a12e10d7)
+
+step4)   
+Specify the file name to save.   
+![WFINTX64-3](https://github.com/user-attachments/assets/3588bca1-e03f-42ca-bbe0-d8f9627b20c9)
+
+step5)   
+Specify the font style as required.   
+![WFINTX64-4](https://github.com/user-attachments/assets/9246bd4f-615c-4676-a451-a8c2a39b83e5)
+
+step6)   
+Press the RUN button to convert TTF fonts to FONTX format.   
+![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
+
+![tft_font](https://github.com/user-attachments/assets/7149863b-cea0-4a11-9364-27af31c6f51d)
+
 ---
 
 # 4-line resistance touch screen   
