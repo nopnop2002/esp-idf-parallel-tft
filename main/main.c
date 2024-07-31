@@ -2156,27 +2156,28 @@ void TFT(void *pvParameters)
 		Tiny JPG Decoder is not in ESP32-S2 ROM
 		ESP-IDF V5 supports this as external code
 		ESP32-S2 and ESP-IDF V5 selecte external code
-		ESP32-S2 has a small ROM, so it can't handle large images
+		ESP32-S2 has a small RAM, so it can't handle large images
 		***/
 #ifdef CONFIG_IDF_TARGET_ESP32S2
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
-		ESP_LOGW(TAG, "IDF_TARGET_ESP32S2");
+		ESP_LOGW(TAG, "ESP32-S2 only has a small amount of RAM");
 		strcpy(file, "/images/esp32_small.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 #endif
 #else
-		ESP_LOGW(TAG, "IDF_TARGET_ESP32/ESP32S3");
+		ESP_LOGD(TAG, "IDF_TARGET_ESP32/ESP32S3");
 		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 #endif
-		WAIT;
 
-#ifndef CONFIG_IDF_TARGET_ESP32S2
-		//ESP32-S2's rom is too small
+		/***
+		ESP32-S2's RAM is too small
+		There is a possibility that an error may occur when displaying PNG files.
+		You can avoid error by enabling PSRAM.
+		***/
 		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 
 #if 0
 		if (lcdEnableScroll(&dev)) {
