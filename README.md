@@ -78,7 +78,8 @@ These are OPEN-SMART TFT-Shield Products.
 
 
 # Software requirements
-esp-idf v4.4/v5.x.   
+ESP-IDF V5.0 or later.   
+ESP-IDF V4.4 release branch reached EOL in July 2024.   
 
 __Note for ESP-IDF V5.x__   
 ESP-IDF V5.x gives this warning, but work.   
@@ -102,7 +103,8 @@ The tjpgd library is not present in ESP32-S2 ROM.
 With ESP-IDF Ver5, the JPEG decode library is now provided from the IDF Component Registry, and the JPEG decode library is now available for ESP32-S2.   
 However, since the ROM is small, a large image cannot be displayed.   
 With ESP-IDF Ver4.4, you cannot be displayed JPEG files because the IDF Component Registry cannot be used.   
-PNG file cannot be displayed because the SRAM is small.   
+Due to the small SRAM capacity, there is a possibility that an error may occur when displaying PNG files.
+You can avoid this error by enabling PSRAM.
 
 # Configuration   
 You have to set this config value with menuconfig.   
