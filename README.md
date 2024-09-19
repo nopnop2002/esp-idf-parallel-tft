@@ -274,7 +274,19 @@ And I ported the pngle library from [here](https://github.com/kikuchan/pngle).
 This can reduce the image to any size.   
 
 # Font File   
-You can add your original font file.   
+This project uses the following as default fonts:   
+- font/ILGH16XB.FNT // 8x16Dot Gothic
+- font/ILGH24XB.FNT // 12x24Dot Gothic
+- font/ILGH32XB.FNT // 16x32Dot Gothic
+- font/ILMH16XB.FNT // 8x16Dot Mincyo
+- font/ILMH24XB.FNT // 12x24Dot Mincyo
+- font/ILMH32XB.FNT // 16x32Dot Mincyo
+
+From 0x00 to 0x7f, the characters image of Alphanumeric are stored.   
+From 0x80 to 0xff, the characters image of Japanese are stored.   
+Changing this file will change the font.
+
+You can add your original fonts.   
 The format of the font file is the FONTX format.   
 Your font file is put in font directory.   
 Your font file is uploaded to SPIFFS partition using meke flash.   
@@ -288,19 +300,8 @@ Developer page is [here](http://elm-chan.org/fsw_e.html).
 
 ![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
 
-This library uses the following as default fonts:   
-- font/ILGH16XB.FNT // 8x16Dot Gothic
-- font/ILGH24XB.FNT // 12x24Dot Gothic
-- font/ILGH32XB.FNT // 16x32Dot Gothic
-- font/ILMH16XB.FNT // 8x16Dot Mincyo
-- font/ILMH24XB.FNT // 12x24Dot Mincyo
-- font/ILMH32XB.FNT // 16x32Dot Mincyo
 
-From 0x00 to 0x7f, the characters image of Alphanumeric are stored.   
-From 0x80 to 0xff, the characters image of Japanese are stored.   
-Changing this file will change the font.
-
-# How to build your own font file   
+# Convert from BDF font to FONTX font   
 step1)   
 download fontxedit.exe.   
 
