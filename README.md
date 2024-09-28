@@ -347,6 +347,13 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![AsciiCode-3](https://github.com/user-attachments/assets/32778605-48d2-4dd4-b268-985adc2bef02)
 
+u8g2 library contains many BDF fonts.   
+This was converted from emoticons21.bdf.   
+![bdf-font-1](https://github.com/user-attachments/assets/62f6af3c-8bba-431c-90a3-1e9d2b77593f)
+
+This was converted from Scroll-o-Sprites.bdf.   
+![bdf-font-2](https://github.com/user-attachments/assets/39016799-0ec6-443f-a369-d537fb6737e2)
+
 # Convert from TTF font to FONTX font  
 step1)   
 Download WFONTX64.exe from [here](https://github.com/nemuisan/WFONTX64/releases).
