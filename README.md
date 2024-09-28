@@ -399,7 +399,7 @@ add font to use
 
 ```
 
-![tft_font](https://github.com/user-attachments/assets/7149863b-cea0-4a11-9364-27af31c6f51d)
+![tft_font](https://github.com/user-attachments/assets/94e8073d-cc18-4c95-bfa4-ed14c9c30277)
 
 ---
 
