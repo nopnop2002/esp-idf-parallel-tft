@@ -592,6 +592,7 @@ https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
 # Performance comparison using ILI9488(320x480)   
 I2S parallel is not always faster.   
+Depending on the application, REGISTER I/O parallel may be faster.   
 Compiling with the O2 option doesn't help much.   
 |Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|I2S parallel(O2)|
 |:-:|:-:|:-:|:-:|:-:|
