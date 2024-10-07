@@ -594,6 +594,8 @@ https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 I2S parallel is not always faster.   
 Depending on the application, REGISTER I/O parallel may be faster.   
 Compiling with the O2 option doesn't help much.   
+The unit of the number is the required time in milliseconds.   
+A smaller value indicates faster speed.   
 |Test|GPIO parallel|REGISTER I/O parallel|I2S parallel|I2S parallel(O2)|
 |:-:|:-:|:-:|:-:|:-:|
 |AddressTest|820|280|40|30|
