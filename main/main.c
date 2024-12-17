@@ -2305,6 +2305,18 @@ esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 
 void app_main()
 {
+	// Initialize NVS
+	// NVS saves the touch position calibration.
+	ESP_LOGI(TAG, "Initialize NVS");
+	esp_err_t err = nvs_flash_init();
+	if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+		// NVS partition was truncated and needs to be erased
+		// Retry nvs_flash_init
+		ESP_ERROR_CHECK(nvs_flash_erase());
+		err = nvs_flash_init();
+	}
+	ESP_ERROR_CHECK( err );
+
 	ESP_LOGI(TAG, "Initializing SPIFFS");
 	// Maximum files that could be open at the same time is 10.
 	ESP_ERROR_CHECK(mountSPIFFS("/spiffs", "storage0", 10));
