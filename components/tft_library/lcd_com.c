@@ -73,10 +73,10 @@
 	do { \
 		if (data) { \
 			if ( GPIO_PIN < 32 ) GPIO.out_w1ts = (1 << GPIO_PIN); \
-			else GPIO.out1_w1ts.val = (1 << (GPIO_PIN - 32)); \
+			else GPIO.out1_w1ts.val = (1 << abs(GPIO_PIN - 32)); \
 		} else { \
 			if ( GPIO_PIN < 32 ) GPIO.out_w1tc = (1 << GPIO_PIN); \
-			else GPIO.out1_w1tc.val = (1 << (GPIO_PIN - 32)); \
+			else GPIO.out1_w1tc.val = (1 << abs(GPIO_PIN - 32)); \
 		} \
 	} while (0)
 
@@ -442,15 +442,16 @@ esp_err_t lcd_interface_cfg(TFT_t * dev, int interface)
 
 void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int gpio_xm, int gpio_yp, int gpio_ym)
 {
-	ESP_LOGI(TAG, "_adc_yp=%d _adc_xm=%d", dev->_adc_yp, dev->_adc_xm);
-	ESP_LOGI(TAG, "_gpio_xp=%d _gpio_xm=%d", gpio_xp, gpio_xm);
 	dev->_calibration = true;
 	dev->_adc_yp = adc_yp;
 	dev->_adc_xm = adc_xm;
+	ESP_LOGI(TAG, "_adc_yp=%d _adc_xm=%d", dev->_adc_yp, dev->_adc_xm);
 	dev->_gpio_xp = gpio_xp;
 	dev->_gpio_xm = gpio_xm;
 	dev->_gpio_yp = gpio_yp;
 	dev->_gpio_ym = gpio_ym;
+	ESP_LOGI(TAG, "_gpio_xp=%d _gpio_xm=%d", gpio_xp, gpio_xm);
+	ESP_LOGI(TAG, "_gpio_yp=%d _gpio_ym=%d", gpio_yp, gpio_ym);
 	ESP_ERROR_CHECK(adc1_config_width(ADC_WIDTH_BIT_DEFAULT));
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
 	ESP_ERROR_CHECK(adc1_config_channel_atten(dev->_adc_yp, ADC_ATTEN_DB_12));
