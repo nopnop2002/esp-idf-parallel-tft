@@ -190,9 +190,7 @@ __Note__
 ESP32 development board cannot supply too much current.   
 It is more stable when supplied from an external power source.   
 
-![All](https://user-images.githubusercontent.com/6020549/104249117-1e0ad080-54ae-11eb-8c25-46a2d8fa5fed.JPG)
-
-![Circuit](https://user-images.githubusercontent.com/6020549/107828267-dbe5ef00-6dcb-11eb-87e1-31f93fb571d3.jpg)
+![ExternalPower](https://github.com/user-attachments/assets/db5d7e4f-4cd3-4df2-b404-755aa0519718)
 
 # Graphic support
 ![Graphic1](https://user-images.githubusercontent.com/6020549/104248260-848eef00-54ac-11eb-9ab8-4b74a2a7713f.JPG)
