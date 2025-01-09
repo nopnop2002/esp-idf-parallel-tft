@@ -147,7 +147,7 @@ You have to set this config value with menuconfig.
 
 ![config-app4](https://user-images.githubusercontent.com/6020549/106704258-28dcff00-662f-11eb-8a75-2070c3fe746a.jpg)
 
-# Wireing  
+# Wiring  
 
 |TFT||ESP32|ESP32S2/S3||
 |:-:|:-:|:-:|:-:|:-:|
@@ -414,10 +414,8 @@ The 4-line resistor touch screen uses 4 pins.
 
 When using GPIO Parallel Interface or REGISTER Parallel Interface, you can enable 4-line resistance touch screen using menuconfig.   
 
-ESP-IDF cannot simultaneous both digital output and analog input using a single gpio.   
-Two GPIOs are required for simultaneous digital output and analog input.   
-(X-) and ESP32 are connected with two wires.   
-(Y+) and ESP32 are connected with two wires.   
+ESP-IDF cannot do both digital output and analog input simultaneously using a single gpio.   
+Hence two GPIOs are required for simultaneous digital output and analog input.
 
 ```
 (X-) ----+---- Gpio for Digital Output(Using GPIO number)
@@ -433,20 +431,23 @@ Two GPIOs are required for simultaneous digital output and analog input.
 
 - ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
-This project use ADC1 to read analog value.   
+This project only supports ADC1 for reading analog values.
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.   
 Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
-When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
+
+When using ADC1_4(ADC1 Channel#4) and ADC1_5(ADC1 Channel#5), the following wiring is additionally required.   
 
 |TFT|ADC1|ESP32|ESP32S2/S3|
 |:-:|:-:|:-:|:-:|
-|LCD-WR(Y+)|Channel#6|GPIO34|GPIO07|
-|LCD-RS(X-)|Channel#7|GPIO35|GPIO08|
+|LCD-WR (Y+)|Channel#4|GPIO32|GPIO07|
+|LCD-RS (X-)|Channel#5|GPIO33|GPIO08|
 
 - GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
 
+> [!IMPORTANT]  
+> Make sure to use correct pins for the respective `ADC1` channels.
 
 ![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
 
