@@ -190,6 +190,7 @@ __Note__
 ESP32 development board cannot supply too much current.   
 It is more stable when supplied from an external power source.   
 I used a USB-TTL conversion module.   
+
 ![ExternalPower](https://github.com/user-attachments/assets/db5d7e4f-4cd3-4df2-b404-755aa0519718)
 
 # Graphic support
