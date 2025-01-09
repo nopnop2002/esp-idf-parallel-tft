@@ -147,7 +147,7 @@ You have to set this config value with menuconfig.
 
 ![config-app4](https://user-images.githubusercontent.com/6020549/106704258-28dcff00-662f-11eb-8a75-2070c3fe746a.jpg)
 
-# Wireing  
+# Wiring  
 
 |TFT||ESP32|ESP32S2/S3||
 |:-:|:-:|:-:|:-:|:-:|
