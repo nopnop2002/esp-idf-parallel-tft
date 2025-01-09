@@ -189,7 +189,7 @@ Normally, a TFT with a regulator works at 5V, but my R61509V doesn't work unless
 __Note__   
 ESP32 development board cannot supply too much current.   
 It is more stable when supplied from an external power source.   
-I used a USB-TTL conversion module.   
+I used a USB-TTL conversion module as an external power source.   
 
 ![ExternalPower](https://github.com/user-attachments/assets/db5d7e4f-4cd3-4df2-b404-755aa0519718)
 
