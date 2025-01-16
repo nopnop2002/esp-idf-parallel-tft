@@ -35,7 +35,7 @@ LED pin should be at GND
 - OPEN-SMART ILI9225 TFT-Shield(176x220)(*5)   
 - OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)(*5)   
 - OPEN-SMART ILI9340 TFT-Shield(240x320)(*5)   
-- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)(*5)   
+- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*5)   
 - OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)(*5)   
 - OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)(*5)   
 - OPEN-SMART R61509V 16Pin-Parallel(240x400)(*1)(*5)   
@@ -436,7 +436,20 @@ When reading analog values, ESP-IDF can use ADC1 and ADC2.
 This project use ADC1 to read analog value.   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.   
-Refer to the ESP32 data sheet for the relationship between ADC channels and GPIOs.   
+|ADC1 Channel|ESP32|ESP32S2/S3|
+|:-:|:-:|:-:|
+|#0|GPIO36|GPIO01|
+|#1|GPIO37|GPIO02|
+|#2|GPIO38|GPIO03|
+|#3|GPIO39|GPIO04|
+|#4|GPIO32|GPIO05|
+|#5|GPIO33|GPIO06|
+|#6|GPIO34|GPIO07|
+|#7|GPIO35|GPIO08|
+|#8||GPIO09|
+|#9||GPIO10|
+
+
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
 
 |TFT|ADC1|ESP32|ESP32S2/S3|
