@@ -426,7 +426,7 @@ Two GPIOs are required for simultaneous digital output and analog input.
          +---- Gpio for Analog Input(Using ADC1 Channel number)
 ```
 
-## Configuration for touch screen
+### Configuration for touch screen
 
 ![config-touch-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/5efd74fe-3b3e-4cbe-b04a-266cee5a44ee)
 
