@@ -460,7 +460,6 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 
 ### GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
-![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
 
 ### Save calibration data to NVS   
 Write calibration data to NVS.   
@@ -470,6 +469,7 @@ To clear the calibration data recorded in NVS, execute the following command.
 ```
 idf.py erase_flash
 ```
+![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
 
 ### Check if touch works properly   
 You can check if touch screen works properly.   
