@@ -455,8 +455,8 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 
 |TFT|ADC1|ESP32|ESP32S2/S3|
 |:-:|:-:|:-:|:-:|
-|LCD-WR(Y+)|Channel#6|GPIO34|GPIO07|
-|LCD-RS(X-)|Channel#7|GPIO35|GPIO08|
+|(Y+)|Channel#6|GPIO34|GPIO07|
+|(X-)|Channel#7|GPIO35|GPIO08|
 
 - GPIO number    
 It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
