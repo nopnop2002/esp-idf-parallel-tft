@@ -458,9 +458,9 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
 |(Y+)|Channel#6|GPIO34|GPIO07|
 |(X-)|Channel#7|GPIO35|GPIO08|
 
-- GPIO number    
- It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
- ![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
+### GPIO number    
+It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
+![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
 
 ### Save calibration data to NVS   
 Write calibration data to NVS.   
@@ -472,7 +472,7 @@ idf.py erase_flash
 ```
 
 ### Check if touch works properly   
-You can check if XPT2046 works properly.   
+You can check if touch screen works properly.   
 ![Image](https://github.com/user-attachments/assets/e11999a9-5997-40e4-9716-c578d8209a0a)
 
 If you touch it at this time, the touched coordinates will be displayed.   
