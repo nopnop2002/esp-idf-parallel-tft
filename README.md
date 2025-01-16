@@ -437,10 +437,18 @@ This project use ADC1 to read analog value.
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.   
 
-|TFT|ESP32|ESP32S2/S3|
+|Channel|ESP32|ESP32S2/S3|
 |:-:|:-:|:-:|
-|LCD-WR(Y+)|GPIO34|GPIO07|
-|LCD-RS(X-)|GPIO35|GPIO08|
+|#0|GPIO36|GPIO01|
+|#1|GPIO37|GPIO02|
+|#2|GPIO38|GPIO03|
+|#3|GPIO39|GPIO04|
+|#4|GPIO32|GPIO05|
+|#5|GPIO33|GPIO06|
+|#6|GPIO34|GPIO07|
+|#7|GPIO35|GPIO08|
+|#8||GPIO09|
+|#9||GPIO10|
 
 
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
