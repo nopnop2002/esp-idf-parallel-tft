@@ -1064,6 +1064,42 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height, uint16_t 
 }
 
 #if CONFIG_ENABLE_TOUCH
+void TouchPosition(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t timeout) {
+	ESP_LOGW(__FUNCTION__, "Start TouchPosition");
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	ESP_LOGD(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+
+	TickType_t lastTouched = xTaskGetTickCount();
+	lcdFillScreen(dev, BLACK);
+	uint8_t ascii[24];
+	strcpy((char *)ascii, "Touch any place");
+	int ypos = ((height - fontHeight) / 2) - 1;
+	int xpos = (width + (strlen((char *)ascii) * fontWidth)) / 2;
+	lcdSetFontDirection(dev, DIRECTION180);
+	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
+
+    int _xp;
+    int _yp;
+	bool isRunning = true;
+	while(isRunning) {
+		if (touch_getxy(dev, &_xp, &_yp)) {
+			lastTouched = xTaskGetTickCount();
+			ESP_LOGI(__FUNCTION__, "TouchPosition _xp=%d _yp=%d", _xp, _yp);
+		} else {
+			TickType_t current = xTaskGetTickCount();
+			if (current - lastTouched > timeout) {
+				isRunning = false;
+			}
+		}
+	} // end while
+	ESP_LOGW(__FUNCTION__, "End TouchPosition");
+}
+
 bool TouchSaveCalibration(TFT_t * dev) {
 	// Open NVS
 	ESP_LOGI(__FUNCTION__, "Opening Non-Volatile Storage (NVS) handle... ");
@@ -1214,6 +1250,7 @@ bool TouchLoadCalibration(TFT_t * dev) {
 void TouchDoCalibration(TFT_t * dev, FontxFile *fx, int width, int height, int fontWidth, int fontHeight, int xmark, int ymark, int *xdata, int *ydata) {
 	// Show touch point
 	lcdFillScreen(dev, BLACK);
+	lcdSetFontDirection(dev, DIRECTION0);
 	lcdDrawFillCircle(dev, xmark, ymark, 10, CYAN);
 	uint8_t ascii[24];
 	strcpy((char *)ascii, "Calibration");
@@ -1313,14 +1350,14 @@ void TouchCalibration(TFT_t * dev, FontxFile *fx, int width, int height) {
 // xpos:touch coordinates x
 // ypos:touch coordinates y
 esp_err_t ConvertCoordinate(TFT_t * dev, int xp, int yp, int *xpos, int *ypos) {
+	ESP_LOGD(__FUNCTION__, "_min_xp=%d _max_xp=%d xp=%d", dev->_min_xp, dev->_max_xp, xp);
+	ESP_LOGD(__FUNCTION__, "_min_yp=%d _max_yp=%d yp=%d", dev->_min_yp, dev->_max_yp, yp);
+	ESP_LOGD(__FUNCTION__, "_min_xc=%d _min_yc=%d _max_xc=%d _max_yc=%d", dev->_min_xc, dev->_min_yc, dev->_max_xc, dev->_max_yc);
 	float _xd = dev->_max_xp - dev->_min_xp;
 	float _yd = dev->_max_yp - dev->_min_yp;
 	float _xs = dev->_max_xc - dev->_min_xc;
 	float _ys = dev->_max_yc - dev->_min_yc;
 	ESP_LOGD(__FUNCTION__, "_xs=%f _ys=%f", _xs, _ys);
-
-	ESP_LOGD(__FUNCTION__, "_max_xp=%d _min_xp=%d xp=%d", dev->_max_xp, dev->_min_xp, xp);
-	ESP_LOGD(__FUNCTION__, "_max_yp=%d _min_yp=%d yp=%d", dev->_max_yp, dev->_min_yp, yp);
 
 	// Determine if within range
 	if (dev->_max_xp > dev->_min_xp) {
@@ -1866,10 +1903,10 @@ void TouchMakeMenu(TFT_t * dev, int page, FontxFile *fx, int width, int height, 
 	y_rect2 = (height/4) * 3 - 1;
 	x_text = x_rect1;
 	y_text = y_center - (strlen((char *)ascii) * fontWidth / 2);
-    area[2].x_low = x_rect1;
-    area[2].x_high = x_rect2;
-    area[2].y_low = y_rect1;
-    area[2].y_high = y_rect2;
+	area[2].x_low = x_rect1;
+	area[2].x_high = x_rect2;
+	area[2].y_low = y_rect1;
+	area[2].y_high = y_rect2;
 	ESP_LOGD(__FUNCTION__, "x_low=%d x_high=%d y_low=%d y_high=%d", area[0].x_low, area[0].x_high, area[0].y_low, area[0].y_high);
 	if (page == 2) {
 		lcdDrawFillRect(dev, x_rect1, y_rect1, x_rect2, y_rect2, RED);
@@ -2044,6 +2081,7 @@ void TFT(void *pvParameters)
 
 #if 0
 	while(1) {
+		TouchPosition(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		TouchCalibration(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		TouchPenTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
 		TouchKeyTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
@@ -2051,6 +2089,9 @@ void TFT(void *pvParameters)
 	}
 #endif
 
+#if CONFIG_TOUCH_CHECK
+	TouchPosition(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT, 1000);
+#endif
 
 	while(1) {
 		traceHeap();

@@ -400,4 +400,11 @@ menu "TFT Configuration"
 				"GPIO_D7"
 	endchoice
 
+	config TOUCH_CHECK
+		depends on ENABLE_TOUCH
+		bool "Enable Touch Check"
+		default false
+		help
+			Enable Touch Check.
+
 endmenu
