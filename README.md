@@ -35,7 +35,7 @@ LED pin should be at GND
 - OPEN-SMART ILI9225 TFT-Shield(176x220)(*5)   
 - OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)(*5)   
 - OPEN-SMART ILI9340 TFT-Shield(240x320)(*5)   
-- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*5)   
+- OPEN-SMART S6D1121 16Pin-Parallel(240x320)(*1)(*5)   
 - OPEN-SMART ST7775  16Pin-Parallel(176x220 Same as ILI9225)(*1)(*5)   
 - OPEN-SMART ST7783  16Pin-Parallel(240x320)(*1)(*5)   
 - OPEN-SMART R61509V 16Pin-Parallel(240x400)(*1)(*5)   
