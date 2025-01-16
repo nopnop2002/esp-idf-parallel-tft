@@ -436,6 +436,7 @@ When reading analog values, ESP-IDF can use ADC1 and ADC2.
 This project use ADC1 to read analog value.   
 ESP32 has 8 channels: GPIO32 - GPIO39.   
 ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.   
+
 |TFT|ESP32|ESP32S2/S3|
 |:-:|:-:|:-:|
 |LCD-WR(Y+)|GPIO34|GPIO07|
