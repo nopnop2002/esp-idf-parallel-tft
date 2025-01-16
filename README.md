@@ -31,7 +31,6 @@ You can use such a TFT-Shield with esp32.
 - HX8347I(Same as HX8347D)(*2)   
 
 ## OPEN-SMART Products   
-LED pin should be at GND   
 - OPEN-SMART ILI9225 TFT-Shield(176x220)(*5)   
 - OPEN-SMART ILI9327 TFT-Shield(240x400)(*3)(*5)   
 - OPEN-SMART ILI9340 TFT-Shield(240x320)(*5)   
