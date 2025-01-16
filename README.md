@@ -430,7 +430,7 @@ Two GPIOs are required for simultaneous digital output and analog input.
 
 ![config-touch-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/5efd74fe-3b3e-4cbe-b04a-266cee5a44ee)
 
-- ADC Channel   
+### ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
 This project use ADC1 to read analog value.   
 ESP32 has 8 channels.   
@@ -462,25 +462,27 @@ When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiri
  It uses four GPIOs, but the GPIOs differ depending on the TFT model.   
  ![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
 
-- Save calibration data to NVS   
- Write calibration data to NVS.   
- Read calibration data from NVS when starting the firmware and use it.   
- If you use the same TFT, you don't need to calibrate again.   
- To clear the calibration data recorded in NVS, execute the following command.   
+### Save calibration data to NVS   
+Write calibration data to NVS.   
+Read calibration data from NVS when starting the firmware and use it.   
+If you use the same TFT, you don't need to calibrate again.   
+To clear the calibration data recorded in NVS, execute the following command.   
 ```
 idf.py erase_flash
 ```
 
-- Check if touch works properly   
- You can check if XPT2046 works properly.   
- ![Image](https://github.com/user-attachments/assets/e11999a9-5997-40e4-9716-c578d8209a0a)
- If you touch it at this time, the touched coordinates will be displayed.   
- If there is no touch for 10 seconds, it will end.   
- ![Image](https://github.com/user-attachments/assets/813c4435-a010-4f55-ad5f-1218724ce82a)
- Move the touch-pen vertically and horizontally to check the X and Y coordinates.   
- What you get here is the physical coordinates.   
- See [here](https://github.com/nopnop2002/esp-idf-ili9340/issues/39) about physical coordinates.   
- ![Image](https://github.com/user-attachments/assets/8f439bd4-0a17-45f2-aeed-8292eb4f067c)
+### Check if touch works properly   
+You can check if XPT2046 works properly.   
+![Image](https://github.com/user-attachments/assets/e11999a9-5997-40e4-9716-c578d8209a0a)
+
+If you touch it at this time, the touched coordinates will be displayed.   
+If there is no touch for 10 seconds, it will end.   
+![Image](https://github.com/user-attachments/assets/8f439bd4-0a17-45f2-aeed-8292eb4f067c)
+
+Move the touch-pen vertically and horizontally to check the X and Y coordinates.   
+What you get here is the physical coordinates.   
+See [here](https://github.com/nopnop2002/esp-idf-ili9340/issues/39) about physical coordinates.   
+![Image](https://github.com/user-attachments/assets/813c4435-a010-4f55-ad5f-1218724ce82a)
 
 
 ### OPEN-SMART 16Pin-Parallel Products   
