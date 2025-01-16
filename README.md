@@ -446,8 +446,6 @@ ESP32S2/S3 has 10 channels: GPIO01 - GPIO10.
 |#5|GPIO33|GPIO06|
 |#6|GPIO34|GPIO07|
 |#7|GPIO35|GPIO08|
-|#8||GPIO09|
-|#9||GPIO10|
 
 
 When using ADC1_6(ADC1 Channel#6) and ADC1_7(ADC1 Channel#7), the following wiring is additionally required.   
