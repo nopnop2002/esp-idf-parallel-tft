@@ -428,7 +428,7 @@ Two GPIOs are required for simultaneous digital output and analog input.
 
 ### Configuration for touch screen
 
-![config-touch-1](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/5efd74fe-3b3e-4cbe-b04a-266cee5a44ee)
+![Image](https://github.com/user-attachments/assets/d49aad5d-93d4-4fba-8b3d-d52a83eb2996)
 
 ### ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
@@ -469,11 +469,11 @@ To clear the calibration data recorded in NVS, execute the following command.
 ```
 idf.py erase_flash
 ```
-![config-touch-2](https://github.com/nopnop2002/esp-idf-parallel-tft/assets/6020549/c306cc6b-26e7-46e8-ac8b-b31918576d11)
+![Image](https://github.com/user-attachments/assets/67258144-fd76-492c-9b48-93188a899058)
 
 ### Check if touch works properly   
 You can check if touch screen works properly.   
-![Image](https://github.com/user-attachments/assets/e11999a9-5997-40e4-9716-c578d8209a0a)
+![Image](https://github.com/user-attachments/assets/cc89798f-bc69-4d04-a46c-ccacd2b28b9f)
 
 If you touch it at this time, the touched coordinates will be displayed.   
 If there is no touch for 10 seconds, it will end.   
