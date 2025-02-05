@@ -622,7 +622,7 @@ YourProject --+-- CMakeLists.txt
 Contents of idf_component.yml.
 ```
 dependencies:
-  nopnop2002/tft_library:
+  nopnop2002/parallel-tft:
     path: components/tft_library/
     git: https://github.com/nopnop2002/esp-idf-parallel-tft.git
 ```
@@ -633,7 +633,7 @@ YourProject --+-- CMakeLists.txt
               +-- main --+-- main.c
                          +-- CMakeLists.txt
                          +-- idf_component.yml
-              +-- managed_components ----- nopnop2002__tft_library
+              +-- managed_components ----- nopnop2002__parallel-tft
 ```
 
 
