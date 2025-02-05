@@ -610,6 +610,32 @@ I borrowed the icon from [here](https://www.flaticon.com/packs/social-media-343)
 ## How dose it works   
 https://www.sparkfun.com/datasheets/LCD/HOW%20DOES%20IT%20WORK.pdf
 
+# How to use this component in your project   
+Create idf_component.yml in the same directory as main.c.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+                         +-- CMakeLists.txt
+                         +-- idf_component.yml
+```
+
+Contents of idf_component.yml.
+```
+dependencies:
+  nopnop2002/tft_library:
+    path: components/tft_library/
+    git: https://github.com/nopnop2002/esp-idf-parallel-tft.git
+```
+
+When you build a projects esp-idf will automaticly fetch repository to managed_components dir and link with your code.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+                         +-- CMakeLists.txt
+                         +-- idf_component.yml
+              +-- managed_components ----- nopnop2002__tft_library
+```
+
 
 # Application layer
 
