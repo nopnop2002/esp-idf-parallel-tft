@@ -432,7 +432,7 @@ Two GPIOs are required for simultaneous digital output and analog input.
 
 ### ADC Channel   
 When reading analog values, ESP-IDF can use ADC1 and ADC2.   
-This project use ADC1 to read analog value.   
+This project only supports ADC1 for reading analog values.   
 ESP32 has 8 channels.   
 ESP32S2/S3 has 10 channels.   
 
