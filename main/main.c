@@ -1055,6 +1055,8 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height, uint16_t 
 			code++;
 			if(code > end) break;
 		}
+		if (code == 0xFF) break;
+		if (code > end) break;
 	}
 
 	endTick = xTaskGetTickCount();
@@ -1083,8 +1085,8 @@ void TouchPosition(TFT_t * dev, FontxFile *fx, int width, int height, TickType_t
 	lcdSetFontDirection(dev, DIRECTION180);
 	lcdDrawString(dev, fx, xpos, ypos, ascii, WHITE);
 
-    int _xp;
-    int _yp;
+	int _xp;
+	int _yp;
 	bool isRunning = true;
 	while(isRunning) {
 		if (touch_getxy(dev, &_xp, &_yp)) {
