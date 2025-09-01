@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <inttypes.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "decode_jpeg.h"
 #include "esp_rom_caps.h"
 #include "esp_log.h"
@@ -93,10 +96,6 @@ uint8_t getScale(int screenWidth, int screenHeight, uint16_t decodeWidth, uint16
 
 }
 
-//Size of the work space for the jpeg decoder.
-//Recommended buffer size; Independent on the size of the image
-#define WORKSZ 3100
-
 //Decode the embedded image into pixel lines that can be used with the rest of the logic.
 esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int screenHeight, int * imageWidth, int * imageHeight) {
 	char *work = NULL;
@@ -104,6 +103,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	JpegDev jd;
 	*pixels = NULL;
 	esp_err_t ret = ESP_OK;
+	jd.fp = NULL;
 
 	ESP_LOGW(__FUNCTION__, "v5 version. JPEG Decoder is %s", JPEG);
 	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
@@ -123,13 +123,21 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	}
 
 	//Allocate the work space for the jpeg decoder.
-	work = calloc(WORKSZ, 1);
+	uint32_t free_heap_size = esp_get_free_heap_size();
+	ESP_LOGI(__FUNCTION__, "esp_get_free_heap_size=%"PRIu32, free_heap_size);
+	//uint32_t jd_work_size = free_heap_size/2;
+
+	//Get the largest free block of memory able to be allocated with the given capabilities.
+	size_t largest_free_block = heap_caps_get_largest_free_block(MALLOC_CAP_EXEC);
+	ESP_LOGI(__FUNCTION__, "largest_free_block=%d", largest_free_block);
+	uint32_t jd_work_size = largest_free_block;
+	ESP_LOGI(__FUNCTION__, "jd_work_size=%"PRIu32, jd_work_size);
+	work = calloc(jd_work_size, 1);
 	if (work == NULL) {
 		ESP_LOGE(__FUNCTION__, "Cannot allocate workspace");
 		ret = ESP_ERR_NO_MEM;
 		goto err;
 	}
-
 	
 	//Populate fields of the JpegDev struct.
 	jd.outData = *pixels;
@@ -145,7 +153,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 
 	//Prepare and decode the jpeg.
 	JRESULT res;
-	res = jd_prepare(&decoder, infunc, work, WORKSZ, &jd);
+	res = jd_prepare(&decoder, infunc, work, jd_work_size, &jd);
 	if (res != JDR_OK) {
 		ESP_LOGE(__FUNCTION__, "Image decoder: jd_prepare failed (%d)", res);
 		ret = ESP_ERR_NOT_SUPPORTED;
@@ -182,7 +190,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 
 	//Something went wrong! Exit cleanly, de-allocating everything we allocated.
 	err:
-	fclose(jd.fp);
+	ESP_LOGD(__FUNCTION__, "start err");
 	if (*pixels != NULL) {
 		for (int i = 0; i < screenHeight; i++) {
 			if ((*pixels)[i]) free((*pixels)[i]);
@@ -190,6 +198,8 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 		free(*pixels);
 	}
 	free(work);
+	if (jd.fp) fclose(jd.fp);
+	ESP_LOGD(__FUNCTION__, "done err");
 	return ret;
 }
 
