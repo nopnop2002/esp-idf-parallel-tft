@@ -4,6 +4,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include <math.h>
+#include <time.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -22,14 +23,6 @@
 #include "decode_jpeg.h"
 #include "decode_png.h"
 #include "pngle.h"
-
-#if CONFIG_INTERFACE_I2S
-#define INTERFACE INTERFACE_I2S
-#elif CONFIG_INTERFACE_GPIO
-#define INTERFACE INTERFACE_GPIO
-#elif CONFIG_INTERFACE_REG
-#define INTERFACE INTERFACE_REG
-#endif
 
 #if CONFIG_ILI9225
 #include "ili9225.h"
@@ -2021,8 +2014,7 @@ void TFT(void *pvParameters)
 	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
 	
 	TFT_t dev;
-	lcd_interface_cfg(&dev, INTERFACE);
-	//lcd_interface_cfg(&dev, INTERFACE_GPIO);
+	lcd_interface_cfg(&dev);
 
 	INIT_FUNCTION(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 

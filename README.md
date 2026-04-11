@@ -82,10 +82,13 @@ ESP-IDF V5.0 or later.
 ESP-IDF V4.4 release branch reached EOL in July 2024.   
 
 __Note for ESP-IDF V5.x__   
-ESP-IDF V5.x gives this warning, but work.   
+I2S parallel interface gives this warning, but work.   
 ```
 #warning "legacy adc driver is deprecated, please migrate to use esp_adc/adc_oneshot.h and esp_adc/adc_continuous.h for oneshot mode and continuous mode drivers respectively"
 ```
+
+__Note for ESP-IDF V6.x__   
+I2S parallel interface is not supported.   
 
 
 # Installation

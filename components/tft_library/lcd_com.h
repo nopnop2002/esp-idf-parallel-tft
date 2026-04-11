@@ -1,8 +1,7 @@
 #ifndef   __LCD_COM_H__
 #define   __LCD_COM_H__
 
-#include "i2s_lcd_driver.h"
-#include "driver/adc.h"
+#include "esp_adc/adc_oneshot.h"
 
 #define TFTLCD_DELAY	0xFFFF
 #define TFTLCD_DELAY16	0xFFFF
@@ -17,6 +16,8 @@ typedef enum {MODE_RESET, MODE_OUTPUT, MODE_INPUT} MODE;
 #define NUM_SAMPLES    2 // Number of samples
 #define COMP_TOLERANCE 2 // Coordinate tolerance
 #define AVERAGE_TIME   4 // Number of samples when averaging
+
+typedef esp_err_t (*lcd_write_fptr_t)(void * dummy1, const uint8_t *data, uint32_t length);
 
 typedef struct {
 	uint16_t _width;
@@ -41,11 +42,12 @@ typedef struct {
 	int16_t _d6;
 	int16_t _d7;
 	int16_t _delay;
-	int16_t _interface;
 	bool _debug;
-	i2s_lcd_handle_t i2s_lcd_handle;
-	adc1_channel_t _adc_yp;
-	adc1_channel_t _adc_xm;
+	void * _i2s_lcd_handle;
+	lcd_write_fptr_t _func;
+	adc_oneshot_unit_handle_t _adc1_handle;
+	adc_channel_t _adc_yp;
+	adc_channel_t _adc_xm;
 	int16_t _gpio_xp;
 	int16_t _gpio_xm;
 	int16_t _gpio_yp;
@@ -64,8 +66,8 @@ typedef struct {
 } TFT_t;
 
 void gpio_digital_write(int GPIO_PIN, uint8_t data);
-void gpio_lcd_write_data(int dummy1, unsigned char *data, size_t size);
-void reg_lcd_write_data(int dummy1, unsigned char *data, size_t size);
+esp_err_t gpio_lcd_write_data(void * dummy1, const uint8_t *data, uint32_t size);
+esp_err_t reg_lcd_write_data(void * dummy1, const uint8_t *data, uint32_t size);
 
 void lcd_write_table(TFT_t * dev, const void *table, int16_t size);
 void lcd_write_table16(TFT_t * dev, const void *table, int16_t size);
@@ -79,10 +81,10 @@ void lcd_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size);
 void lcd_delay_ms(int delay_time);
 void lcd_write_register_word(TFT_t * dev, uint16_t addr, uint16_t data);
 void lcd_write_register_byte(TFT_t * dev, uint8_t addr, uint16_t data);
-esp_err_t lcd_interface_cfg(TFT_t * dev, int interface);
+esp_err_t lcd_interface_cfg(TFT_t * dev);
 
 void touch_interface_cfg(TFT_t * dev, int adc_yp, int adc_xm, int gpio_xp, int gpio_xm, int gpio_yp, int gpio_ym);
-int touch_avr_analog(adc1_channel_t channel, int averagetime);
+int touch_avr_analog(adc_oneshot_unit_handle_t adc1_handle, adc_channel_t channel, int averagetime);
 void touch_gpio(int gpio, int mode, int level);
 int touch_getx(TFT_t * dev);
 int touch_gety(TFT_t * dev);

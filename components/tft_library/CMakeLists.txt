@@ -1,4 +1,5 @@
-set(component_srcs "fontx.c"
+set(component_srcs
+	"fontx.c"
 	"ili9225.c"
 	"ili9320.c"
 	"ili9325.c"
@@ -15,21 +16,24 @@ set(component_srcs "fontx.c"
 	"st7781.c"
 	"s6d1121.c"
 	"hx8347.c"
-	"i2s_lcd_esp32_driver.c"
-	"i2s_lcd_esp32s2_driver.c"
-    "8080_lcd_esp32s3.c"
-	)
+)
 
-if(IDF_VERSION_MAJOR STREQUAL "4")
-idf_component_register(SRCS "${component_srcs}"
-                       PRIV_REQUIRES driver
-                       PRIV_REQUIRES esp_adc_cal
-                       INCLUDE_DIRS ".")
+if(IDF_VERSION_MAJOR STREQUAL "5")
+	list(APPEND component_srcs "i2s_lcd_esp32_driver.c")
+	list(APPEND component_srcs "i2s_lcd_esp32s2_driver.c")
+	list(APPEND component_srcs "8080_lcd_esp32s3.c")
 endif()
 
 if(IDF_VERSION_MAJOR STREQUAL "5")
 idf_component_register(SRCS "${component_srcs}"
-                       PRIV_REQUIRES driver
-                       PRIV_REQUIRES esp_adc
-                       INCLUDE_DIRS ".")
+	PRIV_REQUIRES driver
+	PRIV_REQUIRES esp_adc
+	INCLUDE_DIRS ".")
+endif()
+
+if(IDF_VERSION_MAJOR STREQUAL "6")
+idf_component_register(SRCS "${component_srcs}"
+	PRIV_REQUIRES esp_driver_gpio
+	PRIV_REQUIRES esp_adc
+	INCLUDE_DIRS ".")
 endif()
