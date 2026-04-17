@@ -105,8 +105,7 @@ __Note for ESP32-S2__
 The tjpgd library is not present in ESP32-S2 ROM.   
 With ESP-IDF Ver5, the JPEG decode library is now provided from the IDF Component Registry, and the JPEG decode library is now available for ESP32-S2.   
 However, since the SRAM is small, a large image cannot be displayed.   
-With ESP-IDF Ver4.4, you cannot be displayed JPEG files because the IDF Component Registry cannot be used.   
-Due to the small SRAM capacity, there is a possibility that an error may occur when displaying PNG files.   
+You may encounter memory allocation errors when displaying PNG files.   
 You can avoid this error by enabling PSRAM.
 
 # Configuration   
@@ -720,8 +719,8 @@ SPI used [this](https://github.com/nopnop2002/esp-idf-ili9340).
 
 
 # Reference about I2S driver
-https://github.com/espressif/esp-iot-solution/tree/master/components/bus
-
+https://github.com/espressif/esp-iot-solution/tree/master/components/bus   
+Unfortunately, these codes cannot be built with ESP-IDF V6.   
 - for esp32   
  i2s_lcd_esp32_driver.c   
 - for esp32s2   
