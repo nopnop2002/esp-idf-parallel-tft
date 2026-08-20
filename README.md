@@ -141,13 +141,12 @@ You have to set this config value with menuconfig.
  For some TFTs, the BGR may be inverted.   
  Specify if the colors are inverted.
 
-![config-menu](https://user-images.githubusercontent.com/6020549/104242485-94093a80-54a2-11eb-934b-90eda9fb7bbe.jpg)
+<img width="659" height="468" alt="Image" src="https://github.com/user-attachments/assets/b075ed49-7b84-48d0-8d81-20c0678e3f2e" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/5ffd5833-1e9a-462b-bc3a-96d203eadcdb" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/7d42fd74-b96e-44a0-b6b5-53d228c1e077" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/7c3e2552-9dd2-42b3-b9eb-37979a300e8b" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/6bcc3853-b484-42d2-898e-ea39d7111231" />
 
-![config-app1](https://user-images.githubusercontent.com/6020549/106704254-27abd200-662f-11eb-8697-743e220c030d.jpg)
-
-![config-app2](https://user-images.githubusercontent.com/6020549/106686442-9d06ab00-660d-11eb-9a53-912e221278ce.jpg)
-
-![config-app4](https://user-images.githubusercontent.com/6020549/106704258-28dcff00-662f-11eb-8a75-2070c3fe746a.jpg)
 
 # Wiring  
 
