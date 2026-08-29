@@ -649,6 +649,10 @@ dependencies:
   nopnop2002/parallel-tft:
     path: components/tft_library/
     git: https://github.com/nopnop2002/esp-idf-parallel-tft.git
+  esp_jpeg:
+    version: "^1.0.0"
+    rules:
+      - if: "idf_version >=5.0"
 ```
 
 When you build a projects esp-idf will automaticly fetch repository to managed_components dir and link with your code.   
