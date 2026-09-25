@@ -166,7 +166,7 @@ menu "TFT Configuration"
 
 	config INVERSION
 		bool "Enable Display Inversion"
-		default false
+		default n
 		help
 			Enable Display Inversion.
 
@@ -295,7 +295,7 @@ menu "TFT Configuration"
 	config ENABLE_TOUCH
 		depends on INTERFACE_REG || INTERFACE_GPIO
 		bool "Enable 4-line resistance touch screen"
-		default false
+		default n
 		help
 			Enable 4-line resistance touch screen.
 
@@ -396,14 +396,14 @@ menu "TFT Configuration"
 	config SAVE_CALIBRATION
 		depends on ENABLE_TOUCH
 		bool "Save calibration data to NVS"
-		default false
+		default n
 		help
 			Save calibration data to NVS.
 
 	config TOUCH_CHECK
 		depends on ENABLE_TOUCH
 		bool "Enable Touch Check"
-		default false
+		default n
 		help
 			Enable Touch Check.
 
